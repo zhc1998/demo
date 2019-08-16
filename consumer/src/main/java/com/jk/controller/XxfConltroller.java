@@ -1,6 +1,7 @@
 package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.jk.model.Highcharts;
 import com.jk.model.User;
 import com.jk.service.XxfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -17,8 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class XxfConltroller {
     @Reference
     private XxfService xxfService;
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate2;
+
 
 
 
@@ -27,12 +28,25 @@ public class XxfConltroller {
         return "index";
     }
 
+    @RequestMapping("toHighcharts")
+    public String toHighcharts(){
+        return "highcharts";
+    }
+
+
+    @RequestMapping("queryDayCount")
+    @ResponseBody
+    public List<Highcharts> queryDayCount(){
+        List<Highcharts> list=xxfService.queryDayCount();
+        return list;
+    }
+
     @RequestMapping("toShow")
     public String toShow(){
         return "show";
     }
 
-    @RequestMapping("login")
+   /* @RequestMapping("login")
     @ResponseBody
     public String login(User user, HttpServletRequest request){
         User user1=xxfService.login(user.getUsername());
@@ -62,6 +76,6 @@ public class XxfConltroller {
         redisTemplate2.delete(key);
         request.getSession().setAttribute("user", user1);
         return "0";
-    }
+    }*/
 
 }
