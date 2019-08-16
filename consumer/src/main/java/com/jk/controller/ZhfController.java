@@ -4,9 +4,11 @@ package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Familyhead;
+import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
 import com.jk.util.ParameUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,4 +54,11 @@ public class ZhfController {
     public HashMap<String, Object> queryorderone(@RequestBody ParameUtil parame){
         return zhfService.queryorderone(parame);
     }
+    //查询订单详情
+    @RequestMapping("showorderinfo")
+    public String showorderinfo(Integer id, Model model){
+        Orderone orderone= zhfService.queryorderbyid(id);
+        return "showorderinfo";
+    }
+
 }

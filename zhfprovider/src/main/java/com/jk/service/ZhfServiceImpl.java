@@ -36,5 +36,10 @@ public class ZhfServiceImpl implements ZhfService{
         return hashMap;
     }
 
+    @Override
+    public Orderone queryorderbyid(Integer id) {
+        return orderoneDao.selectByPrimaryKey(id);
+    }
+
 
 }

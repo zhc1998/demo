@@ -1,6 +1,10 @@
 package com.jk.controller;
 
+
+import com.jk.service.ZhfService;
 import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -8,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ToShowController {
 
 
-
+//跳转展示普通订单页面
     @RequestMapping("showorderone")
     public String showorderone(){
-
         return "showorderone";
     }
+
+
+
+
     //跳转到商品列表
     @RequestMapping("toCommodity")
     public String toCommodity(){

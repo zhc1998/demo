@@ -179,7 +179,7 @@ function search(){
                 title: '操作',
                 width: 100,
                 formatter:function(value,row,index){
-                    var str='<button type="button" class="btn btn-warning" onclick=xgpet('+row.id+') >查看详情</button>';
+                    var str='<button type="button" class="btn btn-warning" onclick=showorderinfo('+row.id+') >查看详情</button>';
 
                     return str;
                 }
@@ -187,6 +187,9 @@ function search(){
 
     })
 
+    function showorderinfo(id) {
+location.href="../zhf/showorderinfo?id="+id;
+    }
 </script>
 
 </body>
