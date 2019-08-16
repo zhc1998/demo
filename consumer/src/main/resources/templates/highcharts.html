@@ -15,8 +15,10 @@
            url:"../xxf/queryDayCount",
            success:function (data) {
                var count=[];
+               var time=[];
                for (var i=0;i<data.length;i++){
                    count[i]=data[i].visitcount;
+                   time[i]=data[i].daytime;
                }
                var chart = Highcharts.chart('container',{
                    chart: {
@@ -26,12 +28,14 @@
                        text: '日活跃数'
                    },
                    xAxis: {
-                       type: 'datetime',
-                       dateTimeLabelFormats: {
-                           day: '%e of %b'
+                       title: {
+                           text: '人数'
                        },
+                       categories:time,
                        crosshair: true
                    },
+
+
                    yAxis: {
                        min: 0,
                        title: {
@@ -41,8 +45,8 @@
                    tooltip: {
                        // head + 每个 point + footer 拼接成完整的 table
                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                       pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                           '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                       pointFormat:
+                           '<td style="padding:0"><b>{point.y:.1f} 人</b></td></tr>',
                        footerFormat: '</table>',
                        shared: true,
                        useHTML: true
