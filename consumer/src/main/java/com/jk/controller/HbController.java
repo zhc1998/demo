@@ -48,7 +48,7 @@ public class HbController {
             //放入缓存中、返回list
             redisTemplate.opsForValue().set(key, list);
             //设置过期时间
-            redisTemplate.expire(key, 30, TimeUnit.MINUTES);
+            redisTemplate.expire(key, 3, TimeUnit.MINUTES);
         }
         return list;
     }
