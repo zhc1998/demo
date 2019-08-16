@@ -36,7 +36,7 @@
     <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
 </head>
 <body>
-
+<button type="button" class="btn btn-success" onclick="addPlay()">新建优惠券</button>
 <!--  表格 -->
 <table id="dataGrid"></table>
 </body>
@@ -92,44 +92,172 @@
             },
             columns: [
                 {field: 'checkbox', checkbox: true},  //开启复选框
-                {field: 'id', title: 'ID', width: 300},      //  列    field   代表是 后台  传过来的值
-                {field: 'yhqname', title: '编码',idth: 300,
+                {field: 'id', title: '编号', width: 300},      //  列    field   代表是 后台  传过来的值
+                {field: 'yhqname', title: '优惠券名称',idth: 300,
                 },
-                {field: 'yhqprice', title: '名称',idth: 300,
+                {field: 'yhqprice', title: '优惠形式',idth: 300,
+                    formatter: function (value,row,index){
+
+                            return value+"元";
+                    }
                 },
-                {field: 'yhqlimit', title: '校区',width: 300,
+                {field: 'yhqlimit', title: '领取限制',width: 300,
+                    formatter: function (value,row,index){
+                        if(value==0){
+                            return "不限张";
+                        }
+                        if(value==1){
+                            return "1张";
+                        }
+                        if(value==2){
+                            return "2张";
+                        }
+                        if(value==3){
+                            return "3张";
+                        }
+
+                    }
                 },
-                {field: 'yhqdate', title: '年纪',width: 300,
+                {field: 'yhqdate', title: '有效期',width: 300,
                 },
-                {field: 'yhqmenkan', title: '价格',width: 300,
+                {field: 'yhqmenkan', title: '优惠券门槛',width: 300,
+                    formatter: function (value,row,index){
+                        if(value==1){
+                            return "不限制";
+                        }
+                        if(value==2){
+                            return "满100元使用";
+                        }
+                    }
                 },
-                {field: 'yhqcount', title: '学习中人数',width: 300,
+                {field: 'yhqcount', title: '优惠券总数',width: 300,
                 },
-                {field: 'yhquse', title: '班级消耗课时',width: 300,
+                {field: 'yhquse', title: '优惠券已使用数量',width: 300,
                 },
-                {field: 'yhqdes', title: '课程类型',width: 300,
+                {field: 'yhqdes', title: '优惠券使用说明',width: 300,
                 },
                 /*{field: 'stuimg', title: '头像',width: 300,
                     formatter: function(value,row,index){
                         return "<img width='20' src='${pageContext.request.contextPath}/"+value+"'>"
                     }
                 },*/
-                {field: 'yhqlevel', title: '等级', width: 300,
+                {field: 'yhqlevel', title: '会员等级', width: 300,
                     formatter: function (value,row,index){
                         if(value==1){
-                            return "已开课";
+                            return "所有会员";
                         }
                         if(value==2){
-                            return "未开课";
+                            return "超级会员";
                         }
                     }
                 },
+                {field: 'cz', title: '操作', width: 300,
+                    formatter: function (value,row,index){
+                        var content = "<a href='javascript:update("+row.id+")'>修改</a>";
+                        return content;
+                    }}
 
             ]
         });
     }
 
+    var res;
 
+    function createAddContent(url) {
+        //alert(url);
+        $.ajax({
+            url: url,
+            async: false,
+            success: function (data) {
+                res = data;
+            }
+        });
+        return res;
+    }
+
+    //新增
+
+    function addPlay(){
+        //打开新增弹框
+        bootbox.dialog({
+            title: '新增',
+            message: createAddContent("../toshow/toAddClpYhqPage"),
+            closeButton: true,//
+            buttons: {
+                "success": {
+                    "label": "<i class='icon-ok'></i> 保存",
+                    "className": "btn-sm btn-success",
+                    "callback": function () {
+
+                        $.ajax({
+                            url: '../clp/addYhq',
+                            type: 'post',
+                            data: $("#formId").serialize(),
+                            success: function (data) {
+                                //alert("新增成功");
+                                //location.reload();
+                                if(data=='555'){
+                                    alert("新增失败")
+                                }else{
+                                    alert('新增成功')
+                                    $('#dataGrid').bootstrapTable("refresh");
+                                }
+                                //刷新表格
+                            }, error: function () {
+                                alert("新增失败");
+                            }
+                        });
+                    }
+                },
+                "cancel": {
+                    "label": "<i class='icon-info'></i> 取消",
+                    "className": "btn-sm btn-danger",
+                    "callback": function () {
+
+                    }
+                }
+            }
+
+        });
+    }
+
+    function update(id){
+        alert(id)
+        //打开新增弹框
+        bootbox.dialog({
+            title: '修改',
+            message: createAddContent("../clp/toUpdClpYhqPage?id="+id),
+            closeButton: true,//
+            buttons: {
+                "success": {
+                    "label": "<i class='icon-ok'></i> 修改",
+                    "className": "btn-sm btn-success",
+                    "callback": function () {
+
+                        $.ajax({
+                            url: '../clp/updateYhq',
+                            type: 'post',
+                            data: $("#formId").serialize(),
+                            success: function () {
+                                $('#dataGrid').bootstrapTable("refresh");
+                                //刷新表格
+                            }, error: function () {
+                                alert("修改失败");
+                            }
+                        });
+                    }
+                },
+                "cancel": {
+                    "label": "<i class='icon-info'></i> 取消",
+                    "className": "btn-sm btn-danger",
+                    "callback": function () {
+
+                    }
+                }
+            }
+
+        });
+    }
 
 
 
