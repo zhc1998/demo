@@ -7,7 +7,14 @@
     <select id="login" resultType="User">
         select * from t_user where username=#{username}
     </select>
-
-
+<select id="queryHighcharts" resultType="Highcharts">
+    SELECT * from highcharts WHERE dayTime=#{time}
+</select>
+<update id="updateHighcharts">
+    update highcharts set visitCount=visitCount+1 where id=#{id}
+</update>
+    <insert id="addHighcharts" >
+        insert into highcharts(dayTime,visitCount) values (#{daytime},#{visitcount})
+    </insert>
  
 </mapper>

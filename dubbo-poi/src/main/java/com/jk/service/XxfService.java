@@ -12,4 +12,10 @@ public interface XxfService {
     User login(String username);
 
     List<Highcharts> queryDayCount();
+
+    Highcharts queryHighcharts(String time);
+
+    void updateHighcharts(Integer id);
+
+    void addHighcharts(Highcharts highcharts);
 }
