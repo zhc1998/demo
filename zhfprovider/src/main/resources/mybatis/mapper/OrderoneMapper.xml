@@ -22,15 +22,47 @@
   <select id="QueryorOrderonecount" resultType="long" >
     select
     count(*)
-    from orderone
-
+    from orderone where 1=1
+<if test="pa.ordernumber != null and pa.ordernumber!=''">
+and   ordernumber like  '%${pa.ordernumber}%'
+</if>
+  <if test="pa.consignee != null and pa.consignee!=''">
+      and   consignee like  '%${pa.consignee}%'
+</if>
+    <if test="pa.mindate != null and pa.mindate!=''">
+      and   ordertime &gt;= #{pa.mindate}
+    </if>
+    <if test="pa.maxdate != null and pa.maxdate!=''">
+      and   ordertime &lt;= #{pa.maxdate}
+    </if>
+    <if test="pa.state != null and pa.state!=''">
+      and   state = #{pa.state}
+    </if>
   </select>
+
+
+
 
   <select id="queryOreryone" resultMap="BaseResultMap" >
     select
     *
     from orderone
     where 1=1
+    <if test="pa.ordernumber != null and pa.ordernumber!=''">
+      and   ordernumber like  '%${pa.ordernumber}%'
+    </if>
+    <if test="pa.consignee != null and pa.consignee!=''">
+      and   consignee like  '%${pa.consignee}%'
+    </if>
+    <if test="pa.mindate != null and pa.mindate!=''">
+      and   ordertime &gt;= #{pa.mindate}
+    </if>
+    <if test="pa.maxdate != null and pa.maxdate!=''">
+      and   ordertime &lt;= #{pa.maxdate}
+    </if>
+    <if test="pa.state != null and pa.state!=''">
+      and   state = #{pa.state}
+    </if>
 limit #{st},#{ro}
   </select>
 

@@ -36,9 +36,44 @@
     <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
 </head>
 <body>
+<form class="form-inline">
+    <div class="form-group">
+        <label for="name">订单号</label>
+        <input type="text" class="form-control" style="width:100px" id="ordernumber"  placeholder="订单号"/>
+        <label for="name">收货人</label>
+        <input type="text" class="form-control" style="width:100px" id="consignee"  placeholder="收货人"/>
+        <label >状态</label>
+        <select  id="state" class="form-control" name="leagid" >
+            <option value="">请选择</option>
+            <option value="1">代付款</option>
+            <option value="2">代发货</option>
+            <option value="3">待收货</option>
+            <option value="4">已关闭</option>
+            <option value="5">已完成</option>
+        </select>
+        <label for="name">下单时间</label>
+        <input type="date" class="form-control"  id="mindate" name="minadate"  style="width: 200px" />---
+        <input type="date" class="form-control" id="maxdate" name="maxadate"  style="width: 200px" />
+        <button type='button' class='btn btn-info' onclick='search()'>查询</button><br>
+    </div>
+</form>
+
 <table id="showorderone"></table>
 
 <script>
+function search(){
+    $("#showorderone").bootstrapTable("refresh", {
+        "query": {
+            ordernumber: $("#ordernumber").val(),
+            consignee: $("#consignee").val(),
+            state:$("#state").val(),
+            mindate:$("#mindate").val(),
+            maxdate: $("#maxdate").val()
+        }
+    });
+}
+
+
 
     $("#showorderone").bootstrapTable({
         url:"../zhf/queryorderone",
@@ -78,6 +113,11 @@
             var param = {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize,
+                ordernumber: $("#ordernumber").val(),
+                consignee: $("#consignee").val(),
+                state:$("#state").val(),
+                mindate:$("#mindate").val(),
+                maxdate: $("#maxdate").val()
                 // sortName: params.sortName,
                 // sortOrder: params.sortOrder,
                 //userName: $("#userName").val()
@@ -130,8 +170,8 @@
                         return "待收货";
                     }if(value==4){
                         return "已关闭";
-                    }if(value==已完成){
-                        return "代付款";
+                    }if(value==5){
+                        return "已完成";
                     }
                 }
             },{
@@ -139,7 +179,7 @@
                 title: '操作',
                 width: 100,
                 formatter:function(value,row,index){
-                    var str='<button type="button" class="btn btn-warning" onclick=xgpet('+row.id+') >修改</button>';
+                    var str='<button type="button" class="btn btn-warning" onclick=xgpet('+row.id+') >查看详情</button>';
 
                     return str;
                 }
