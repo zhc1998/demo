@@ -2,10 +2,12 @@ package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Tree;
 import com.jk.service.HbService;
+import com.jk.util.ResultPage;
 import com.jk.util.TreeNoteUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
@@ -53,5 +55,13 @@ public class HbController {
     @RequestMapping("queryuser")
     public String queryuser(){
         return "hbmembers";
+    }
+
+    @RequestMapping("querymenmbers")
+    @ResponseBody
+    public ResultPage querymenmbers(@RequestBody ResultPage result){
+        ResultPage resultPage = hbService.querymenmbers(result);
+
+        return resultPage;
     }
 }

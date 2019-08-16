@@ -10,8 +10,10 @@
  */
 package com.jk.dao;
 
+import com.jk.model.Members;
 import com.jk.model.Tree;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,4 +28,8 @@ public interface HbDao {
 
 
     List<Tree> getTreeAll();
+
+    Integer querymenmberscount(HashMap<String, Object> hashMap);
+
+    List<Members> HashMap(HashMap<String, Object> hashMap);
 }
