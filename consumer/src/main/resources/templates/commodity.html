@@ -37,7 +37,12 @@
 </head>
 <body>
 
-
+<form id="pro_from" class="form-inline">
+    <div class="form-group">
+        <select id="commodityType"></select>
+    </div>
+    <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
+</form>
 
 <!--  表格 -->
 <table id="dataGrid" ></table>
@@ -46,13 +51,14 @@
     $(function(){
 
         initDataGrid();
-        //loadLeag();
+        loadCommodityType();
     });
 
     //查询球员
     function initDataGrid() {
+        //var commodityType = $("#commodityType").val();
+        //alert(commodityType);
         //创建bootstrapTable
-
         $("#dataGrid").bootstrapTable({
             url: "../zch/queryCommodity",
             method: 'post',
@@ -89,7 +95,7 @@
                     //clientName: $("#clientName").val(),//客户姓名
                     //clientPhoneMarketing:clientPhoneMarketing,
                     //clientIndustry:clientIndustry,
-                    //clientRank:clientRank,
+                    TypeIds:$("#commodityType").val(),
                 };
                 return param;
             },
@@ -139,11 +145,6 @@
         });
     }
 
-    //内容改变事件
-    var leagid = 0;
-    function changeleagname(val){
-        leagid=val;
-    }
 
     //条件查询
     function queryData(){
@@ -152,165 +153,28 @@
             "query": {
 
                 //"name": $("#name").val(),
-                //"leagid":leagid
+                //"TypeIds":$("#commodityType").val(),
             }
         });
 
     }
 
-    //新增
-    var res;
 
-    function createAddContent(url) {
-        alert(url);
+
+    //查询商品类型
+    function loadCommodityType(){
         $.ajax({
-            url: url,
-            async: false,
-            success: function (data) {
-                res = data;
-            }
-        });
-        return res;
-    }
-
-    //新增
-    function addPlayer(){
-        //打开新增弹框
-        bootbox.dialog({
-            title: '新增',
-            message: createAddContent("<%=request.getContextPath()%>/page/toAddPlayer.do"),
-            closeButton: true,//是否显示关闭按钮
-            buttons: {
-                "success": {
-                    "label": "<i class='icon-ok'></i> 保存",
-                    "className": "btn-sm btn-success",
-                    "callback": function () {
-                        $.ajax({
-                            url:"<%=request.getContextPath()%>/player/addPlayer.do",
-                            type:"post",
-                            data:$("#addForm").serialize(),
-                            dataType:"json",
-                            success:function(data){
-                                if(data){
-                                    $('#dataGrid').bootstrapTable("refresh");
-                                }else{
-                                    alert("新增失败");
-                                }
-                            },
-                            error:function(){
-                                alert("代码错误");
-                            }
-                        })
-
-                    }
-                },
-                "cancel": {
-                    "label": "<i class='icon-info'></i> 取消",
-                    "className": "btn-sm btn-danger",
-                    "callback": function () {
-
-                    }
-                }
-            }
-
-        });
-    }
-
-    //修改
-    function upd(id){
-
-        //打开修改弹框
-        bootbox.dialog({
-            title: '修改',
-            message: createAddContent("<%=request.getContextPath()%>/page/queryOnePlayer.do?id="+id),
-            closeButton: true,//是否显示关闭按钮
-            buttons: {
-                "success": {
-                    "label": "<i class='icon-ok'></i> 保存",
-                    "className": "btn-sm btn-success",
-                    "callback": function () {
-                        $.ajax({
-                            url:"<%=request.getContextPath()%>/player/updPlayer.do",
-                            type:"post",
-                            data:$("#updForm").serialize(),
-                            dataType:"json",
-                            success:function(data){
-                                if(data){
-                                    $('#dataGrid').bootstrapTable("refresh");
-
-                                }else{
-                                    alert("修改失败");
-                                }
-                            },
-                            error:function(){
-                                alert("代码错误");
-                            }
-                        })
-
-                    }
-                },
-                "cancel": {
-                    "label": "<i class='icon-info'></i> 取消",
-                    "className": "btn-sm btn-danger",
-                    "callback": function () {
-
-                    }
-                }
-            }
-
-        });
-    }
-
-    //批量删除
-    function delePlayer() {
-        //获取选中的行
-        var array = $('#dataGrid').bootstrapTable("getSelections");//获取选中的行
-        alert(array);
-        console.log(array);
-
-        var ids = "";
-        if (array.length <= 0) {
-            alert("请你选中要删除的数据！！！");
-        } else {
-            for (var i = 0; i < array.length; i++) {
-                ids+=","+array[i].id;
-            }
-            ids = ids.substring(1);
-
-            $.ajax({
-                url:"<%=request.getContextPath()%>/player/delePlayer.do",
-                type:"post",
-                data:{ids:ids},
-                dataType:"json",
-                success:function(data){
-                    $('#dataGrid').bootstrapTable("refresh");
-                },
-                error:function(){
-                    alert("代码错误");
-                }
-            })
-
-
-
-        }
-
-
-    }
-
-    //查询联赛
-    function loadLeag(){
-        $.ajax({
-            url:"<%=request.getContextPath()%>/player/loadLeag.do",
+            url:"../zch/queryCommodityType",
             type:"post",
             data:{},
             dataType:"json",
             success:function(data){
-                var html = "<option value=''>全部</option>";
+                var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].leagid+"'>"+data[i].leagname+"</option>";
+                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
                 }
 
-                $("#leagname").html(html);
+                $("#commodityType").html(html);
             },
             error:function(){
                 alert("查询联赛失败");

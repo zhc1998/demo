@@ -26,6 +26,16 @@ public class ResultPage implements Serializable {
        private Integer pageNumber;//当前页
        private Integer pageSize;//每页条数
 
+	   private Integer TypeIds;//类型Id
+
+	public Integer getTypeIds() {
+		return TypeIds;
+	}
+
+	public void setTypeIds(Integer typeIds) {
+		TypeIds = typeIds;
+	}
+
 	public Integer getTotal() {
 		return total;
 	}

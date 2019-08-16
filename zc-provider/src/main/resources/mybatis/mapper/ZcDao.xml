@@ -4,7 +4,18 @@
 
   <!--分页查询-->
   <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
-      select *  from t_item  LIMIT #{start},#{end}
+      select *  from t_item te
+      left join t_commoditytype ty on ty.typeId=te.TypeId
+      <include refid="sq"></include>
+      LIMIT #{start},#{end}
   </select>
 
+  <!--条件查询-->
+    <sql id="sq">
+        <where>
+            <if test="result.TypeId!=null and result.TypeId!=''">
+               and ty.typeId = #{result.TypeId}
+            </if>
+        </where>
+    </sql>
 </mapper>
