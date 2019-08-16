@@ -24,5 +24,20 @@ public class XxfServiceImpl implements XxfService{
         return xxfDao.queryDayCount();
     }
 
+    @Override
+    public Highcharts queryHighcharts(String time) {
+        return xxfDao.queryHighcharts(time);
+    }
+
+    @Override
+    public void updateHighcharts(Integer id) {
+        xxfDao.updateHighcharts(id);
+    }
+
+    @Override
+    public void addHighcharts(Highcharts highcharts) {
+        xxfDao.addHighcharts(highcharts);
+    }
+
 
 }

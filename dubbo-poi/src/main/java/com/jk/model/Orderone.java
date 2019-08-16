@@ -1,11 +1,11 @@
 package com.jk.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 public class Orderone implements Serializable {
@@ -26,9 +26,12 @@ public class Orderone implements Serializable {
     private Integer state;
 
     private String buyer;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:ss:mm")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")// 处理从	后端到前端的时间
-    private Date ordertime;
+
+    private String ordertime;
+
+    private Integer amount;
+
+    private String artno;
 
     public Integer getId() {
         return id;
@@ -102,11 +105,27 @@ public class Orderone implements Serializable {
         this.buyer = buyer == null ? null : buyer.trim();
     }
 
-    public Date getOrdertime() {
+    public String getOrdertime() {
         return ordertime;
     }
 
-    public void setOrdertime(Date ordertime) {
+    public void setOrdertime(String ordertime) {
         this.ordertime = ordertime;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getArtno() {
+        return artno;
+    }
+
+    public void setArtno(String artno) {
+        this.artno = artno;
     }
 }

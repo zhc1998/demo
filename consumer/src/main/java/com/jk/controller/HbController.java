@@ -25,6 +25,10 @@ public class HbController {
     private RedisTemplate redisTemplate;
 
 
+    @RequestMapping("tree")
+    public String tree() {
+        return "hbtree";
+    }
 
 
     @RequestMapping("getAllTree")
@@ -65,3 +69,8 @@ public class HbController {
         return resultPage;
     }
 }
+            redisTemplate.expire(key, 30, TimeUnit.MINUTES);
+        }*/
+            return list;
+        }
+    }

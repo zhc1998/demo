@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta charset="utf-8" />
+    <title>用户登录</title>
     <!-- 引入jquery -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <!-- 引入bootstrap的css -->
@@ -35,23 +37,74 @@
     <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
     <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
 </head>
+
+
+<style type="text/css">
+    body{
+        background-image: url("../js/img/th.jpg");
+        background-size:100% 100%;
+        background-attachment:fixed;
+    }
+    #login_box{
+        padding: 35px;
+        border-radius:15px;
+        background: #56666B;
+        color: #fff;
+    }
+    #login_title{
+        color: #000000;
+    }
+    </style>
 <body>
-<form id="formId">
-    <table align="center">
-        <tr>
-            <td>用户名</td>
-            <td><input class="form-control" name="username"  style="width:300px" ></td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td><input class="form-control" name="password"  style="width:300px" ></td>
-        </tr>
-        <tr>
-            <td colspan="2"><button type="button" class="btn btn-success" onclick="login()">登录</button></td>
-        </tr>
-    </table>
-</form>
+<div class="container" id="top">
+    <div class="row" style="margin-top: 240px;">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="col-md-offset-3 col-md-9">
+                <h1 id='login_title'></h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" >
+        </div>
+        <div class="col-md-4" id='login_box'>
+            <span id="mag"></span>
+            <form class="form-horizontal" id="formId">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">用户账号</label>
+                    <div class="col-md-9">
+                        <input class="form-control" type="text"  placeholder="请输入用户名" id="username" name="username" >
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">用户密码</label>
+                    <div class="col-md-9">
+                        <input class="form-control" type="text" placeholder="请输入密码" id="password" name="password"/>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                        <a href="javaScript:login()" id="btn" class="btn btn-success col-lg-12">登录</a>
+                    </div>
+                    <div class="col-md-offset-2 col-md-4">
+                        <input type="button" class="form-control"  onclick="zhu()"  value="注册"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4" >
+        </div>
+    </div>
+</div>
 </body>
+</html>
+
 <SCRIPT>
     function login(){
         $.ajax({

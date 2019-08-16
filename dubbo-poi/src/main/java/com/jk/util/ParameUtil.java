@@ -14,7 +14,11 @@ public class ParameUtil implements Serializable {
     private String sortOrder;
     private String drugName;
 
-
+    private String ordernumber;
+   private String consignee;
+   private Integer state;
+   private String mindate;
+   private String maxdate;
 
 
 
@@ -56,5 +60,45 @@ public class ParameUtil implements Serializable {
 
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public String getOrdernumber() {
+        return ordernumber;
+    }
+
+    public void setOrdernumber(String ordernumber) {
+        this.ordernumber = ordernumber;
+    }
+
+    public String getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(String consignee) {
+        this.consignee = consignee;
+    }
+
+    public String getMindate() {
+        return mindate;
+    }
+
+    public void setMindate(String mindate) {
+        this.mindate = mindate;
+    }
+
+    public String getMaxdate() {
+        return maxdate;
+    }
+
+    public void setMaxdate(String maxdate) {
+        this.maxdate = maxdate;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }
