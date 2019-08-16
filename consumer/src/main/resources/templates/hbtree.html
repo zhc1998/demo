@@ -116,11 +116,11 @@
                     enableLinks:false,
                     //事件当节点选中时
                     onNodeSelected:function(event,node){
-                        $.addtabs({iframeHeight:450});
+                        $.addtabs({iframeHeight:450})
                         console.log(node);
                         //动态向 nav-tabs 导航标签添加tab选项卡
                         //addTabs方法  add() 添加tab  close()关闭tab  closeAll() 关闭全部tab
-                        if(null !=  node.url){
+                        if(null !=  node.url&& node.pid!=0){
                             $.addtabs.add({
                                 id:node.id,
                                 title:node.text,

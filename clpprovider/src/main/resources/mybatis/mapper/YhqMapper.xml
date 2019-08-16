@@ -19,7 +19,7 @@
 
 
   <select id="queryYhq" resultMap="BaseResultMap">
-    select * from clp_yhq
+    select count(*),c.* from clp_yhq c GROUP BY c.yhqName
     limit #{sta},#{pageSize}
   </select>
 
@@ -28,7 +28,25 @@
   </select>
 
 
+  <select id="toUpdClpYhqPage" resultMap="BaseResultMap">
+    select * from clp_yhq where id = #{id}
+  </select>
 
+
+
+  <insert id="addYhq" parameterType="java.util.List">
+    insert into clp_yhq (yhqName, yhqPrice,
+                         yhqLimit, yhqDate, yhqMenkan,
+                         yhqCount,yhqDes,
+                         yhqLevel) values
+
+     <foreach collection="list" item="l" separator=",">
+       (#{l.yhqname},#{l.yhqprice},#{l.yhqlimit},#{l.yhqdate},
+        #{l.yhqmenkan},#{l.yhqcount},#{l.yhqdes},#{l.yhqlevel})
+     </foreach>
+
+
+  </insert>
 
 
 
