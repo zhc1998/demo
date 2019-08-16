@@ -5,12 +5,15 @@ package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Familyhead;
 import com.jk.service.ZhfService;
+import com.jk.util.ParameUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("zhf")
@@ -39,5 +42,14 @@ public class ZhfController {
         }
 // 1用户不存在
         return 1;
+    }
+
+
+
+    //查询普通订单
+    @RequestMapping("queryorderone")
+    @ResponseBody
+    public HashMap<String, Object> queryorderone(@RequestBody ParameUtil parame){
+        return zhfService.queryorderone(parame);
     }
 }
