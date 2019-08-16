@@ -25,10 +25,6 @@ public class ZchController {
     @RequestMapping("queryCommodity")
     @ResponseBody
     public ResultPage queryCommodity(@RequestBody ResultPage result){
-        System.out.println(result.getIs());
-
-    public ResultPage queryCommodity(ResultPage result){
-
 
         ResultPage resultPage = zcService.queryCommodity(result);
 
