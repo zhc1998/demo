@@ -6,6 +6,7 @@
   <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
       select *  from t_item te
       left join t_commoditytype ty on ty.typeId=te.TypeId
+      left join brand br on br.itemId=te.id
       <include refid="sq"></include>
       LIMIT #{start},#{end}
   </select>
@@ -13,8 +14,20 @@
   <!--条件查询-->
     <sql id="sq">
         <where>
-            <if test="result.TypeId!=null and result.TypeId!=''">
-               and ty.typeId = #{result.TypeId}
+            <if test="result.typeIds!=null and result.typeIds!=''">
+               and ty.typeId = #{result.typeIds}
+            </if>
+            <if test="result.commodityName!=null and result.commodityName!=''">
+                and te.commodityName = #{result.commodityName}
+            </if>
+            <if test="result.status!=null and result.status!=''">
+                and te.status = #{result.status}
+            </if>
+            <if test="result.is!=null and result.is!=''">
+                and te.newProduct = #{result.is} or te.selllikeHotCakes = #{result.is}
+            </if>
+            <if test="result.dran!=null and result.dran!=''">
+                and br.id = #{result.dran}
             </if>
         </where>
     </sql>
