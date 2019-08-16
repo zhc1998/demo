@@ -5,10 +5,12 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
+import com.jk.model.Orderone;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,5 +72,9 @@ public class ZchController {
     public List<DrandModel> queryAllDran(){
         return zcService.queryAllDran();
     }
+
+
+
+
 
 }

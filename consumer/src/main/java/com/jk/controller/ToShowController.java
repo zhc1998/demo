@@ -1,27 +1,44 @@
 package com.jk.controller;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("toshow")
 public class ToShowController {
 
 
-
+//跳转展示普通订单页面
     @RequestMapping("showorderone")
     public String showorderone(){
 
         return "showorderone";
     }
-
     //跳转到商品列表
     @RequestMapping("toCommodity")
     public String toCommodity(){
         return "commodity";
     }
+
+
+    // clp  优惠券 查询 跳页面
+    @RequestMapping("toShowYhq")
+    public String toShowYhq(){
+        return "showYhq";
+    }
+
+
+    // clp 新增  优惠券 跳页面toAddYhqPage
+    @RequestMapping("toAddClpYhqPage")
+    public String toAddClpYhqPage(){
+        return "addClpYhq";
+    }
+
+
+
+
 
 
     //跳转到商品品牌页面
@@ -50,6 +67,5 @@ public class ToShowController {
     @RequestMapping("toHighcharts")
     public String toHighcharts(){
         return "highcharts";
-
     }
 }

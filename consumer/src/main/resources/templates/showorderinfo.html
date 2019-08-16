@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入fileinput的css -->
+    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
+
+    <!-- 引入my97 -->
+    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
+    <!-- 引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
+    <!--  引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">订单详情</h3>
+    </div>
+    <!-- 基本信息 -->
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+        <h5> 基本信息</h5>
+        </div>
+
+    <ul class="list-group">
+    <li class="list-group-item"><b>订单号:</b><span th:text="${orderone.ordernumber}"></span></li>
+    <li class="list-group-item"><b>订单状态:</b><span th:text="${orderone.ordernumber}"></span></li>
+    <li class="list-group-item"><b>下单时间:</b><span th:text="${orderone.ordertime}"></span></li>
+    <li class="list-group-item"><b>下单人:</b><span th:text="${orderone.buyer}"></span></li>
+    <li class="list-group-item"><b>付款时间:</b></li>
+    </ul>
+    </div>
+<!-- 收货人信息 -->
+<div class="panel panel-warning">
+    <div class="panel-heading">
+    <h5>收货人信息</h5>
+    </div>
+<ul class="list-group">
+    <li class="list-group-item"><b>收货人:</b><span th:text="${orderone.consignee}"></span></li>
+    <li class="list-group-item"><b>电话:</b><span th:text="${orderone.tel}"></span></li>
+    <li class="list-group-item"><b>地址:</b><span th:text="${orderone.address}"></span></li>
+    <li class="list-group-item"><b>邮编:</b><span th:text="${orderone.buyer}"></span></li>
+
+</ul>
+</div>
+</div>
+</div>
+
+
+</body>
+</html>
