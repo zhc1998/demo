@@ -1,11 +1,11 @@
-/** 
+package com.jk.util; /**
  * <pre>项目名称:yasyui 
  * 文件名称:ResultPage.java 
  * 包名:com.jk.zc.utils 
  * 创建日期:2019年5月17日下午8:13:02 
  * Copyright (c) 2019, yuxy123@gmail.com All Rights Reserved.</pre> 
- */  
-package com.jk.util;
+ */
+
 
 import java.io.Serializable;
 
