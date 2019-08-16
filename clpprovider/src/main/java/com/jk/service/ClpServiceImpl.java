@@ -11,8 +11,14 @@
 package com.jk.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.jk.dao.ClpTeacherMapper;
+import com.jk.dao.YhqMapper;
+import com.jk.model.QueryYhq;
+import com.jk.model.Yhq;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -25,7 +31,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class ClpServiceImpl implements ClpService{
 
+
+
+
     @Autowired
-    private ClpTeacherMapper clpTeacherMapper;
+    private YhqMapper yhqMapper;
+
+
+
+
+    @Override
+    public Map queryYhq(QueryYhq yhq) {
+        int sta=(yhq.getPageNumber()-1)*yhq.getPageSize();
+        List<Yhq> list=yhqMapper.queryYhq(sta,yhq.getPageSize());
+        long count=yhqMapper.queryCount();
+        Map map=new HashMap();
+        map.put("rows",list);
+        map.put("total",count);
+        return map;
+    }
 
 }
