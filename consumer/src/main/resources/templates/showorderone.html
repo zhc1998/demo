@@ -68,35 +68,52 @@
             {
                 checkbox:true,
             },{
-                field: 'pid',
-                title: '编号',
+                field: 'ordernumber',
+                title: '订单编号',
                 idField:true,
                 width: 50
             },{
-                field: 'pname',
-                title: '名称',
+                field: 'ordertime',
+                title: '下单时间',
                 idField:true,
                 width: 100
             },{
-                field: 'pdate',
-                title: '生日',
+                field: 'consignee',
+                title: '收货人',
                 width: 100
 
             },{
-                field: 'psex',
-                title: '性别',
+                field: 'totalmoney',
+                title: '商品总金额',
                 width: 80,
 
             },{
-                field: 'page',
-                title: '年龄',
+                field: 'amountpayable',
+                title: '应付金额',
                 width: 100
+            },{
+                field: 'state',
+                title: '订单状态',
+                width: 100,
+                formatter:function(value,row,index){
+                   if(value==1){
+                       return "代付款";
+                   }else if(value==2){
+                       return "代发货";
+                   }if(value==3){
+                        return "待收货";
+                    }if(value==4){
+                        return "已关闭";
+                    }if(value==已完成){
+                        return "代付款";
+                    }
+                }
             },{
                 field: 'action',
                 title: '操作',
                 width: 100,
                 formatter:function(value,row,index){
-                    var str='<button type="button" class="btn btn-warning" onclick=xgpet('+row.pid+') >修改</button>';
+                    var str='<button type="button" class="btn btn-warning" onclick=xgpet('+row.id+') >修改</button>';
 
                     return str;
                 }
