@@ -1,10 +1,11 @@
 package com.jk.util;
 
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 
+ *
  * Copyright © 2017 金科教育. All rights reserved. <br>
  * 类: Md5Util <br>
  * 描述: MD5加密 <br>
@@ -24,7 +25,7 @@ public class Md5Util {
 	 */
 	public static String getMd532(String plainText) {  
 	    try {  
-	        MessageDigest md = MessageDigest.getInstance("MD5");  
+	        MessageDigest md = MessageDigest.getInstance("MD5");
 	        md.update(plainText.getBytes());  
 	        byte b[] = md.digest();  
 	        int i;
@@ -41,7 +42,7 @@ public class Md5Util {
 	        return buf.toString();  
 	        // 16位的加密  
 	        //return buf.toString().substring(8, 24);  
-	    } catch (NoSuchAlgorithmException e) {  
+	    } catch (NoSuchAlgorithmException e) {
 	        e.printStackTrace();  
 	        return null;  
 	    }  
