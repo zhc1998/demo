@@ -4,6 +4,9 @@
 <select id="queryDayCount" resultType="Highcharts">
     select * from Highcharts
 </select>
+    <select id="login" resultType="User">
+        select * from t_user where username=#{username}
+    </select>
 
 
  

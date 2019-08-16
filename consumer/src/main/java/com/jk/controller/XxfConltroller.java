@@ -6,6 +6,7 @@ import com.jk.model.User;
 import com.jk.service.XxfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,19 +20,12 @@ import java.util.concurrent.TimeUnit;
 public class XxfConltroller {
     @Reference
     private XxfService xxfService;
+   /* @Autowired
+    private StringRedisTemplate redisTemplate2;*/
 
 
 
 
-    @RequestMapping("toIndex")
-    public String toindex(){
-        return "index";
-    }
-
-    @RequestMapping("toHighcharts")
-    public String toHighcharts(){
-        return "highcharts";
-    }
 
 
     @RequestMapping("queryDayCount")
@@ -41,18 +35,18 @@ public class XxfConltroller {
         return list;
     }
 
-    @RequestMapping("toShow")
-    public String toShow(){
-        return "show";
-    }
 
-   /* @RequestMapping("login")
+    @RequestMapping("login")
     @ResponseBody
-    public String login(User user, HttpServletRequest request){
-        User user1=xxfService.login(user.getUsername());
-        if(user1==null){
+    public String login(User user, HttpServletRequest request) {
+        User user1 = xxfService.login(user.getUsername());
+        if (user1 == null) {
             return "1";
         }
+        if(!user1.getPassword().equals(user.getPassword())){
+            return "2";
+        }
+        /*
         String key="login"+user1.getUserid();
         if(redisTemplate2.hasKey(key)){
             String sum = redisTemplate2.opsForValue().get(key);
@@ -73,9 +67,8 @@ public class XxfConltroller {
                 return "2";
             }
         }
-        redisTemplate2.delete(key);
+        redisTemplate2.delete(key);*/
         request.getSession().setAttribute("user", user1);
         return "0";
-    }*/
-
+    }
 }
