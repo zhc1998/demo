@@ -23,6 +23,7 @@ public class ToShowController {
         return "commodity";
     }
 
+
     //跳转到商品品牌页面
     @RequestMapping("toDran")
     public String toDran(){
@@ -31,8 +32,24 @@ public class ToShowController {
 
     //跳转到修改商品页面
     @RequestMapping("toUpdCommodity")
-    public String toUpdCommodity(Integer id, Model model){
-        model.addAttribute("id",id);
+    public String toUpdCommodity(Integer id, Model model) {
+        model.addAttribute("id", id);
         return "updCommodity";
+    }
+   //跳转登录页
+    @RequestMapping("toIndex")
+    public String toindex(){
+        return "index";
+    }
+    //跳转树
+    @RequestMapping("tohbtree")
+    public String tohbtree(){
+        return "hbtree";
+    }
+    //跳转控制台
+    @RequestMapping("toHighcharts")
+    public String toHighcharts(){
+        return "highcharts";
+
     }
 }
