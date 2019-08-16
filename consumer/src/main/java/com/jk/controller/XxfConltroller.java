@@ -1,7 +1,6 @@
 package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.jk.model.Highcharts;
 import com.jk.model.User;
 import com.jk.service.XxfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,13 @@ public class XxfConltroller {
 
 
 
-
+/*
     @RequestMapping("queryDayCount")
     @ResponseBody
     public List<Highcharts> queryDayCount(){
         List<Highcharts> list=xxfService.queryDayCount();
         return list;
-    }
+    }*/
 
 
     @RequestMapping("login")
