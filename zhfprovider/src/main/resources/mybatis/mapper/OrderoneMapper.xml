@@ -12,26 +12,59 @@
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="buyer" property="buyer" jdbcType="VARCHAR" />
     <result column="ordertime" property="ordertime" jdbcType="DATE" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="artno" property="artno" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, ordernumber, consignee, tel, address, totalmoney, amountpayable, state, buyer, 
-    ordertime
+    ordertime, amount, artno
   </sql>
-
 
   <select id="QueryorOrderonecount" resultType="long" >
     select
     count(*)
-    from orderone
-
+    from orderone where 1=1
+    <if test="pa.ordernumber != null and pa.ordernumber!=''">
+      and   ordernumber like  '%${pa.ordernumber}%'
+    </if>
+    <if test="pa.consignee != null and pa.consignee!=''">
+      and   consignee like  '%${pa.consignee}%'
+    </if>
+    <if test="pa.mindate != null and pa.mindate!=''">
+      and   ordertime &gt;= #{pa.mindate}
+    </if>
+    <if test="pa.maxdate != null and pa.maxdate!=''">
+      and   ordertime &lt;= #{pa.maxdate}
+    </if>
+    <if test="pa.state != null and pa.state!=''">
+      and   state = #{pa.state}
+    </if>
   </select>
+
+
+
 
   <select id="queryOreryone" resultMap="BaseResultMap" >
     select
     *
     from orderone
     where 1=1
-limit #{st},#{ro}
+    <if test="pa.ordernumber != null and pa.ordernumber!=''">
+      and   ordernumber like  '%${pa.ordernumber}%'
+    </if>
+    <if test="pa.consignee != null and pa.consignee!=''">
+      and   consignee like  '%${pa.consignee}%'
+    </if>
+    <if test="pa.mindate != null and pa.mindate!=''">
+      and   ordertime &gt;= #{pa.mindate}
+    </if>
+    <if test="pa.maxdate != null and pa.maxdate!=''">
+      and   ordertime &lt;= #{pa.maxdate}
+    </if>
+    <if test="pa.state != null and pa.state!=''">
+      and   state = #{pa.state}
+    </if>
+    limit #{st},#{ro}
   </select>
 
 
@@ -49,11 +82,13 @@ limit #{st},#{ro}
     insert into orderone (id, ordernumber, consignee, 
       tel, address, totalmoney, 
       amountpayable, state, buyer, 
-      ordertime)
+      ordertime, amount, artno
+      )
     values (#{id,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, 
       #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{totalmoney,jdbcType=DOUBLE}, 
       #{amountpayable,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, 
-      #{ordertime,jdbcType=DATE})
+      #{ordertime,jdbcType=DATE}, #{amount,jdbcType=INTEGER}, #{artno,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jk.model.Orderone" >
     insert into orderone
@@ -88,6 +123,12 @@ limit #{st},#{ro}
       <if test="ordertime != null" >
         ordertime,
       </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="artno != null" >
+        artno,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -119,6 +160,12 @@ limit #{st},#{ro}
       </if>
       <if test="ordertime != null" >
         #{ordertime,jdbcType=DATE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="artno != null" >
+        #{artno,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -152,6 +199,12 @@ limit #{st},#{ro}
       <if test="ordertime != null" >
         ordertime = #{ordertime,jdbcType=DATE},
       </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="artno != null" >
+        artno = #{artno,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -165,7 +218,9 @@ limit #{st},#{ro}
       amountpayable = #{amountpayable,jdbcType=DOUBLE},
       state = #{state,jdbcType=INTEGER},
       buyer = #{buyer,jdbcType=VARCHAR},
-      ordertime = #{ordertime,jdbcType=DATE}
+      ordertime = #{ordertime,jdbcType=DATE},
+      amount = #{amount,jdbcType=INTEGER},
+      artno = #{artno,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
