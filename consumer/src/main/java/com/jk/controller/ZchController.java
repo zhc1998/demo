@@ -1,5 +1,6 @@
 package com.jk.controller;
 
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
@@ -7,11 +8,14 @@ import com.jk.model.commodity.DrandModel;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> e9e983a551926212eb6c02a97486e08af8f373ba
 
 @Controller
 @RequestMapping("zch")
@@ -22,8 +26,13 @@ public class ZchController {
     //查询商品列表
     @RequestMapping("queryCommodity")
     @ResponseBody
+<<<<<<< HEAD
     public ResultPage queryCommodity(@RequestBody ResultPage result){
         System.out.println(result.getIs());
+=======
+    public ResultPage queryCommodity(ResultPage result){
+
+>>>>>>> e9e983a551926212eb6c02a97486e08af8f373ba
         ResultPage resultPage = zcService.queryCommodity(result);
 
         return resultPage;
