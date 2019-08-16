@@ -58,6 +58,7 @@ public class ZhfController {
     @RequestMapping("showorderinfo")
     public String showorderinfo(Integer id, Model model){
         Orderone orderone= zhfService.queryorderbyid(id);
+        model.addAttribute("orderone",orderone);
         return "showorderinfo";
     }
 

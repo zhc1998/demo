@@ -28,6 +28,10 @@ public class Orderone implements Serializable {
 
     private String ordertime;
 
+    private Integer amount;
+
+    private String artno;
+
     public Integer getId() {
         return id;
     }
@@ -106,5 +110,21 @@ public class Orderone implements Serializable {
 
     public void setOrdertime(String ordertime) {
         this.ordertime = ordertime;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getArtno() {
+        return artno;
+    }
+
+    public void setArtno(String artno) {
+        this.artno = artno;
     }
 }
