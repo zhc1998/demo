@@ -15,6 +15,7 @@ import com.jk.dao.YhqMapper;
 import com.jk.model.QueryYhq;
 import com.jk.model.Yhq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,24 @@ public class ClpServiceImpl implements ClpService{
         map.put("rows",list);
         map.put("total",count);
         return map;
+    }
+
+
+
+    @Override
+    public Yhq toUpdClpYhqPage(Integer id) {
+        return yhqMapper.toUpdClpYhqPage(id);
+    }
+
+    @Override
+    public void updateYhq(Yhq yhq) {
+        yhqMapper.updateByPrimaryKeySelective(yhq);
+    }
+
+    @Override
+    @Async
+    public void addYhq(List<Yhq> list) {
+        yhqMapper.addYhq(list);
     }
 
 }

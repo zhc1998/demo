@@ -1,8 +1,12 @@
 package com.jk.model;
 
 
+
 import java.io.Serializable;
 import java.util.Date;
+
+
+
 
 public class Orderone implements Serializable {
     private Integer id;
@@ -23,7 +27,11 @@ public class Orderone implements Serializable {
 
     private String buyer;
 
-    private Date ordertime;
+    private String ordertime;
+
+    private Integer amount;
+
+    private String artno;
 
     public Integer getId() {
         return id;
@@ -97,11 +105,27 @@ public class Orderone implements Serializable {
         this.buyer = buyer == null ? null : buyer.trim();
     }
 
-    public Date getOrdertime() {
+    public String getOrdertime() {
         return ordertime;
     }
 
-    public void setOrdertime(Date ordertime) {
+    public void setOrdertime(String ordertime) {
         this.ordertime = ordertime;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getArtno() {
+        return artno;
+    }
+
+    public void setArtno(String artno) {
+        this.artno = artno;
     }
 }
