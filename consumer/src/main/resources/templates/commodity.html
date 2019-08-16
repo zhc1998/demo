@@ -40,6 +40,14 @@
 <form id="pro_from" class="form-inline">
     <div class="form-group">
         <select id="commodityType"></select>
+        <select id="status"></select>
+        <select id="is">
+            <option value="">全部</option>
+            <option value="1">新品</option>
+            <option value="1">热销</option>
+        </select>
+        <select id="dran"></select>
+        <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
     </div>
     <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
 </form>
@@ -52,9 +60,11 @@
 
         initDataGrid();
         loadCommodityType();
+        loadStatus();
+        queryAllDran();
     });
 
-    //查询球员
+    //查询商品
     function initDataGrid() {
         //var commodityType = $("#commodityType").val();
         //alert(commodityType);
@@ -90,12 +100,11 @@
                 var param = {
                     pageNumber: params.pageNumber,//当前页
                     pageSize: params.pageSize,//每页条数
-                    //sortName: params.sortName,//设置排序id
-                    //sortOrder: params.sortOrder,//定义排序方式
-                    //clientName: $("#clientName").val(),//客户姓名
-                    //clientPhoneMarketing:clientPhoneMarketing,
-                    //clientIndustry:clientIndustry,
-                    TypeIds:$("#commodityType").val(),
+                    typeIds:$("#commodityType").val(),
+                    commodityName:$("#commodityName").val(),
+                    status:$("#status").val(),
+                    is:$("#os").val(),
+                    dran:$("#dran").val(),
                 };
                 return param;
             },
@@ -140,7 +149,9 @@
                     }},
 
                 {field:'inventory',title:'库存'},
-                {field:'zc',title:'操作'},
+                {field:'zc',title:'操作',formatter:function(value,row,index){
+                    return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
+                    }},
             ]
         });
     }
@@ -148,18 +159,72 @@
 
     //条件查询
     function queryData(){
-
+        alert($("#is").val())
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
-
-                //"name": $("#name").val(),
-                //"TypeIds":$("#commodityType").val(),
+                "commodityName": $("#commodityName").val(),
+                "typeIds":$("#commodityType").val(),
+                "status":$("#status").val(),
+                "is":$("#is").val(),
+                "dran":$("#dran").val(),
             }
         });
 
     }
 
+    //查询所有品牌
+    function queryAllDran(){
+        $.ajax({
+            url:"../zch/queryAllDran",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>所有品牌</option>";
+                for(var i=0;i<data.length;i++){
+                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
 
+                $("#dran").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
+            }
+        })
+    }
+
+    //修改
+    function upd(id){
+        alert(id);
+        location.href="../toshow/toUpdCommodity?id="+id;
+    }
+
+
+    //查询上下架
+    function loadStatus(){
+        $.ajax({
+            url:"../zch/queryStatus",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>全部</option>";
+                for(var i=0;i<data.length;i++){
+                    if(data[i].status==1){
+                        status = "上架";
+                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
+                    }else{
+                        status = "下架";
+                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
+                    }
+
+                }
+
+                $("#status").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
+            }
+        })
+    }
 
     //查询商品类型
     function loadCommodityType(){
@@ -177,7 +242,7 @@
                 $("#commodityType").html(html);
             },
             error:function(){
-                alert("查询联赛失败");
+                alert("查询商品类型失败");
             }
         })
     }
