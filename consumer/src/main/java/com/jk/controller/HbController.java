@@ -24,7 +24,6 @@ public class HbController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-
     @RequestMapping("tree")
     public String tree() {
         return "hbtree";
@@ -33,29 +32,28 @@ public class HbController {
 
     @RequestMapping("getAllTree")
     @ResponseBody
-    public List<Tree> getTreeAll(){
+    public List<Tree> getTreeAll() {
         List<Tree> list = new ArrayList();
-        //1、定义缓存key
-       // String key = "trees";
+       /*  //1、定义缓存key
+        String key = "trees";
         //2、先判断缓存中是否存在
-        //if (redisTemplate.hasKey(key)) {
-        //System.out.println("-----缓存-------");
-        //3、a 存在 ：从缓存中获取，返回list
-        // list = (List<Tree>) redisTemplate.opsForValue().get(key);
-       // }else{
-           // System.out.println("-----数据库-------");
+        if (redisTemplate.hasKey(key)) {
+            System.out.println("-----缓存-------");
+            //3、a 存在 ：从缓存中获取，返回list
+            list = (List<Tree>) redisTemplate.opsForValue().get(key);
+        } else {
+            System.out.println("-----数据库-------");
             //3、 b 不存在：
-            //先从数据库查询、
-            list= hbService.getTreeAll();
+            //先从数据库查询、*/
+            list = hbService.getTreeAll();
             list = TreeNoteUtil.getFatherNode(list);
-            //放入缓存中、返回list
-           // redisTemplate.opsForValue().set(key, list);
+           /* //放入缓存中、返回list
+            redisTemplate.opsForValue().set(key, list);
             //设置过期时间
-            //redisTemplate.expire(key, 3, TimeUnit.MINUTES);
-        //}
-        return list;
-    }
-
+            redisTemplate.expire(key, 3, TimeUnit.MINUTES);
+        }*/
+            return list;
+        }
     @RequestMapping("queryuser")
     public String queryuser(){
         return "hbmembers";
@@ -68,5 +66,4 @@ public class HbController {
 
         return resultPage;
     }
-}
-
+    }

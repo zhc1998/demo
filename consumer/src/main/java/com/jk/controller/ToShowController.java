@@ -39,6 +39,20 @@ public class ToShowController {
 
 
 
+
+
+    //跳转到商品品牌页面
+    @RequestMapping("toDran")
+    public String toDran(){
+        return "dran";
+    }
+
+    //跳转到修改商品页面
+    @RequestMapping("toUpdCommodity")
+    public String toUpdCommodity(Integer id, Model model) {
+        model.addAttribute("id", id);
+        return "updCommodity";
+    }
    //跳转登录页
     @RequestMapping("toIndex")
     public String toindex(){
