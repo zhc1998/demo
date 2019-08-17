@@ -37,7 +37,20 @@
 </head>
 <body>
 
-
+<form id="pro_from" class="form-inline">
+    <div class="form-group">
+        <select id="commodityType"></select>
+        <select id="status"></select>
+        <select id="is">
+            <option value="">全部</option>
+            <option value="1">新品</option>
+            <option value="1">热销</option>
+        </select>
+        <select id="dran"></select>
+        <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
+    </div>
+    <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
+</form>
 
 <!--  表格 -->
 <table id="dataGrid" ></table>
@@ -46,13 +59,16 @@
     $(function(){
 
         initDataGrid();
-        //loadLeag();
+        loadCommodityType();
+        loadStatus();
+        queryAllDran();
     });
 
-    //查询球员
+    //查询商品
     function initDataGrid() {
+        //var commodityType = $("#commodityType").val();
+        //alert(commodityType);
         //创建bootstrapTable
-
         $("#dataGrid").bootstrapTable({
             url: "../zch/queryCommodity",
             method: 'post',
@@ -84,12 +100,11 @@
                 var param = {
                     pageNumber: params.pageNumber,//当前页
                     pageSize: params.pageSize,//每页条数
-                    //sortName: params.sortName,//设置排序id
-                    //sortOrder: params.sortOrder,//定义排序方式
-                    //clientName: $("#clientName").val(),//客户姓名
-                    //clientPhoneMarketing:clientPhoneMarketing,
-                    //clientIndustry:clientIndustry,
-                    //clientRank:clientRank,
+                    typeIds:$("#commodityType").val(),
+                    commodityName:$("#commodityName").val(),
+                    status:$("#status").val(),
+                    is:$("#os").val(),
+                    dran:$("#dran").val(),
                 };
                 return param;
             },
@@ -134,186 +149,100 @@
                     }},
 
                 {field:'inventory',title:'库存'},
-                {field:'zc',title:'操作'},
+                {field:'zc',title:'操作',formatter:function(value,row,index){
+                    return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
+                    }},
             ]
         });
     }
 
-    //内容改变事件
-    var leagid = 0;
-    function changeleagname(val){
-        leagid=val;
-    }
 
     //条件查询
     function queryData(){
-
+        alert($("#is").val())
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
-
-                //"name": $("#name").val(),
-                //"leagid":leagid
+                "commodityName": $("#commodityName").val(),
+                "typeIds":$("#commodityType").val(),
+                "status":$("#status").val(),
+                "is":$("#is").val(),
+                "dran":$("#dran").val(),
             }
         });
 
     }
 
-    //新增
-    var res;
-
-    function createAddContent(url) {
-        alert(url);
+    //查询所有品牌
+    function queryAllDran(){
         $.ajax({
-            url: url,
-            async: false,
-            success: function (data) {
-                res = data;
-            }
-        });
-        return res;
-    }
-
-    //新增
-    function addPlayer(){
-        //打开新增弹框
-        bootbox.dialog({
-            title: '新增',
-            message: createAddContent("<%=request.getContextPath()%>/page/toAddPlayer.do"),
-            closeButton: true,//是否显示关闭按钮
-            buttons: {
-                "success": {
-                    "label": "<i class='icon-ok'></i> 保存",
-                    "className": "btn-sm btn-success",
-                    "callback": function () {
-                        $.ajax({
-                            url:"<%=request.getContextPath()%>/player/addPlayer.do",
-                            type:"post",
-                            data:$("#addForm").serialize(),
-                            dataType:"json",
-                            success:function(data){
-                                if(data){
-                                    $('#dataGrid').bootstrapTable("refresh");
-                                }else{
-                                    alert("新增失败");
-                                }
-                            },
-                            error:function(){
-                                alert("代码错误");
-                            }
-                        })
-
-                    }
-                },
-                "cancel": {
-                    "label": "<i class='icon-info'></i> 取消",
-                    "className": "btn-sm btn-danger",
-                    "callback": function () {
-
-                    }
+            url:"../zch/queryAllDran",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>所有品牌</option>";
+                for(var i=0;i<data.length;i++){
+                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
                 }
-            }
 
-        });
+                $("#dran").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
+            }
+        })
     }
 
     //修改
     function upd(id){
-
-        //打开修改弹框
-        bootbox.dialog({
-            title: '修改',
-            message: createAddContent("<%=request.getContextPath()%>/page/queryOnePlayer.do?id="+id),
-            closeButton: true,//是否显示关闭按钮
-            buttons: {
-                "success": {
-                    "label": "<i class='icon-ok'></i> 保存",
-                    "className": "btn-sm btn-success",
-                    "callback": function () {
-                        $.ajax({
-                            url:"<%=request.getContextPath()%>/player/updPlayer.do",
-                            type:"post",
-                            data:$("#updForm").serialize(),
-                            dataType:"json",
-                            success:function(data){
-                                if(data){
-                                    $('#dataGrid').bootstrapTable("refresh");
-
-                                }else{
-                                    alert("修改失败");
-                                }
-                            },
-                            error:function(){
-                                alert("代码错误");
-                            }
-                        })
-
-                    }
-                },
-                "cancel": {
-                    "label": "<i class='icon-info'></i> 取消",
-                    "className": "btn-sm btn-danger",
-                    "callback": function () {
-
-                    }
-                }
-            }
-
-        });
+        alert(id);
+        location.href="../toshow/toUpdCommodity?id="+id;
     }
 
-    //批量删除
-    function delePlayer() {
-        //获取选中的行
-        var array = $('#dataGrid').bootstrapTable("getSelections");//获取选中的行
-        alert(array);
-        console.log(array);
 
-        var ids = "";
-        if (array.length <= 0) {
-            alert("请你选中要删除的数据！！！");
-        } else {
-            for (var i = 0; i < array.length; i++) {
-                ids+=","+array[i].id;
-            }
-            ids = ids.substring(1);
-
-            $.ajax({
-                url:"<%=request.getContextPath()%>/player/delePlayer.do",
-                type:"post",
-                data:{ids:ids},
-                dataType:"json",
-                success:function(data){
-                    $('#dataGrid').bootstrapTable("refresh");
-                },
-                error:function(){
-                    alert("代码错误");
-                }
-            })
-
-
-
-        }
-
-
-    }
-
-    //查询联赛
-    function loadLeag(){
+    //查询上下架
+    function loadStatus(){
         $.ajax({
-            url:"<%=request.getContextPath()%>/player/loadLeag.do",
+            url:"../zch/queryStatus",
             type:"post",
-            data:{},
             dataType:"json",
             success:function(data){
                 var html = "<option value=''>全部</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].leagid+"'>"+data[i].leagname+"</option>";
+                    if(data[i].status==1){
+                        status = "上架";
+                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
+                    }else{
+                        status = "下架";
+                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
+                    }
+
                 }
 
-                $("#leagname").html(html);
+                $("#status").html(html);
             },
             error:function(){
-                alert("查询联赛失败");
+                alert("查询商品类型失败");
+            }
+        })
+    }
+
+    //查询商品类型
+    function loadCommodityType(){
+        $.ajax({
+            url:"../zch/queryCommodityType",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>所有分类</option>";
+                for(var i=0;i<data.length;i++){
+                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
+                }
+
+                $("#commodityType").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
             }
         })
     }
