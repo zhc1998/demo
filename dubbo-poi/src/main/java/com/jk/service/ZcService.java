@@ -23,4 +23,9 @@ public interface ZcService {
     List<DrandModel> queryAllDran();
 
 
+    CommodityModel loadOneModel(Integer id);
+
+    void updCommodity(CommodityModel commodityModel);
+
+    List<CommodityModel> loadImg(CommodityModel commodityModel);
 }

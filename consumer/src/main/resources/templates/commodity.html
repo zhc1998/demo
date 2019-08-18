@@ -39,14 +39,14 @@
 
 <form id="pro_from" class="form-inline">
     <div class="form-group">
-        <select id="commodityType"></select>
-        <select id="status"></select>
-        <select id="is">
+        <select style="width: 200px;"  class="form-control" id="commodityType"></select>
+        <select style="width: 200px;"  class="form-control" id="status"></select>
+        <select style="width: 200px;"  class="form-control" id="is">
             <option value="">全部</option>
             <option value="1">新品</option>
             <option value="1">热销</option>
         </select>
-        <select id="dran"></select>
+        <select style="width: 300px;"  class="form-control" id="dran"></select>
         <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
     </div>
     <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
@@ -66,8 +66,6 @@
 
     //查询商品
     function initDataGrid() {
-        //var commodityType = $("#commodityType").val();
-        //alert(commodityType);
         //创建bootstrapTable
         $("#dataGrid").bootstrapTable({
             url: "../zch/queryCommodity",
@@ -149,8 +147,19 @@
                     }},
 
                 {field:'inventory',title:'库存'},
+                {field:'pictureUrl',title:'图片',formatter:function (value,row,index) {
+                        //return "<img alt='"+value+"' height='50' width='50'>"//return "<img src='../"+value+"' height='50' width='50'>";
+
+                        return "<div class=\"container-fluid\">\n" +
+                            "                            <div class=\"row-fluid\">\n" +
+                            "                            <div class=\"span12\">\n" +
+                            "                            <img alt=\"140x140\" src='../"+value+"' />\n" +
+                            "                            </div>\n" +
+                            "                            </div>\n" +
+                            "                            </div>";
+                    }},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                    return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
+                        return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
                     }},
             ]
         });
@@ -194,8 +203,7 @@
 
     //修改
     function upd(id){
-        alert(id);
-        location.href="../toshow/toUpdCommodity?id="+id;
+        location.href="../zch/loadOneModel?id="+id;
     }
 
 

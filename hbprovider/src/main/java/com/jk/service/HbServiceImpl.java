@@ -3,7 +3,6 @@ package com.jk.service;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import com.jk.dao.HbDao;
-import com.jk.model.Members;
 import com.jk.model.Tree;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.util.ResultPage;
@@ -46,5 +45,7 @@ public class HbServiceImpl implements HbService {
         List<CommodityModel> list = hbDao.HashMap(hashMap);
         resultPage.setRows(list);
         return resultPage;
+
+
     }
 }
