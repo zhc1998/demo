@@ -1,6 +1,7 @@
 package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Tree;
+import com.jk.model.User;
 import com.jk.service.HbService;
 import com.jk.util.ResultPage;
 import com.jk.util.TreeNoteUtil;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +60,24 @@ public class HbController {
     @ResponseBody
     public ResultPage querymenmbers(@RequestBody ResultPage result){
         ResultPage resultPage = hbService.querymenmbers(result);
-
         return resultPage;
+    }
+
+    @RequestMapping("saveDialog")
+    @ResponseBody
+    public String saveDialog(HttpServletRequest request,String password,String sysNewPWInp,String sysConfirmPWInp){
+        User us = (User) request.getSession().getAttribute("user");
+        if(!us.getPassword().equals(password)){
+         return "1";
+        }
+        if(password.equals(sysNewPWInp)){
+            return "2";
+        }
+        if(!sysNewPWInp.equals(sysConfirmPWInp)){
+            return "3";
+        }
+
+        hbService.saveDialog(us.getUserid(),sysNewPWInp);
+        return "4";
     }
     }
