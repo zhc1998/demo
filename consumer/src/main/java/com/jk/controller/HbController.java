@@ -24,12 +24,6 @@ public class HbController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @RequestMapping("tree")
-    public String tree() {
-        return "hbtree";
-    }
-
-
     @RequestMapping("getAllTree")
     @ResponseBody
     public List<Tree> getTreeAll() {
