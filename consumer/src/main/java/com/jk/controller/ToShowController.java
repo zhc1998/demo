@@ -63,11 +63,7 @@ public class ToShowController {
     public String tohbtree(){
         return "hbtree";
     }
-    //跳转控制台
-    @RequestMapping("toHighcharts")
-    public String toHighcharts(){
-        return "highcharts";
-    }
+
 
     //会员用户列表
     @RequestMapping("queryuser")
