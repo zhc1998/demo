@@ -68,4 +68,16 @@ public class ToShowController {
     public String toHighcharts(){
         return "highcharts";
     }
+
+    //会员用户列表
+    @RequestMapping("queryuser")
+    public String queryuser(){
+        return "hbmembers";
+    }
+
+    //修改密码
+    @RequestMapping("toupdate")
+    public String toupdate(){
+        return "update";
+    }
 }
