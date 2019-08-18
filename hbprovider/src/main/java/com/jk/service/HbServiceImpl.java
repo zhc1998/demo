@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.jk.dao.HbDao;
 import com.jk.model.Members;
 import com.jk.model.Tree;
+import com.jk.model.commodity.CommodityModel;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,7 +43,7 @@ public class HbServiceImpl implements HbService {
         hashMap.put("end", result.getPageSize());
 
         //查询所有数据
-        List<Members> list = hbDao.HashMap(hashMap);
+        List<CommodityModel> list = hbDao.HashMap(hashMap);
         resultPage.setRows(list);
         return resultPage;
     }
