@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Component
@@ -46,5 +47,13 @@ public class HbServiceImpl implements HbService {
         List<CommodityModel> list = hbDao.HashMap(hashMap);
         resultPage.setRows(list);
         return resultPage;
+    }
+
+    @Override
+    public void saveDialog(Integer userid, String sysNewPWInp) {
+        Map map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("sysNewPWInp",sysNewPWInp);
+        hbDao.saveDialog(map);
     }
 }
