@@ -13,4 +13,6 @@ public interface ZhfService {
     HashMap<String, Object> queryorderone(ParameUtil parame);
 
     Orderone queryorderbyid(Integer id);
+
+    HashMap<String, Object> queryordertable(Integer oid);
 }
