@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class Highcharts implements Serializable {
     private Integer id;
-
     private Date daytime;
     private Integer visitcount;
 

@@ -24,7 +24,7 @@
   </select>
 
   <select id="queryCount" resultType="long">
-    select count(*) from clp_yhq
+    SELECT COUNT(*) FROM (select id from clp_yhq c GROUP BY c.yhqName) t
   </select>
 
 
