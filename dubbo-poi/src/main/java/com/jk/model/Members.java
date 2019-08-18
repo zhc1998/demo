@@ -10,8 +10,6 @@
  */
 package com.jk.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,9 +29,7 @@ public class Members implements Serializable {
     private String gender;
     private String headportrait;
     private String wechataddress;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date zctime;
+    private String zctime;
 
     public Integer getId() {
         return id;
@@ -75,11 +71,11 @@ public class Members implements Serializable {
         this.wechataddress = wechataddress;
     }
 
-    public Date getZctime() {
+    public String getZctime() {
         return zctime;
     }
 
-    public void setZctime(Date zctime) {
+    public void setZctime(String zctime) {
         this.zctime = zctime;
     }
 }
