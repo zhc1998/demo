@@ -87,5 +87,25 @@ public class CommodityService implements ZcService {
         return zcDao.loadImg(commodityModel);
     }
 
+    //新增商品
+    @Override
+    public void addCommodity(CommodityModel commodityModel) {
+
+       zcDao.addCommodity(commodityModel);
+    }
+
+    //查询商品分类
+    @Override
+    public List<CommodityTypeModel> queryClassify(CommodityTypeModel commodityTypeModel) {
+
+        return zcDao.queryClassify(commodityTypeModel);
+    }
+
+    //查询描述
+    @Override
+    public DrandModel loadDescribe(Integer ids) {
+        return zcDao.loadDescribe(ids);
+    }
+
 
 }

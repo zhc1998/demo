@@ -100,6 +100,34 @@ public class ZchController {
         return resultPage;
     }
 
+    //新增
+    @RequestMapping("addCommodity")
+    @ResponseBody
+    public boolean addCommodity(CommodityModel commodityModel){
+        System.out.println(commodityModel);
+        if(commodityModel.getId()==null){
+            zcService.addCommodity(commodityModel);
+            return true;
+        }
+        return false;
+    }
 
+    //查询商品分类
+    @RequestMapping("queryClassify")
+    @ResponseBody
+    public ResultPage queryClassify(CommodityTypeModel commodityTypeModel){
+        ResultPage resultPage = new ResultPage();
+        List<CommodityTypeModel> list = zcService.queryClassify(commodityTypeModel);
+        resultPage.setRows(list);
+        return resultPage;
+    }
+
+    //查询品牌描述
+    @RequestMapping("loadDescribe")
+    @ResponseBody
+    public DrandModel loadDescribe(Integer ids){
+        DrandModel drandModel =  zcService.loadDescribe(ids);
+        return drandModel;
+    }
 
 }

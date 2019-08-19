@@ -7,6 +7,16 @@ public class CommodityTypeModel implements Serializable {
 
     private String typeName;
 
+    private Integer inventory;
+
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
+
     public Integer getTypeId() {
         return typeId;
     }

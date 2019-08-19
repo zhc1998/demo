@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>Title</title>
     <!-- 引入jquery -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -42,15 +41,14 @@
 </body>
 <script>
     $(function(){
-
         initDataGrid();
+    })
 
-    });
-
-    //查询品牌
+    //查询商品
     function initDataGrid() {
+        //创建bootstrapTable
         $("#dataGrid").bootstrapTable({
-            url: "../zch/queryDran",
+            url: "../zch/queryClassify",
             method: 'post',
             striped: true,  	         // 斑马线效果     默认false
             singleSelect: false,        //只允许选中一行
@@ -66,54 +64,20 @@
             sidePagination: 'server',
             toolbar: '#toolbar',
             columns: [
-                {field: 'ckAll', checkbox: true},  //开启复选框
-                {field:'id',title:'品牌Id'},
-                {field:'name',title:'品牌名称'},
-                {field:'logo',title:'品牌LOG'},
-                {field:'url',title:'品牌网址',formatter:function (value, row, index) {
-                    return "<a href='"+value+"'>"+value+"</a>";
+                {field:'typeId',title:'编号'},
+                {field:'typeName',title:'类型名称'},
+                {field:'inventory',title:'商品数量'},
+                {field:'navigation',title:'导航栏',formatter:function () {
+
+                        return "<font color='royalblue'>√</font>";
                     }},
-                {field:'introduction',title:'品牌描述',formatter:function(value,row,index){
-                    return "<a href='javascript:queryDescribe("+row.id+")'>描述</a>";
+                {field:'idShow',title:'是否展示',formatter:function () {
+                        return "<font color='royalblue'>√</font>";
                     }},
-                {field:'version',title:'是否展示',formatter:function(value,row,index){
-                    var version = value==0?"<font color='royalblue'>√</font>":"";
-                    return version;
+                {field:'cz',title:'操作',formatter:function(){
+                    return "a";
                     }},
             ]
-        });
-    }
-
-    //跳转弹框
-    var res;
-    function createAddContent(url) {
-        alert(url);
-        $.ajax({
-            url: url,
-            async: false,
-            success: function (data) {
-                res = data;
-            }
-        });
-        return res;
-    }
-    //查询描述
-    function queryDescribe(id) {
-        //打开新增弹框
-        bootbox.dialog({
-            title: '描述',
-            message: createAddContent("../toshow/toDescribe?id="+id),
-            closeButton: true,//是否显示关闭按钮
-            buttons: {
-                "cancel": {
-                    "label": "<i class='icon-info'></i> 关闭",
-                    "className": "btn-sm btn-danger",
-                    "callback": function () {
-
-                    }
-                }
-            }
-
         });
     }
 </script>

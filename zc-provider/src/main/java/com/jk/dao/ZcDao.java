@@ -46,4 +46,14 @@ public interface ZcDao {
     //加载图文信息
     @Select("SELECT pictureUrl  from t_item WHERE id = #{id}")
     List<CommodityModel> loadImg(CommodityModel commodityModel);
+
+    //新增
+    void addCommodity(CommodityModel commodityModel);
+
+    //查询商品分类
+    List<CommodityTypeModel> queryClassify(CommodityTypeModel commodityTypeModel);
+
+    //查询描述
+    @Select("select *  from  brand WHERE id = #{value}")
+    DrandModel loadDescribe(Integer ids);
 }

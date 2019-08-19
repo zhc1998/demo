@@ -97,4 +97,18 @@ public class ToShowController {
     public String addCommodity(){
         return "addCommodity";
     }
+
+    //跳转到商品类型展示
+    @RequestMapping("toCommodityType")
+    public String toCommodityType(){
+        return "commodityType";
+    }
+
+    //跳转到描述页面
+    @RequestMapping("toDescribe")
+    public String toDescribe(Integer id,Model model){
+        model.addAttribute("id",id);
+
+        return "describe";
+    }
 }
