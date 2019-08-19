@@ -65,8 +65,8 @@ public class ZchController {
     //品牌条件查询
     @RequestMapping("queryAllDran")
     @ResponseBody
-    public List<DrandModel> queryAllDran(){
-        return zcService.queryAllDran();
+    public List<DrandModel> queryAllDran(Integer ids){
+        return zcService.queryAllDran(ids);
     }
 
     //查询回显
