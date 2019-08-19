@@ -68,4 +68,24 @@ public class CommodityService implements ZcService {
     public List<DrandModel> queryAllDran() {
         return zcDao.queryAllDran();
     }
+
+    //查询回显
+    @Override
+    public CommodityModel loadOneModel(Integer id) {
+        return zcDao.loadOneModel(id);
+    }
+
+    @Override
+    public void updCommodity(CommodityModel commodityModel) {
+        zcDao.updCommodity(commodityModel);
+    }
+
+    //加载图文信息
+    @Override
+    public List<CommodityModel> loadImg(CommodityModel commodityModel) {
+
+        return zcDao.loadImg(commodityModel);
+    }
+
+
 }

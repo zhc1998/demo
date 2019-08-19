@@ -14,11 +14,13 @@
     <result column="ordertime" property="ordertime" jdbcType="DATE" />
     <result column="amount" property="amount" jdbcType="INTEGER" />
     <result column="artno" property="artno" jdbcType="VARCHAR" />
+    <result column="paydate" property="paydate" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, ordernumber, consignee, tel, address, totalmoney, amountpayable, state, buyer, 
-    ordertime, amount, artno
+    ordertime, amount, artno, paydate
   </sql>
+
 
   <select id="QueryorOrderonecount" resultType="long" >
     select
@@ -68,6 +70,7 @@
   </select>
 
 
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -82,13 +85,13 @@
     insert into orderone (id, ordernumber, consignee, 
       tel, address, totalmoney, 
       amountpayable, state, buyer, 
-      ordertime, amount, artno
-      )
+      ordertime, amount, artno, 
+      paydate)
     values (#{id,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, 
       #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{totalmoney,jdbcType=DOUBLE}, 
       #{amountpayable,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, 
-      #{ordertime,jdbcType=DATE}, #{amount,jdbcType=INTEGER}, #{artno,jdbcType=VARCHAR}
-      )
+      #{ordertime,jdbcType=DATE}, #{amount,jdbcType=INTEGER}, #{artno,jdbcType=VARCHAR}, 
+      #{paydate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.jk.model.Orderone" >
     insert into orderone
@@ -129,6 +132,9 @@
       <if test="artno != null" >
         artno,
       </if>
+      <if test="paydate != null" >
+        paydate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -166,6 +172,9 @@
       </if>
       <if test="artno != null" >
         #{artno,jdbcType=VARCHAR},
+      </if>
+      <if test="paydate != null" >
+        #{paydate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -205,6 +214,9 @@
       <if test="artno != null" >
         artno = #{artno,jdbcType=VARCHAR},
       </if>
+      <if test="paydate != null" >
+        paydate = #{paydate,jdbcType=DATE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -220,7 +232,8 @@
       buyer = #{buyer,jdbcType=VARCHAR},
       ordertime = #{ordertime,jdbcType=DATE},
       amount = #{amount,jdbcType=INTEGER},
-      artno = #{artno,jdbcType=VARCHAR}
+      artno = #{artno,jdbcType=VARCHAR},
+      paydate = #{paydate,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

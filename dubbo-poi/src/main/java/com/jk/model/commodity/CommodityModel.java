@@ -21,7 +21,17 @@ public class CommodityModel implements Serializable {
 
     private Integer TypeId;//类型Id
 
+    private Integer itemId;
+
     private String pictureUrl;//图片路径
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
 
     public Integer getId() {
         return id;
@@ -105,7 +115,7 @@ public class CommodityModel implements Serializable {
 
     @Override
     public String toString() {
-        return "commodityModel{" +
+        return "CommodityModel{" +
                 "id=" + id +
                 ", commodityName='" + commodityName + '\'' +
                 ", artNo='" + artNo + '\'' +
@@ -115,6 +125,7 @@ public class CommodityModel implements Serializable {
                 ", selllikeHotCakes=" + selllikeHotCakes +
                 ", inventory=" + inventory +
                 ", TypeId=" + TypeId +
+                ", itemId=" + itemId +
                 ", pictureUrl='" + pictureUrl + '\'' +
                 '}';
     }

@@ -37,6 +37,7 @@
 </head>
 <body>
 <button type="button" class="btn btn-success" onclick="addPlay()">新建优惠券</button>
+<button type="button" class="btn btn-success" onclick="deleteYhqByName()">批量删除</button>
 <!--  表格 -->
 <table id="dataGrid"></table>
 </body>
@@ -258,7 +259,37 @@
         });
     }
 
+    function deleteYhqByName() {
+        var arr = $('#dataGrid').bootstrapTable("getSelections");//获取选中的行
 
+        console.log(arr);
+
+        if (arr.length <= 0) {
+            alert("请你选中要删除的数据！！！");
+        } else {
+            var names = "";
+            for (var i = 0; i < arr.length; i++) {
+                names += "'"+arr[i].yhqname+"'"+ ",";
+            }
+            names = names.substring(0, names.length - 1);
+
+            alert(names);
+
+
+            $.ajax({
+                url: "../clp/deleteYhqByName",
+                data: {names: names},
+                type: "post",
+                success: function () {
+                    alert("删除成功！");
+                    $("#dataGrid").bootstrapTable("refresh");
+
+                }, error: function () {
+                    alert("失败");
+                }
+            })
+        }
+    }
 
 
 </script>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入fileinput的css -->
+    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
+
+    <!-- 引入my97 -->
+    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
+    <!-- 引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
+    <!--  引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+</head>
+<body>
+<button type="button"  class="btn btn-success" onclick="">其他信息</button>
+
+<div id="main" style="width:1200px;">
+
+    <div id="left" style="width:300px;float:left;">
+        <form role="form" id="addForm">
+            <input type="hidden" name="id" id="ids" style="width: 300px;"   >
+            <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  >
+            <div class="form-group">
+                <label >商品名称</label>
+                <input type="text" class="form-control" style="width: 300px;"  name="commodityName">
+            </div>
+            <div class="form-group">
+                <label >商品货号</label>
+                <input type="text" class="form-control" style="width: 300px;"  name="artNo" >
+            </div>
+            <div class="form-group">
+                <label >商品分类</label>
+                <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId" onchange="angeCommodity(this.value)"></select>
+            </div>
+            <div class="form-group">
+                <label >品牌</label>
+                <select style="width: 300px;"  class="form-control"  id="name" name="itemId"></select>
+            </div>
+            <div class="form-group">
+                <label >供货商</label>
+                <select style="width: 300px;" class="form-control">
+                    <option>仅支持本店出售</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label >本店售价</label>
+                <input type="text" class="form-control" style="width: 300px;"  name="commodityPrice" >
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10" >
+                    <div class="file-loading">
+                        <input id="uploadFile"  style="width: 10px;"  type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="right" style="width:900px;float:left;">
+       <span id="tab">
+           <div class="form-group">
+                <label >名称</label>
+                <input type="text" class="form-control" style="width: 300px;"  name="commodityName">
+            </div>
+           <div class="form-group">
+                <label ></label>
+                <input type="text" class="form-control" style="width: 300px;"  name="commodityName">
+            </div>
+       </span>
+    </div>
+
+</div>
+<script>
+    $(function(){
+        loadCommodityType();
+        queryAllDran();
+    })
+    //回显类型
+    function  loadCommodityType() {
+        $.ajax({
+            url:"../zch/queryCommodityType",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>所有分类</option>";
+                for(var i=0;i<data.length;i++){
+
+                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
+
+                }
+
+                $("#commodityType").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
+            }
+        })
+    }
+
+
+
+    //回显平牌
+    function  queryAllDran() {
+        $.ajax({
+            url:"../zch/queryAllDran",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>所有分类</option>";
+                for(var i=0;i<data.length;i++){
+
+                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+
+                }
+
+                $("#name").html(html);
+            },
+            error:function(){
+                alert("查询商品类型失败");
+            }
+        })
+    }
+
+    //属性
+    function angeCommodity(val){
+        if(val==1){
+
+        }
+        if(val==2){
+
+            $("#tab").html("");
+        }
+
+    }
+</script>
+</body>
+</html>

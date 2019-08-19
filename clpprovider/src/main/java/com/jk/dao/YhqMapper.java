@@ -25,4 +25,6 @@ public interface YhqMapper {
     Yhq toUpdClpYhqPage(@Param("id")Integer id);
 
     void addYhq(List<Yhq> list);
+
+    void deleteYhqByName(@Param("names")String names);
 }

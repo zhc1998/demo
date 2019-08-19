@@ -16,4 +16,6 @@ public interface ClpService {
     void updateYhq(Yhq yhq);
 
     void addYhq(List<Yhq> list);
+
+    void deleteYhqByName(String names);
 }

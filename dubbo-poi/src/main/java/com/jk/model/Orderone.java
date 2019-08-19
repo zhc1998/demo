@@ -33,6 +33,12 @@ public class Orderone implements Serializable {
 
     private String artno;
 
+    private String commodityname;
+
+    private Integer commodityprice;
+
+    private String paydate;
+
     public Integer getId() {
         return id;
     }
@@ -127,5 +133,29 @@ public class Orderone implements Serializable {
 
     public void setArtno(String artno) {
         this.artno = artno;
+    }
+
+    public String getCommodityname() {
+        return commodityname;
+    }
+
+    public void setCommodityname(String commodityname) {
+        this.commodityname = commodityname;
+    }
+
+    public Integer getCommodityprice() {
+        return commodityprice;
+    }
+
+    public void setCommodityprice(Integer commodityprice) {
+        this.commodityprice = commodityprice;
+    }
+
+    public String getPaydate() {
+        return paydate;
+    }
+
+    public void setPaydate(String paydate) {
+        this.paydate = paydate;
     }
 }
