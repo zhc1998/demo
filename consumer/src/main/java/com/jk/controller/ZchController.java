@@ -83,7 +83,6 @@ public class ZchController {
     @ResponseBody
     public boolean updCommodity(CommodityModel commodityModel){
         if(commodityModel.getId()!=null){
-            System.out.println(commodityModel);
             zcService.updCommodity(commodityModel);
             return true;
         }
@@ -104,7 +103,6 @@ public class ZchController {
     @RequestMapping("addCommodity")
     @ResponseBody
     public boolean addCommodity(CommodityModel commodityModel){
-        System.out.println(commodityModel);
         if(commodityModel.getId()==null){
             zcService.addCommodity(commodityModel);
             return true;
