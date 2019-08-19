@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("toshow")
 public class ToShowController {
@@ -102,5 +104,11 @@ public class ToShowController {
     @RequestMapping("figure")
     public String figure(){
         return "figure";
+    }
+    //注销
+    @RequestMapping("zhuxiao")
+    public String zhuxiao(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:../toshow/toIndex";
     }
 }

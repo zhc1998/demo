@@ -43,7 +43,7 @@ public class SysLogAspect {
 		Highcharts highcharts2=xxfService.queryHighcharts(time);
 		if(highcharts2==null){
 			Highcharts highcharts = new Highcharts();
-			highcharts.setDaytime(new Date());
+			highcharts.setDaytime(sdf.format(new Date()));
 			highcharts.setVisitcount(1);
 			xxfService.addHighcharts(highcharts);
 		}else {
