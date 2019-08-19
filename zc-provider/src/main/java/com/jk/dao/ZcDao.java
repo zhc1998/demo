@@ -33,8 +33,8 @@ public interface ZcDao {
     List<DrandModel> zcService();
 
     //查询品牌名称
-    @Select("select id,name  from  brand")
-    List<DrandModel> queryAllDran();
+    //@Select("select id,name  from  brand")
+    List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
     //@Select("SELECT *  from t_item WHERE id = 1")

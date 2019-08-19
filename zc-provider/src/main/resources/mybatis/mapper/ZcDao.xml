@@ -34,15 +34,12 @@
 
     <!--查询回显-->
     <select id="loadOneModel" parameterType="int" resultType="com.jk.model.commodity.CommodityModel">
-        select *,ty.TypeId TypeIds  from t_item te
-        left join t_commoditytype ty on ty.typeId=te.TypeId
-        left join brand br on br.itemId=te.id
-        WHERE te.id = #{value}
+        select *  from t_item  WHERE id = 1
     </select>
 
     <!--修改-->
     <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = 1
+        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = #{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
@@ -67,5 +64,12 @@
     <select id="queryClassify" resultType="com.jk.model.commodity.CommodityTypeModel">
         select ty.*,it.inventory as inventory from  t_commoditytype ty
         left join t_item it on it.TypeId=ty.itemId
+    </select>
+
+    <!--回显平牌-->
+    <select id="queryAllDran" parameterType="int" resultType="com.jk.model.commodity.DrandModel">
+        select br.name,br.type  from brand br
+        left join t_commoditytype ty on ty.itemId = br.type
+        WHERE br.type = #{value}
     </select>
 </mapper>
