@@ -70,4 +70,9 @@ public class ClpServiceImpl implements ClpService{
         yhqMapper.addYhq(list);
     }
 
+    @Override
+    public void deleteYhqByName(String names) {
+         yhqMapper.deleteYhqByName(names);
+    }
+
 }

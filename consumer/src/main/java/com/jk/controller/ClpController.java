@@ -49,6 +49,9 @@ public class ClpController {
     public void addYhq(Yhq yhq){
         int count=yhq.getYhqcount();
         System.out.println(count);
+        if(yhq.getYhquse()==null){
+            yhq.setYhquse(0);
+        }
 
         for(int i=0;i<100;i++){
             List<Yhq> list=new ArrayList<>(count/100);
@@ -77,6 +80,14 @@ public class ClpController {
         clpService.updateYhq(yhq);
     }
 
+
+    //deleteYhqByName  批量删除
+    @RequestMapping("deleteYhqByName")
+    @ResponseBody
+    public void deleteYhqByName(String names){
+        System.out.println(names);
+        clpService.deleteYhqByName(names);
+    }
 
 
 }
