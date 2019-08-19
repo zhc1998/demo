@@ -9,4 +9,6 @@ public interface HbService {
     List<Tree> getTreeAll();
 
     ResultPage querymenmbers(ResultPage result);
+
+    void saveDialog(Integer userid, String sysNewPWInp);
 }
