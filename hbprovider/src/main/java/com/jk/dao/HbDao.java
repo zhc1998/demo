@@ -15,6 +15,7 @@ import com.jk.model.commodity.CommodityModel;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -32,4 +33,6 @@ public interface HbDao {
     Integer querymenmberscount(HashMap<String, Object> hashMap);
 
     List<CommodityModel> HashMap(HashMap<String, Object> hashMap);
+
+    void saveDialog(Map map);
 }

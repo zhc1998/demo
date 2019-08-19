@@ -69,7 +69,36 @@ public class ZchController {
         return zcService.queryAllDran();
     }
 
+    //查询回显
+    @RequestMapping("loadOneModel")
+    public String loadOneModel(Integer id,Model model){
+        CommodityModel commodityModel = zcService.loadOneModel(id);
+        model.addAttribute("com",commodityModel);
+        model.addAttribute("id",id);
+        return "updCommodity";
+    }
 
+    //修改商品
+    @RequestMapping("updCommodity")
+    @ResponseBody
+    public boolean updCommodity(CommodityModel commodityModel){
+        if(commodityModel.getId()!=null){
+            System.out.println(commodityModel);
+            zcService.updCommodity(commodityModel);
+            return true;
+        }
+        return false;
+    }
+
+    //加载图片
+    @RequestMapping("loadImg")
+    @ResponseBody
+    public ResultPage loadImg(CommodityModel commodityModel){
+        ResultPage resultPage = new ResultPage();
+        List<CommodityModel> list = zcService.loadImg(commodityModel);
+        resultPage.setRows(list);
+        return resultPage;
+    }
 
 
 
