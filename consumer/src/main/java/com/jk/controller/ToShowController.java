@@ -111,4 +111,10 @@ public class ToShowController {
 
         return "describe";
     }
+
+    //跳转到轮播图
+    @RequestMapping("figure")
+    public String figure(){
+        return "figure";
+    }
 }
