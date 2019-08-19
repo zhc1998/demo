@@ -35,4 +35,15 @@ public interface ZcDao {
     //查询品牌名称
     @Select("select id,name  from  brand")
     List<DrandModel> queryAllDran();
+
+    //查询回显
+    //@Select("SELECT *  from t_item WHERE id = 1")
+    CommodityModel loadOneModel(Integer id);
+
+    //修改
+    void updCommodity(CommodityModel commodityModel);
+
+    //加载图文信息
+    @Select("SELECT pictureUrl  from t_item WHERE id = #{id}")
+    List<CommodityModel> loadImg(CommodityModel commodityModel);
 }

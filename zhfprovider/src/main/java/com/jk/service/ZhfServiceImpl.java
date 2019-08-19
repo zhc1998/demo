@@ -9,6 +9,7 @@ import com.jk.model.Orderone;
 import com.jk.util.ParameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +40,17 @@ public class ZhfServiceImpl implements ZhfService{
     @Override
     public Orderone queryorderbyid(Integer id) {
         return orderoneDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public HashMap<String, Object> queryordertable(Integer oid) {
+        Orderone orderone = orderoneDao.queryordertable(oid);
+        List<Orderone>list=new ArrayList<>();
+        list.add(orderone);
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("total",1);
+        hashMap.put("rows",list);
+        return hashMap;
     }
 
 

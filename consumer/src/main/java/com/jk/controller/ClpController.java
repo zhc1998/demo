@@ -36,8 +36,6 @@ public class ClpController {
     @RequestMapping("queryYhq")
     @ResponseBody
     public Map queryYhq(@RequestBody QueryYhq yhq){
-        System.err.println(yhq.getPageNumber());
-        System.err.println(yhq.getPageSize());
         return clpService.queryYhq(yhq);
     }
 

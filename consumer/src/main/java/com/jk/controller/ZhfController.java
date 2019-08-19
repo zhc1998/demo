@@ -61,5 +61,10 @@ public class ZhfController {
         model.addAttribute("orderone",orderone);
         return "showorderinfo";
     }
-
+//查询订单的商品列表
+    @RequestMapping("queryordertable")
+    @ResponseBody
+    public HashMap<String, Object> queryordertable(Integer oid) {
+        return zhfService.queryordertable(oid);
+    }
 }

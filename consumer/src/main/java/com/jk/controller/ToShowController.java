@@ -63,9 +63,38 @@ public class ToShowController {
     public String tohbtree(){
         return "hbtree";
     }
-    //跳转控制台
-    @RequestMapping("toHighcharts")
-    public String toHighcharts(){
-        return "highcharts";
+
+
+    //会员用户列表
+    @RequestMapping("queryuser")
+    public String queryuser(){
+        return "hbmembers";
+    }
+
+    //修改密码
+    @RequestMapping("toupdate")
+    public String toupdate(){
+        return "update";
+    }
+
+    //跳转到图文信息
+    @RequestMapping("imageText")
+    public String imageText(Integer ids,Model model){
+
+        model.addAttribute("ids",ids);
+        return "imageText";
+    }
+
+    //跳转到商品属性
+    @RequestMapping("property")
+    public String property(){
+
+        return "property";
+    }
+
+    //跳转到新增商品
+    @RequestMapping("addCommodity")
+    public String addCommodity(){
+        return "addCommodity";
     }
 }

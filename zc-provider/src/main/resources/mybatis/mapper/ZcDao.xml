@@ -31,4 +31,18 @@
             </if>
         </where>
     </sql>
+
+    <!--查询回显-->
+    <select id="loadOneModel" parameterType="int" resultType="com.jk.model.commodity.CommodityModel">
+        select *,ty.TypeId TypeIds  from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId=te.id
+        WHERE te.id = #{value}
+    </select>
+
+    <!--修改-->
+    <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
+        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = 1
+    </update>
+
 </mapper>
