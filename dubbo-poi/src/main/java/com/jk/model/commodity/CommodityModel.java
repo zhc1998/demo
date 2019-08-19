@@ -21,7 +21,7 @@ public class CommodityModel implements Serializable {
 
     private Integer TypeId;//类型Id
 
-    private Integer itemId;
+    private Integer itemId;//平牌Id
 
     private String pictureUrl;//图片路径
 

@@ -45,4 +45,27 @@
         UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = 1
     </update>
 
+    <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
+
+         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,selllikeHotCakes,inventory,TypeId,pictureUrl,itemId)
+         VALUES(
+             #{commodityName},
+             #{artNo},
+             #{commodityPrice},
+             1,
+             1,
+             1,
+             #{inventory},
+             #{TypeId},
+             #{pictureUrl},
+             #{itemId}
+         )
+
+    </insert>
+
+    <!--查询商品分类-->
+    <select id="queryClassify" resultType="com.jk.model.commodity.CommodityTypeModel">
+        select ty.*,it.inventory as inventory from  t_commoditytype ty
+        left join t_item it on it.TypeId=ty.itemId
+    </select>
 </mapper>

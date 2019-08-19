@@ -28,4 +28,10 @@ public interface ZcService {
     void updCommodity(CommodityModel commodityModel);
 
     List<CommodityModel> loadImg(CommodityModel commodityModel);
+
+    void addCommodity(CommodityModel commodityModel);
+
+    List<CommodityTypeModel> queryClassify(CommodityTypeModel commodityTypeModel);
+
+    DrandModel loadDescribe(Integer ids);
 }

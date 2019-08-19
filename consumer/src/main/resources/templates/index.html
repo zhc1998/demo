@@ -56,52 +56,49 @@
     }
     </style>
 <body>
-<div class="container" id="top">
-    <div class="row" style="margin-top: 240px;">
-        <div class="col-md-offset-4 col-md-4">
-            <div class="col-md-offset-3 col-md-9">
-                <h1 id='login_title'></h1>
+    <div class="container" id="top">
+        <div class="row" style="margin-top: 240px;">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="col-md-offset-3 col-md-9">
+                    <h1 id='login_title'></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8" >
+            </div>
+            <div class="col-md-4" id='login_box'>
+                <span id="mag"></span>
+                <form class="form-horizontal" id="formId">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户账号</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text"  placeholder="请输入用户名" id="username" name="username" >
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户密码</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" placeholder="请输入密码" id="password" name="password"/>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-5 col-md-4">
+                            <a href="javaScript:login()" id="btn" class="btn btn-success col-lg-12">登录</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4" >
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8" >
-        </div>
-        <div class="col-md-4" id='login_box'>
-            <span id="mag"></span>
-            <form class="form-horizontal" id="formId">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">用户账号</label>
-                    <div class="col-md-9">
-                        <input class="form-control" type="text"  placeholder="请输入用户名" id="username" name="username" >
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    <label class="col-md-3 control-label">用户密码</label>
-                    <div class="col-md-9">
-                        <input class="form-control" type="text" placeholder="请输入密码" id="password" name="password"/>
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-4">
-                        <a href="javaScript:login()" id="btn" class="btn btn-success col-lg-12">登录</a>
-                    </div>
-                    <div class="col-md-offset-2 col-md-4">
-                        <input type="button" class="form-control"  onclick="zhu()"  value="注册"/>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-4" >
-        </div>
-    </div>
-</div>
 </body>
 </html>
 
