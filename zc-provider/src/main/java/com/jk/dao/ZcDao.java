@@ -56,4 +56,8 @@ public interface ZcDao {
     //查询描述
     @Select("select *  from  brand WHERE id = #{value}")
     DrandModel loadDescribe(Integer ids);
+
+    //查询平牌
+    @Select("select br.name,br.id  from brand br")
+    List<DrandModel> queryDran();
 }

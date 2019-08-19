@@ -42,11 +42,10 @@
         <select style="width: 200px;"  class="form-control" id="commodityType"></select>
         <select style="width: 200px;"  class="form-control" id="status"></select>
         <select style="width: 200px;"  class="form-control" id="is">
-            <option value="">全部</option>
+            <option value="0">全部</option>
             <option value="1">新品</option>
-            <option value="1">热销</option>
+            <option value="2">热销</option>
         </select>
-        <select style="width: 300px;"  class="form-control" id="dran"></select>
         <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
     </div>
     <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
@@ -137,7 +136,7 @@
                     }},
                 {field:'selllikeHotCakes',title:'热销',formatter:function (value,row,index) {
                         var selllikeHotCakes
-                        if(value==1){
+                        if(value==2){
                             selllikeHotCakes = "✔";
                             return "<font color='royalblue'>"+selllikeHotCakes+"</font>";
 
@@ -159,6 +158,7 @@
                             "                            </div>\n" +
                             "                            </div>";
                     }},
+                {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
                         return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
                     }},
@@ -174,6 +174,7 @@
 
     //条件查询
     function queryData(){
+        alert($("#dran").val());
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
                 "commodityName": $("#commodityName").val(),
@@ -188,14 +189,16 @@
 
     //查询所有品牌
     function queryAllDran(){
+        var zt = "a";
         $.ajax({
             url:"../zch/queryAllDran",
             type:"post",
             dataType:"json",
+            data:{zt:zt},
             success:function(data){
                 var html = "<option value=''>所有品牌</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    html+="<option value='"+data[i].name+"'>"+data[i].name+"</option>";
                 }
 
                 $("#dran").html(html);

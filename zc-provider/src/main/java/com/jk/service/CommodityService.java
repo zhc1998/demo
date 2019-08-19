@@ -65,10 +65,14 @@ public class CommodityService implements ZcService {
 
     //查询品牌名称
     @Override
-    public List<DrandModel> queryAllDran(Integer ids) {
+    public List<DrandModel> queryAllDran(Integer ids,String zt) {
 
-        System.out.println(ids);
-        return zcDao.queryAllDran(ids);
+        if(zt==null){
+            return zcDao.queryAllDran(ids);
+        }else{
+            List<DrandModel> drandModels = zcDao.queryDran();
+            return drandModels;
+        }
     }
 
     //查询回显

@@ -65,16 +65,19 @@ public class ZchController {
     //品牌条件查询
     @RequestMapping("queryAllDran")
     @ResponseBody
-    public List<DrandModel> queryAllDran(Integer ids){
-        return zcService.queryAllDran(ids);
+    public List<DrandModel> queryAllDran(Integer ids,String zt){
+
+        return zcService.queryAllDran(ids,zt);
     }
 
     //查询回显
     @RequestMapping("loadOneModel")
     public String loadOneModel(Integer id,Model model){
         CommodityModel commodityModel = zcService.loadOneModel(id);
+        List<CommodityTypeModel> list = zcService.queryCommodityType();
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
+        model.addAttribute("list",list);
         return "updCommodity";
     }
 
