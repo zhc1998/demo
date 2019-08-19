@@ -79,6 +79,7 @@ public class CommodityService implements ZcService {
 
     @Override
     public void updCommodity(CommodityModel commodityModel) {
+
         zcDao.updCommodity(commodityModel);
     }
 
