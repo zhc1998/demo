@@ -20,7 +20,7 @@ public interface ZcService {
 
     List<DrandModel> zcService();
 
-    List<DrandModel> queryAllDran();
+    List<DrandModel> queryAllDran(Integer ids);
 
 
     CommodityModel loadOneModel(Integer id);

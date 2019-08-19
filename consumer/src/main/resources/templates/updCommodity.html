@@ -54,11 +54,12 @@
         </div>
         <div class="form-group">
             <label >商品分类</label>
-            <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId"></select>
+            <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId" onchange="queryAllDran(this.value)"></select>
         </div>
         <div class="form-group">
             <label >品牌</label>
-            <select style="width: 300px;"  class="form-control"  id="name" name="itemId"></select>
+            <select style="width: 300px;"  class="form-control"  id="name" name="itemId">
+            </select>
         </div>
         <div class="form-group">
             <label >供货商</label>
@@ -77,6 +78,7 @@
                 </div>
             </div>
         </div>
+
     </form>
 
 </center>
@@ -84,7 +86,7 @@
 <script>
     $(function(){
         loadCommodityType();
-        queryAllDran();
+        //queryAllDran();
     })
 
     //返回
@@ -195,16 +197,17 @@
 
     //回显平牌
     function  queryAllDran() {
+        var ids = $("#commodityType").val();
         $.ajax({
             url:"../zch/queryAllDran",
             type:"post",
-            data:{},
+            data:{ids:ids},
             dataType:"json",
             success:function(data){
                 var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
 
-                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    html+="<option value='"+data[i].type+"'>"+data[i].name+"</option>";
 
                 }
 

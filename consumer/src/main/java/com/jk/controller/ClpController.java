@@ -46,20 +46,33 @@ public class ClpController {
     @ResponseBody
     public void addYhq(Yhq yhq){
         int count=yhq.getYhqcount();
-        System.out.println(count);
         if(yhq.getYhquse()==null){
             yhq.setYhquse(0);
         }
+        if(yhq.getYhqcount()%100==0){
+            addyhq(yhq);
+        }else {
+           addyhq(yhq);
+            for (int i = 0; i<1; i++) {
+                //若知道list容量在创建时需要给出初始容量
+                ArrayList<Yhq> list = new ArrayList<>(yhq.getYhqcount()%100);
+                for (int j = 0; j <yhq.getYhqcount()%100; j++) {
+                    list.add(yhq);
+                }
+                clpService.addYhq(list);
+            }
+        }
+    }
 
-        for(int i=0;i<100;i++){
-            List<Yhq> list=new ArrayList<>(count/100);
-            System.out.println("线程名称"+Thread.currentThread().getName()+"i="+i);
-            for (int j=0;j<count/100;j++){
+    private void  addyhq(Yhq yhq){
+        for (int i = 0; i <100; i++) {
+            //若知道list容量在创建时需要给出初始容量
+            ArrayList<Yhq> list = new ArrayList<>(100);
+            for (int j = 0; j <  yhq.getYhqcount()/ 100; j++) {
                 list.add(yhq);
             }
             clpService.addYhq(list);
         }
-
     }
 
     // clp 修改页面  优惠券 跳页面toUpdYhqPage
