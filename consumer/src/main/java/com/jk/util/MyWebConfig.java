@@ -11,6 +11,9 @@ public class MyWebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new MyInterceptor())
                 .addPathPatterns("/**")       //拦截项目中的哪些请求
                 .excludePathPatterns("/toshow/toIndex")
+                .excludePathPatterns("/**/*.js")
+                .excludePathPatterns("/**/*.jpg")
+                .excludePathPatterns("/**/*.css")
                 .excludePathPatterns("/xxf/login");  //对项目中的哪些请求不拦截
     }
 }

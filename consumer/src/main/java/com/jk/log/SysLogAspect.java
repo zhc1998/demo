@@ -32,22 +32,28 @@ public class SysLogAspect {
 
 
 	
-	@Pointcut("execution(* com.jk.controller.XxfConltroller.login())")
+	@Pointcut("execution(* com.jk.controller.XxfConltroller.*())")
 	public void logPointCut() {}
 	 //后置通知
     @AfterReturning( value= "logPointCut()" ,returning="returningValue" ) 
     public void myAfter(JoinPoint jp,Object returningValue) throws UnknownHostException {//returningValue是返回值，但需要告诉spring
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-		Date date=new Date();
-		String time = sdf.format(date);
-		Highcharts highcharts2=xxfService.queryHighcharts(time);
-		if(highcharts2==null){
-			Highcharts highcharts = new Highcharts();
-			highcharts.setDaytime(sdf.format(new Date()));
-			highcharts.setVisitcount(1);
-			xxfService.addHighcharts(highcharts);
-		}else {
-			xxfService.updateHighcharts(highcharts2.getId());
+		System.out.println(jp.getSignature().getName());
+		if(jp.getSignature().getName().equals("login")){
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println("进来了");
+			Date date=new Date();
+			String time = sdf.format(date);
+			Highcharts highcharts2=xxfService.queryHighcharts(time);
+			if(highcharts2==null){
+				System.out.println("进来了1");
+				Highcharts highcharts = new Highcharts();
+				highcharts.setDaytime(sdf.format(new Date()));
+				highcharts.setVisitcount(1);
+				xxfService.addHighcharts(highcharts);
+			}else {
+				System.out.println("进来了2");
+				xxfService.updateHighcharts(highcharts2.getId());
+			}
 		}
 
 
