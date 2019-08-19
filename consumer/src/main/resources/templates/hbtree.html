@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -106,7 +106,7 @@
 
             <a class="navbar-brand glyphicon glyphicon-globe" href="javascript:dialogRedis()" id="menu-toggle">
 
-                中国电力建设
+                <font>欢迎</font><span th:text="${session.user.username}"></span><font>登录</font>
 
             </a>
 
@@ -116,7 +116,7 @@
 
         <ul class="nav navbar-nav navbar-right">
 
-            <li>    <a href="#"> 注销</a></li>
+            <li>    <a href="../toshow/toIndex"> 注销</a></li>
 
         </ul>
 
