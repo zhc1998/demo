@@ -76,7 +76,6 @@ public class HbController {
         if(!sysNewPWInp.equals(sysConfirmPWInp)){
             return "3";
         }
-
         hbService.saveDialog(us.getUserid(),sysNewPWInp);
         return "4";
     }

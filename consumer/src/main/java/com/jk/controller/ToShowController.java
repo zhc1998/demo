@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("toshow")
 public class ToShowController {
@@ -103,12 +105,10 @@ public class ToShowController {
     public String toCommodityType(){
         return "commodityType";
     }
-
     //跳转到描述页面
     @RequestMapping("toDescribe")
     public String toDescribe(Integer id,Model model){
         model.addAttribute("id",id);
-
         return "describe";
     }
 
@@ -116,5 +116,11 @@ public class ToShowController {
     @RequestMapping("figure")
     public String figure(){
         return "figure";
+    }
+    //注销
+    @RequestMapping("zhuxiao")
+    public String zhuxiao(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:../toshow/toIndex";
     }
 }

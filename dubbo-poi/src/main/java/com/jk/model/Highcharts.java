@@ -1,11 +1,10 @@
 package com.jk.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Highcharts implements Serializable {
     private Integer id;
-    private Date daytime;
+    private String daytime;
     private Integer visitcount;
 
     public Integer getId() {
@@ -16,11 +15,11 @@ public class Highcharts implements Serializable {
         this.id = id;
     }
 
-    public Date getDaytime() {
+    public String getDaytime() {
         return daytime;
     }
 
-    public void setDaytime(Date daytime) {
+    public void setDaytime(String daytime) {
         this.daytime = daytime;
     }
 
