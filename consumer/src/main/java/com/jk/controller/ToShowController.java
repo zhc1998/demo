@@ -17,6 +17,18 @@ public class ToShowController {
     public String tofrontLogin(){
         return "frontLogin";
     }
+    //跳转修改密码页面
+    @RequestMapping("toUpdatePassword")
+    public String toUpdatePassword(){
+        return "updatePassword";
+    }
+    //跳转注册页面
+    @RequestMapping("toZhuCe")
+    public String toZhuCe(){
+        return "zhuCe";
+    }
+
+
 //跳转展示普通订单页面
     @RequestMapping("showorderone")
     public String showorderone(){

@@ -16,5 +16,11 @@
     <insert id="addHighcharts" >
         insert into highcharts(dayTime,visitCount) values (#{daytime},#{visitcount})
     </insert>
+    <select id="frontLogin" resultType="members">
+        select * from members where username=#{username}
+    </select>
+    <select id="yz" resultType="members">
+        select * from members where username=#{username}
+    </select>
  
 </mapper>
