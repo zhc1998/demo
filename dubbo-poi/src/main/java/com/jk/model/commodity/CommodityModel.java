@@ -19,7 +19,7 @@ public class CommodityModel implements Serializable {
 
     private Integer  inventory;//库存
 
-    private Integer TypeId;//类型Id
+    private Integer typeId;//类型Id
 
     private Integer itemId;//平牌Id
 
@@ -118,11 +118,11 @@ public class CommodityModel implements Serializable {
     }
 
     public Integer getTypeId() {
-        return TypeId;
+        return typeId;
     }
 
     public void setTypeId(Integer typeId) {
-        TypeId = typeId;
+        this.typeId = typeId;
     }
 
     public String getPictureUrl() {
@@ -144,7 +144,7 @@ public class CommodityModel implements Serializable {
                 ", newProduct=" + newProduct +
                 ", selllikeHotCakes=" + selllikeHotCakes +
                 ", inventory=" + inventory +
-                ", TypeId=" + TypeId +
+                ", typeId=" + typeId +
                 ", itemId=" + itemId +
                 ", pictureUrl='" + pictureUrl + '\'' +
                 ", typeName='" + typeName + '\'' +

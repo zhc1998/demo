@@ -48,20 +48,18 @@
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
 
-         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,selllikeHotCakes,inventory,TypeId,pictureUrl,itemId)
-         VALUES(
-             #{commodityName},
-             #{artNo},
-             #{commodityPrice},
-             1,
-             1,
-             1,
-             #{inventory},
-             #{TypeId},
-             #{pictureUrl},
-             #{itemId}
-         )
-
+        INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId)
+        VALUES(
+                  #{commodityName},
+                  #{artNo},
+                  #{commodityPrice},
+                  1,
+                  #{newProduct},
+                  #{inventory},
+                  #{TypeId},
+                  #{pictureUrl},
+                  #{itemId}
+              )
     </insert>
 
     <!--查询商品分类-->
