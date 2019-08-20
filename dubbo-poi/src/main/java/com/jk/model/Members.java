@@ -32,6 +32,15 @@ public class Members implements Serializable {
     private Integer gender;
     private Integer type;
     private String nickname;
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getNickname() {
         return nickname;

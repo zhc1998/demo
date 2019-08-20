@@ -19,5 +19,7 @@ public interface XxfDao {
 
     Members frontLogin(String username);
 
-    Members yz(String username);
+
+    void addMembers(Members members);
+
 }

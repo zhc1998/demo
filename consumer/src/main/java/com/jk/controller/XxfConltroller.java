@@ -1,29 +1,36 @@
 package com.jk.controller;
 
+
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.jk.model.Highcharts;
 import com.jk.model.Members;
 import com.jk.model.User;
 import com.jk.service.XxfService;
 import com.jk.util.CheckImgUtil;
+import com.jk.util.CheckSumBuilder;
+import com.jk.util.FileUtil;
+import com.jk.util.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("xxf")
 public class XxfConltroller {
     @Reference
     private XxfService xxfService;
-   /* @Autowired
-    private StringRedisTemplate redisTemplate2;*/
+    @Autowired
+    private RedisTemplate redisTemplate;
     @RequestMapping("queryDayCount")
     @ResponseBody
     public List<Highcharts> queryDayCount(){
@@ -95,10 +102,101 @@ public class XxfConltroller {
         if(!realcode.toLowerCase().equals(code.toLowerCase())){
             return "1";
         }
-        Members members1= xxfService.yz(members.getUsername());
+        Members members1= xxfService.frontLogin(members.getUsername());
         if(members1==null){
             return "2";
         }
         return "0";
     }
-}
+
+
+    @RequestMapping("huoCode")
+    @ResponseBody
+    public String huoCode(String phone){
+        String url = "https://api.netease.im/sms/sendcode.action";
+        String CurTime=String.valueOf(new Date().getTime());
+        String Nonce= UUID.randomUUID().toString().replace("-", "");
+
+        HashMap<String, Object> headers = new HashMap<String, Object>();
+        headers.put("AppKey", "b9fa9dcb8c8661b78808db9dd18977c0");
+        headers.put("Nonce", Nonce);
+        headers.put("CurTime", CurTime);
+        headers.put("CheckSum", CheckSumBuilder.getCheckSum("7c7427caa619", Nonce, CurTime));
+
+
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("mobile",phone);
+        params.put("templateid","14798448");
+
+        try {
+            String str= HttpClientUtil.post(url, params, headers);
+            JSONObject jsonObject = JSONObject.parseObject(str);
+            String code=jsonObject.getString("code");
+
+            if("200".equals(code)){
+                String objcode = jsonObject.getString("obj");
+
+                String key="phone"+phone;
+                List<Object> list = new ArrayList<Object>();
+                StringBuffer stringBuffer = new StringBuffer(objcode);
+                stringBuffer.append(":"+code);
+
+                if(!redisTemplate.hasKey(key)){
+                    redisTemplate.opsForList().leftPush(key, stringBuffer);
+                    redisTemplate.expire(key, 5, TimeUnit.MINUTES);
+                }else{
+                    redisTemplate.opsForList().leftPop(key);
+                    redisTemplate.opsForList().leftPush(key, stringBuffer);
+                    redisTemplate.expire(key, 5, TimeUnit.MINUTES);
+                }
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "0";
+    }
+
+
+
+    @RequestMapping("addMembers")
+    @ResponseBody
+    public String addMembers(Members members){
+        members.setType(1);
+        String key="phone"+members.getPhone();
+        String code = (String) redisTemplate.opsForValue().get(key);
+        if(!members.getCode().equals(code)){
+                      return "1";
+        }
+        xxfService.addMembers(members);
+        return "0";
+    }
+
+
+    @RequestMapping("uploadNewsImg")
+    @ResponseBody
+    public String uploadNewsImg(MultipartFile img, HttpServletRequest request){
+        String path = FileUtil.upload(img, request);
+        return path;
+    }
+
+
+
+
+    @RequestMapping("queryCodeByPhone")
+    @ResponseBody
+    public String queryCodeByPhone(Members members){
+        Members members1=xxfService.frontLogin(members.getUsername());
+        if(!members1.getPhone().equals(members.getPhone())){
+            return "1";
+        }
+        String key="phone"+members.getPhone();
+        String code = (String) redisTemplate.opsForValue().get(key);
+        if(!members.getCode().equals(code)){
+              return "2";
+        }
+        return "0";
+    }
+
+
+    }
