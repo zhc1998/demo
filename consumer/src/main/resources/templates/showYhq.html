@@ -272,10 +272,6 @@
                 names += "'"+arr[i].yhqname+"'"+ ",";
             }
             names = names.substring(0, names.length - 1);
-
-            alert(names);
-
-
             $.ajax({
                 url: "../clp/deleteYhqByName",
                 data: {names: names},

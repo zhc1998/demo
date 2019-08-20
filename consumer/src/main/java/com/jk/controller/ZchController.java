@@ -27,7 +27,6 @@ public class ZchController {
     public ResultPage queryCommodity(@RequestBody ResultPage result){
 
         ResultPage resultPage = zcService.queryCommodity(result);
-
         return resultPage;
     }
 

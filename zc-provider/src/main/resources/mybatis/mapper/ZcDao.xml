@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.dao.ZcDao" >
+    <!--查询条数-->
+    <select id="queryCommodityCount" resultType="long">
+        select count(*) from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        <include refid="sq"></include>
+    </select>
+    <!--分页查询-->
+    <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        <include refid="sq"></include>
+        LIMIT #{start},#{end}
+    </select>
 
   <!--分页查询-->
   <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
@@ -10,11 +23,11 @@
       LIMIT #{start},#{end}
   </select>
 
-  <!--条件查询-->
+    <!--条件查询-->
     <sql id="sq">
         <where>
             <if test="result.typeIds!=null and result.typeIds!=''">
-               and ty.typeId = #{result.typeIds}
+                and ty.typeId = #{result.typeIds}
             </if>
             <if test="result.commodityName!=null and result.commodityName!=''">
                 and te.commodityName = #{result.commodityName}
@@ -38,7 +51,7 @@
 
     <!--修改-->
     <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-        update t_item set commodityName = #{commodityName},inventory = #{inventory},artNo = #{artNo},TypeId = #{TypeId},commodityPrice=#{commodityPrice},pictureUrl = #{pictureUrl} WHERE id = #{id}
+        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = #{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
