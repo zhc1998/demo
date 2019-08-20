@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ToShowController {
 
 
+    //跳转前台登陆页面
+    @RequestMapping("tofrontLogin")
+    public String tofrontLogin(){
+        return "frontLogin";
+    }
 //跳转展示普通订单页面
     @RequestMapping("showorderone")
     public String showorderone(){

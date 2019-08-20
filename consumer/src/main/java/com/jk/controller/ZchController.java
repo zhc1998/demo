@@ -27,7 +27,6 @@ public class ZchController {
     public ResultPage queryCommodity(@RequestBody ResultPage result){
 
         ResultPage resultPage = zcService.queryCommodity(result);
-
         return resultPage;
     }
 
@@ -65,16 +64,19 @@ public class ZchController {
     //品牌条件查询
     @RequestMapping("queryAllDran")
     @ResponseBody
-    public List<DrandModel> queryAllDran(Integer ids){
-        return zcService.queryAllDran(ids);
+    public List<DrandModel> queryAllDran(Integer ids,String zt){
+
+        return zcService.queryAllDran(ids,zt);
     }
 
     //查询回显
     @RequestMapping("loadOneModel")
     public String loadOneModel(Integer id,Model model){
         CommodityModel commodityModel = zcService.loadOneModel(id);
+        List<CommodityTypeModel> list = zcService.queryCommodityType();
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
+        model.addAttribute("list",list);
         return "updCommodity";
     }
 
@@ -83,7 +85,6 @@ public class ZchController {
     @ResponseBody
     public boolean updCommodity(CommodityModel commodityModel){
         if(commodityModel.getId()!=null){
-            System.out.println(commodityModel);
             zcService.updCommodity(commodityModel);
             return true;
         }
@@ -104,7 +105,6 @@ public class ZchController {
     @RequestMapping("addCommodity")
     @ResponseBody
     public boolean addCommodity(CommodityModel commodityModel){
-        System.out.println(commodityModel);
         if(commodityModel.getId()==null){
             zcService.addCommodity(commodityModel);
             return true;

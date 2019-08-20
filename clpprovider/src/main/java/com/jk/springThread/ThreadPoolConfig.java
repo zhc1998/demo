@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 
 @Configuration //springboot 启动 认为这个类是配置
-@EnableAsync  //并发线程
+@EnableAsync  //并发线程异步调用
 public class ThreadPoolConfig {
 
     /**
