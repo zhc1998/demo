@@ -19,8 +19,9 @@
     <select id="frontLogin" resultType="members">
         select * from members where username=#{username}
     </select>
-    <select id="yz" resultType="members">
-        select * from members where username=#{username}
-    </select>
+    <insert id="addMembers">
+        insert into members(username,password,mimg,phone,gender,type) values(#{username},#{password},#{mimg},#{phone},#{gender},#{type})
+    </insert>
+
  
 </mapper>

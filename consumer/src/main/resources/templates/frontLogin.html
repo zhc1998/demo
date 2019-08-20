@@ -35,7 +35,7 @@
             &emsp;&emsp;&emsp;&emsp;&emsp;
             <a href="javascript:updatePassword()">忘记密码</a>
             &emsp;&emsp;
-            <a href="javascript:">立即注册</a>
+            <a href="javascript:zhuCe()">立即注册</a>
         </div>
     </form>
 
@@ -50,6 +50,10 @@
     </ul>
     </body>
 <script>
+    function zhuCe() {
+location.href="../toshow/toZhuCe"
+
+    }
     function form() {
         $.ajax({
             url:"../xxf/frontLogin",
@@ -62,7 +66,7 @@
                     alert("密码错误")
                 }
                 if(data=="0"){
-                    location.href="../shouye/shouye"
+                    location.href="../toshow/showye"
                 }
             }
         })
