@@ -115,14 +115,8 @@
                 {field:'commodityPrice',title:'价格'},
                 {field:'name',title:'品牌'},
                 {field:'status',title:'发布商品状态',formatter:function(value,row,index){
-                    var status
-                        if(value==1){
-                            status = "✔";
-                            return "<font color='royalblue'>"+status+"</font>";
-                        }else {
-                            status = "×";
-                            return "<font color='crimson'>"+status+"</font>";
-                        }
+                        var status = value ==1?"未审核":"审核通过";
+                        return status;
 
                     }},
                 {field:'newProduct',title:'新品',formatter:function(value,row,index){

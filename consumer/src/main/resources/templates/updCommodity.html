@@ -38,7 +38,7 @@
 </head>
 <body>
 <center>
-
+    <input type="hidden" id="itemId" th:value="${com.itemId}">
     <button type="button"  class="btn btn-Warning btn-lg" onclick="ret()">返回</button>
     <button type="button"  class="btn btn-Warning btn-lg" onclick="upd()">修改</button>
     <form role="form" id="updForm">
@@ -60,6 +60,10 @@
         <div class="form-group">
             <label >商品分类</label>
             <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId" onchange="queryAllDran(this.value)"></select>
+        </div>
+        <div class="form-group">
+            <label >商品品牌</label>
+            <select  style="width: 300px;"  class="form-control"  id="dranEcho" name="itemId" ></select>
         </div>
         <div class="form-group">
             <label >供货商</label>
@@ -140,19 +144,19 @@
         $.ajax({
             url:"../zch/queryCommodityType",
             type:"post",
-            data:{},
             dataType:"json",
             success:function(data){
                 var html = "<option value='-1'>所有分类</option>";
                 for(var i=0;i<data.length;i++){
-                    //th:field="*{cus.locationid}"
+                    var ids = "";
                     if(data[i].typeId==TypeIds){
                         html+="<option value='"+data[i].typeId+"' selected >"+data[i].typeName+"</option>";
+                        ids = data[i].typeId;
+                        queryAllDran(ids);
                     }else{
                         html+="<option value='"+data[i].typeId+"' ${data[i].typeId==2? selected:''}  >"+data[i].typeName+"</option>";
                     }
                 }
-
                 $("#commodityType").html(html);
             },
             error:function(){
@@ -161,5 +165,30 @@
         })
     }
 
+    //回显平牌
+    function  queryAllDran(ids) {
+        var itemId = $("#itemId").val();
+        $.ajax({
+            url:"../zch/updAllDran",
+            type:"post",
+            data:{ids:ids},
+            dataType:"json",
+            success:function(data){
+                var html = "<option value=''>请先选择商品类型</option>";
+                for(var i=0;i<data.length;i++){
+                    if(itemId==data[i].itemId){
+                        html+="<option value='"+data[i].itemId+"' selected>"+data[i].name+"</option>";
+                    }else{
+                        html+="<option value='"+data[i].itemId+"' ${data[i].itemId==2? selected:''}>"+data[i].name+"</option>";
+                    }
+                }
+
+                $("#dranEcho").html(html);
+            },
+            error:function(){
+                alert("查询商品平牌失败");
+            }
+        })
+    }
 </script>
 </html>

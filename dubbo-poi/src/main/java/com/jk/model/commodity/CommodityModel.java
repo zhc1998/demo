@@ -24,9 +24,19 @@ public class CommodityModel implements Serializable {
 
     private String pictureUrl;//图片路径
 
-    private String typeName;
+    private String typeName;//类型
 
-    private String name;
+    private String name;//品牌
+
+    private Integer issue;
+
+    public Integer getIssue() {
+        return issue;
+    }
+
+    public void setIssue(Integer issue) {
+        this.issue = issue;
+    }
 
     public String getTypeName() {
         return typeName;

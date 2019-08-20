@@ -65,14 +65,10 @@ public class CommodityService implements ZcService {
 
     //查询品牌名称
     @Override
-    public List<DrandModel> queryAllDran(Integer ids,String zt) {
+    public List<DrandModel> queryAllDran() {
 
-        if(zt==null){
-            return zcDao.queryAllDran(ids);
-        }else{
             List<DrandModel> drandModels = zcDao.queryDran();
             return drandModels;
-        }
     }
 
     //查询回显
@@ -112,6 +108,19 @@ public class CommodityService implements ZcService {
     @Override
     public DrandModel loadDescribe(Integer ids) {
         return zcDao.loadDescribe(ids);
+    }
+
+    //查询平牌Id
+    @Override
+    public DrandModel updAllDran(Integer ids) {
+        DrandModel dran = zcDao.updAllDran(ids);
+        return dran;
+    }
+
+    //根据批品牌类型管理Id查询 itemid 平牌关联商品Id
+    @Override
+    public List<DrandModel> queryAllDranList(Integer itemId) {
+        return zcDao.queryAllDranList(itemId);
     }
 
 
