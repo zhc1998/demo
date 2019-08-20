@@ -1,5 +1,6 @@
 package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.jk.model.Audit;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.service.HbService;
@@ -78,5 +79,52 @@ public class HbController {
         }
         hbService.saveDialog(us.getUserid(),sysNewPWInp);
         return "4";
+    }
+
+    @RequestMapping("updateAll1")
+    @ResponseBody
+    public void updateAll1(Integer id){
+        hbService.updateAll1(id);
+    }
+
+    @RequestMapping("updateAll2")
+    @ResponseBody
+    public void updateAll2(Integer id){
+        hbService.updateAll2(id);
+    }
+
+    @RequestMapping("login")
+    @ResponseBody
+    public String login(Audit audit, HttpServletRequest request) {
+        Audit audit1 = hbService.login(audit.getName());
+        if (audit1 == null) {
+            return "1";
+        }
+        if(!audit1.getPassword().equals(audit.getPassword())){
+            return "2";
+        }
+        request.getSession().setAttribute("audit", audit1);
+        return "0";
+    }
+
+    @RequestMapping("updateaudit1")
+    @ResponseBody
+    public void updateaudit1(Integer id){
+        hbService.updateaudit1(id);
+    }
+
+    @RequestMapping("updateaudit2")
+    @ResponseBody
+    public void updateaudit2(Integer id){
+        hbService.updateaudit2(id);
+    }
+
+    //查询商品列表
+    @RequestMapping("queryCommodity")
+    @ResponseBody
+    public ResultPage queryCommodity(@RequestBody ResultPage result){
+
+        ResultPage resultPage = hbService.queryCommodity(result);
+        return resultPage;
     }
     }
