@@ -96,7 +96,6 @@ public class ClpController {
     @RequestMapping("deleteYhqByName")
     @ResponseBody
     public void deleteYhqByName(String names){
-        System.out.println(names);
         clpService.deleteYhqByName(names);
     }
 
