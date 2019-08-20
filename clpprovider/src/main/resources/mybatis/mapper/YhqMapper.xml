@@ -12,9 +12,11 @@
     <result column="yhqUse" property="yhquse" jdbcType="INTEGER" />
     <result column="yhqDes" property="yhqdes" jdbcType="VARCHAR" />
     <result column="yhqLevel" property="yhqlevel" jdbcType="INTEGER" />
+    <result column="yhqStartDate" property="yhqstartdate" jdbcType="VARCHAR" />
+    <result column="yhqImg" property="yhqimg" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, yhqName, yhqPrice, yhqLimit, yhqDate, yhqMenkan, yhqCount, yhqUse, yhqDes, yhqLevel
+    id, yhqName, yhqPrice, yhqLimit, yhqDate, yhqMenkan, yhqCount, yhqUse, yhqDes, yhqLevel, yhqStartDate, yhqImg
   </sql>
 
 
@@ -34,17 +36,17 @@
 
 
 
+
+
   <insert id="addYhq" parameterType="java.util.List">
-    insert into clp_yhq (yhqName, yhqPrice,
-                         yhqLimit, yhqDate, yhqMenkan,
-                         yhqCount,yhqUse,yhqDes,
-                         yhqLevel) values
+    INSERT INTO clp_yhq (yhqName, yhqPrice,
+    yhqLimit, yhqDate, yhqMenkan,
+    yhqCount, yhqUse, yhqDes,
+    yhqLevel, yhqStartDate, yhqImg) VALUES
+    <foreach collection="list" item="l" separator=","  >
+      (#{l.yhqname},#{l.yhqprice},#{l.yhqlimit},#{l.yhqdate},#{l.yhqmenkan},#{l.yhqcount},#{l.yhquse},#{l.yhqdes},#{l.yhqlevel},#{l.yhqstartdate},#{l.yhqimg})
 
-     <foreach collection="list" item="l" separator=",">
-       (#{l.yhqname},#{l.yhqprice},#{l.yhqlimit},#{l.yhqdate},
-        #{l.yhqmenkan},#{l.yhqcount},#{l.yhquse},#{l.yhqdes},#{l.yhqlevel})
-     </foreach>
-
+    </foreach>
 
   </insert>
 
@@ -57,7 +59,7 @@
 
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from clp_yhq
     where id = #{id,jdbcType=INTEGER}
@@ -67,14 +69,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jk.model.Yhq" >
-    insert into clp_yhq (id, yhqName, yhqPrice, 
-      yhqLimit, yhqDate, yhqMenkan, 
-      yhqCount, yhqUse, yhqDes, 
-      yhqLevel)
-    values (#{id,jdbcType=INTEGER}, #{yhqname,jdbcType=VARCHAR}, #{yhqprice,jdbcType=DOUBLE}, 
-      #{yhqlimit,jdbcType=INTEGER}, #{yhqdate,jdbcType=VARCHAR}, #{yhqmenkan,jdbcType=VARCHAR}, 
-      #{yhqcount,jdbcType=INTEGER}, #{yhquse,jdbcType=INTEGER}, #{yhqdes,jdbcType=VARCHAR}, 
-      #{yhqlevel,jdbcType=INTEGER})
+    insert into clp_yhq (id, yhqName, yhqPrice,
+                         yhqLimit, yhqDate, yhqMenkan,
+                         yhqCount, yhqUse, yhqDes,
+                         yhqLevel, yhqStartDate, yhqImg
+    )
+    values (#{id,jdbcType=INTEGER}, #{yhqname,jdbcType=VARCHAR}, #{yhqprice,jdbcType=DOUBLE},
+            #{yhqlimit,jdbcType=INTEGER}, #{yhqdate,jdbcType=VARCHAR}, #{yhqmenkan,jdbcType=VARCHAR},
+            #{yhqcount,jdbcType=INTEGER}, #{yhquse,jdbcType=INTEGER}, #{yhqdes,jdbcType=VARCHAR},
+            #{yhqlevel,jdbcType=INTEGER}, #{yhqstartdate,jdbcType=VARCHAR}, #{yhqimg,jdbcType=VARCHAR}
+           )
   </insert>
   <insert id="insertSelective" parameterType="com.jk.model.Yhq" >
     insert into clp_yhq
@@ -109,6 +113,12 @@
       <if test="yhqlevel != null" >
         yhqLevel,
       </if>
+      <if test="yhqstartdate != null" >
+        yhqStartDate,
+      </if>
+      <if test="yhqimg != null" >
+        yhqImg,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -140,6 +150,12 @@
       </if>
       <if test="yhqlevel != null" >
         #{yhqlevel,jdbcType=INTEGER},
+      </if>
+      <if test="yhqstartdate != null" >
+        #{yhqstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="yhqimg != null" >
+        #{yhqimg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -173,20 +189,28 @@
       <if test="yhqlevel != null" >
         yhqLevel = #{yhqlevel,jdbcType=INTEGER},
       </if>
+      <if test="yhqstartdate != null" >
+        yhqStartDate = #{yhqstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="yhqimg != null" >
+        yhqImg = #{yhqimg,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jk.model.Yhq" >
     update clp_yhq
     set yhqName = #{yhqname,jdbcType=VARCHAR},
-      yhqPrice = #{yhqprice,jdbcType=DOUBLE},
-      yhqLimit = #{yhqlimit,jdbcType=INTEGER},
-      yhqDate = #{yhqdate,jdbcType=VARCHAR},
-      yhqMenkan = #{yhqmenkan,jdbcType=VARCHAR},
-      yhqCount = #{yhqcount,jdbcType=INTEGER},
-      yhqUse = #{yhquse,jdbcType=INTEGER},
-      yhqDes = #{yhqdes,jdbcType=VARCHAR},
-      yhqLevel = #{yhqlevel,jdbcType=INTEGER}
+        yhqPrice = #{yhqprice,jdbcType=DOUBLE},
+        yhqLimit = #{yhqlimit,jdbcType=INTEGER},
+        yhqDate = #{yhqdate,jdbcType=VARCHAR},
+        yhqMenkan = #{yhqmenkan,jdbcType=VARCHAR},
+        yhqCount = #{yhqcount,jdbcType=INTEGER},
+        yhqUse = #{yhquse,jdbcType=INTEGER},
+        yhqDes = #{yhqdes,jdbcType=VARCHAR},
+        yhqLevel = #{yhqlevel,jdbcType=INTEGER},
+        yhqStartDate = #{yhqstartdate,jdbcType=VARCHAR},
+        yhqImg = #{yhqimg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

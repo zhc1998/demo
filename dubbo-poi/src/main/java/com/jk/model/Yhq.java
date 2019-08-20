@@ -23,6 +23,10 @@ public class Yhq implements Serializable {
 
     private Integer yhqlevel;
 
+    private String yhqstartdate;
+
+    private String yhqimg;
+
     public Integer getId() {
         return id;
     }
@@ -102,4 +106,23 @@ public class Yhq implements Serializable {
     public void setYhqlevel(Integer yhqlevel) {
         this.yhqlevel = yhqlevel;
     }
+
+    public String getYhqstartdate() {
+        return yhqstartdate;
+    }
+
+    public void setYhqstartdate(String yhqstartdate) {
+        this.yhqstartdate = yhqstartdate == null ? null : yhqstartdate.trim();
+    }
+
+    public String getYhqimg() {
+        return yhqimg;
+    }
+
+    public void setYhqimg(String yhqimg) {
+        this.yhqimg = yhqimg == null ? null : yhqimg.trim();
+    }
+
+
+
 }

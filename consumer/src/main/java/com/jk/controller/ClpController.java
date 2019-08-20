@@ -5,16 +5,22 @@ import com.jk.model.QueryYhq;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.Yhq;
 import com.jk.service.ClpService;
+import com.jk.util.OSSClientUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("clp")
@@ -24,6 +30,8 @@ public class ClpController {
     private ClpService clpService;
 
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
 
@@ -93,6 +101,56 @@ public class ClpController {
     public void deleteYhqByName(String names){
         clpService.deleteYhqByName(names);
     }
+
+    //updateUseYhq
+    @RequestMapping("updateClpUseYhq")
+    @ResponseBody
+    public Integer updateClpUseYhq(Integer id) throws  ParseException {
+        Yhq yhq=new Yhq();
+        String key="yhq2"+id;
+        if(redisTemplate.hasKey(key)){
+            System.out.println("====缓存===");
+            yhq=(Yhq) redisTemplate.opsForValue().get(key);
+        }else{
+            System.out.println("====数据库===");
+            yhq=clpService.toUpdClpYhqPage(id);
+            redisTemplate.opsForValue().set(key,yhq);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date=sdf.parse(yhq.getYhqdate());
+        Date date2=new Date();
+        long time=(date.getTime()-date2.getTime())/1000/60;
+        System.out.println(yhq.getYhqdate());
+        System.out.println(date);
+        System.out.println(date2);
+        System.out.println(time);
+
+        if(time<=0){
+            redisTemplate.expire(key,0, TimeUnit.MINUTES);
+        }else{
+           redisTemplate.expire(key,time, TimeUnit.MINUTES);
+        }
+      return (int)time;
+    }
+
+
+    /**
+     * OSS阿里云上传图片
+     */
+    @RequestMapping("updaloadImg")
+    @ResponseBody
+    public String uploadImg(MultipartFile imgg)throws IOException {
+        if (imgg == null || imgg.getSize() <= 0) {
+            throw new IOException("file不能为空");
+        }
+        OSSClientUtil ossClient=new OSSClientUtil();
+        String name = ossClient.uploadImg2Oss(imgg);
+        String imgUrl = ossClient.getImgUrl(name);
+        String[] split = imgUrl.split("\\?");
+        System.out.println(split[0]);
+        return split[0];
+    }
+
 
 
 }
