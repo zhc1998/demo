@@ -4,9 +4,8 @@
 
   <!--分页查询-->
   <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
-      select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.selllikeHotCakes,te.inventory,ty.typeName,br.name   from t_item te
+      select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.selllikeHotCakes,te.inventory,ty.typeName   from t_item te
       left join t_commoditytype ty on ty.typeId=te.TypeId
-      left join brand br on br.type = te.itemId GROUP BY artno
       <include refid="sq"></include>
       LIMIT #{start},#{end}
   </select>
