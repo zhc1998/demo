@@ -46,6 +46,7 @@
             <option value="1">新品</option>
             <option value="2">热销</option>
         </select>
+        <select id="dran" class="form-control"></select>
         <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
     </div>
     <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
@@ -112,7 +113,8 @@
                 {field:'commodityName',title:'商品名称'},
                 {field:'artNo',title:'商品货号'},
                 {field:'commodityPrice',title:'价格'},
-                {field:'status',title:'上架',formatter:function(value,row,index){
+                {field:'name',title:'品牌'},
+                {field:'status',title:'发布商品状态',formatter:function(value,row,index){
                     var status
                         if(value==1){
                             status = "✔";
@@ -134,7 +136,7 @@
                         }
 
                     }},
-                {field:'selllikeHotCakes',title:'热销',formatter:function (value,row,index) {
+                {field:'newProduct',title:'热销',formatter:function (value,row,index) {
                         var selllikeHotCakes
                         if(value==2){
                             selllikeHotCakes = "✔";
@@ -160,7 +162,7 @@
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                        return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
+                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
                     }},
             ]
         });
@@ -174,7 +176,7 @@
 
     //条件查询
     function queryData(){
-        alert($("#commodityType").val());
+        //alert($("#commodityType").val());
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
                 "commodityName": $("#commodityName").val(),
@@ -189,16 +191,14 @@
 
     //查询所有品牌
     function queryAllDran(){
-        var zt = "a";
         $.ajax({
-            url:"../zch/queryCommodityType",
+            url:"../zch/queryAllDran",
             type:"post",
             dataType:"json",
-            data:{zt:zt},
             success:function(data){
-                var html = "<option value=''>所有分类</option>";
+                var html = "<option value=''>所有平牌</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
+                    html+="<option value='"+data[i].itemId+"'>"+data[i].name+"</option>";
                 }
 
                 $("#dran").html(html);
@@ -225,10 +225,10 @@
                 var html = "<option value=''>全部</option>";
                 for(var i=0;i<data.length;i++){
                     if(data[i].status==1){
-                        status = "上架";
+                        status = "已发布";
                         html+="<option value='"+data[i].status+"'>"+status+"</option>";
                     }else{
-                        status = "下架";
+                        status = "未发布";
                         html+="<option value='"+data[i].status+"'>"+status+"</option>";
                     }
 
@@ -250,6 +250,7 @@
             data:{},
             dataType:"json",
             success:function(data){
+                //alert(data[i].itemId);
                 var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
                     html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
