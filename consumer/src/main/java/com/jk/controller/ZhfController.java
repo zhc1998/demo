@@ -59,7 +59,7 @@ public class ZhfController {
     public String showorderinfo(Integer id, Model model){
         Orderone orderone= zhfService.queryorderbyid(id);
         model.addAttribute("orderone",orderone);
-        return "showorderinfo";
+        return "houtai/showorderinfo";
     }
 //查询订单的商品列表
     @RequestMapping("queryordertable")

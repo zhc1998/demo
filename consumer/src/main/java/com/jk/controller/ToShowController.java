@@ -15,32 +15,44 @@ public class ToShowController {
     //跳转前台登陆页面
     @RequestMapping("tofrontLogin")
     public String tofrontLogin(){
-        return "frontLogin";
+        return "ffqt/frontLogin";
     }
+    //跳转修改密码页面
+    @RequestMapping("toUpdatePassword")
+    public String toUpdatePassword(){
+        return "updatePassword";
+    }
+    //跳转注册页面
+    @RequestMapping("toZhuCe")
+    public String toZhuCe(){
+        return "zhuCe";
+    }
+
+
 //跳转展示普通订单页面
     @RequestMapping("showorderone")
     public String showorderone(){
 
-        return "showorderone";
+        return "houtai/showorderone";
     }
     //跳转到商品列表
     @RequestMapping("toCommodity")
     public String toCommodity(){
-        return "commodity";
+        return "houtai/commodity";
     }
 
 
     // clp  优惠券 查询 跳页面
     @RequestMapping("toShowYhq")
     public String toShowYhq(){
-        return "showYhq";
+        return "houtai/showYhq";
     }
 
 
     // clp 新增  优惠券 跳页面toAddYhqPage
     @RequestMapping("toAddClpYhqPage")
     public String toAddClpYhqPage(){
-        return "addClpYhq";
+        return "houtai/addClpYhq";
     }
 
 
@@ -51,37 +63,37 @@ public class ToShowController {
     //跳转到商品品牌页面
     @RequestMapping("toDran")
     public String toDran(){
-        return "dran";
+        return "houtai/dran";
     }
 
     //跳转到修改商品页面
     @RequestMapping("toUpdCommodity")
     public String toUpdCommodity(Integer id, Model model) {
         model.addAttribute("id", id);
-        return "updCommodity";
+        return "houtai/updCommodity";
     }
    //跳转登录页
     @RequestMapping("toIndex")
     public String toindex(){
-        return "index";
+        return "houtai/index";
     }
     //跳转树
     @RequestMapping("tohbtree")
     public String tohbtree(){
-        return "hbtree";
+        return "houtai/hbtree";
     }
 
 
     //会员用户列表
     @RequestMapping("queryuser")
     public String queryuser(){
-        return "hbmembers";
+        return "houtai/hbmembers";
     }
 
     //修改密码
     @RequestMapping("toupdate")
     public String toupdate(){
-        return "update";
+        return "houtai/update";
     }
 
     //跳转到图文信息
@@ -89,38 +101,31 @@ public class ToShowController {
     public String imageText(Integer ids,Model model){
 
         model.addAttribute("ids",ids);
-        return "imageText";
-    }
-
-    //跳转到商品属性
-    @RequestMapping("property")
-    public String property(){
-
-        return "property";
+        return "houtai/imageText";
     }
 
     //跳转到新增商品
     @RequestMapping("addCommodity")
     public String addCommodity(){
-        return "addCommodity";
+        return "houtai/addCommodity";
     }
 
     //跳转到商品类型展示
     @RequestMapping("toCommodityType")
     public String toCommodityType(){
-        return "commodityType";
+        return "houtai/commodityType";
     }
     //跳转到描述页面
     @RequestMapping("toDescribe")
     public String toDescribe(Integer id,Model model){
         model.addAttribute("id",id);
-        return "describe";
+        return "houtai/describe";
     }
 
     //跳转到轮播图
     @RequestMapping("figure")
     public String figure(){
-        return "figure";
+        return "houtai/figure";
     }
     //注销
     @RequestMapping("zhuxiao")
@@ -131,7 +136,7 @@ public class ToShowController {
 
     //跳转到用户前台
     @RequestMapping("showye")
-    public String showye(){ return "showye"; }
+    public String showye(){ return "hbqt/showye"; }
 
     //跳转审核登录
     @RequestMapping("audit")
