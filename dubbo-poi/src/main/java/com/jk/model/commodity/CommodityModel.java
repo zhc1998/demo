@@ -15,7 +15,6 @@ public class CommodityModel implements Serializable {
 
     private Integer newProduct;//是否为新品
 
-    private Integer selllikeHotCakes;//是否热销
 
     private Integer  inventory;//库存
 
@@ -101,14 +100,6 @@ public class CommodityModel implements Serializable {
         this.newProduct = newProduct;
     }
 
-    public Integer getSelllikeHotCakes() {
-        return selllikeHotCakes;
-    }
-
-    public void setSelllikeHotCakes(Integer selllikeHotCakes) {
-        this.selllikeHotCakes = selllikeHotCakes;
-    }
-
     public Integer getInventory() {
         return inventory;
     }
@@ -142,7 +133,6 @@ public class CommodityModel implements Serializable {
                 ", commodityPrice=" + commodityPrice +
                 ", status=" + status +
                 ", newProduct=" + newProduct +
-                ", selllikeHotCakes=" + selllikeHotCakes +
                 ", inventory=" + inventory +
                 ", TypeId=" + TypeId +
                 ", itemId=" + itemId +

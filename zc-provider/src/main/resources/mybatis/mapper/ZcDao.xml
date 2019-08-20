@@ -23,7 +23,7 @@
                 and te.status = #{result.status}
             </if>
             <if test="result.is!=null and result.is!=0">
-                and te.newProduct = #{result.is} or te.selllikeHotCakes = #{result.is}
+                and te.newProduct = #{result.is}
             </if>
             <if test="result.dran!=null and result.dran!=''">
                 and br.name = #{result.dran}
@@ -38,7 +38,7 @@
 
     <!--修改-->
     <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = #{id}
+        update t_item set commodityName = #{commodityName},inventory = #{inventory},artNo = #{artNo},TypeId = #{TypeId},commodityPrice=#{commodityPrice},pictureUrl = #{pictureUrl} WHERE id = #{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
