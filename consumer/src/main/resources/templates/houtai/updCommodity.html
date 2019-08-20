@@ -7,13 +7,13 @@
     <!-- 引入jquery -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <!-- 引入bootstrap的css -->
-    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- 引入bootstrap-treeview的css -->
-    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" />
     <!-- 引入bootstrap-addTabs的css -->
-    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" />
     <!-- 引入bootstrap-table的css -->
-    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" />
     <!-- 引入fileinput的css -->
     <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
 
@@ -38,24 +38,24 @@
 </head>
 <body>
 <center>
-    <input type="hidden" id="itemId" th:value="${com.itemId}">
+    <input type="hidden" id="itemId" th:value="${com.itemId}"/>
     <button type="button"  class="btn btn-Warning btn-lg" onclick="ret()">返回</button>
     <button type="button"  class="btn btn-Warning btn-lg" onclick="upd()">修改</button>
     <form role="form" id="updForm">
-        <input type="hidden" name="id" id="ids" style="width: 300px;" th:value="${id}"  >
-        <input type="hidden" name="id" id="TypeIds" style="width: 300px;" th:value="${com.TypeId}">
-        <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  >
+        <input type="hidden" name="id" id="ids" style="width: 300px;" th:value="${id}"  />
+        <input type="hidden" name="id" id="TypeIds" style="width: 300px;" th:value="${com.TypeId}"/>
+        <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  />
         <div class="form-group">
             <label >商品名称</label>
-            <input type="text" class="form-control" style="width: 300px;" th:value="${com.commodityName}"  name="commodityName">
+            <input type="text" class="form-control" style="width: 300px;" th:value="${com.commodityName}"  name="commodityName"/>
         </div>
         <div class="form-group">
             <label >库存</label>
-            <input type="text" class="form-control" style="width: 300px;" th:value="${com.inventory}"  name="inventory">
+            <input type="text" class="form-control" style="width: 300px;" th:value="${com.inventory}"  name="inventory"/>
         </div>
         <div class="form-group">
             <label >商品货号</label>
-            <input type="text" class="form-control" style="width: 300px;" th:value="${com.artNo}" name="artNo" >
+            <input type="text" class="form-control" style="width: 300px;" th:value="${com.artNo}" name="artNo" />
         </div>
         <div class="form-group">
             <label >商品分类</label>
@@ -84,7 +84,7 @@
         <div class="form-group">
             <div class="col-sm-10" >
                 <div class="file-loading">
-                    <input id="uploadFile"  style="width: 10px;"  type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                    <input id="uploadFile"  style="width: 10px;"  type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2" />
                 </div>
             </div>
         </div>

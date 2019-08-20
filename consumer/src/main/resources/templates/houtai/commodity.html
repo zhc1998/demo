@@ -40,7 +40,12 @@
 <form id="pro_from" class="form-inline">
     <div class="form-group">
         <select style="width: 200px;"  class="form-control" id="commodityType"></select>
-        <select style="width: 200px;"  class="form-control" id="status"></select>
+        <select style="width: 200px;"  class="form-control" id="status">
+            <option value="">全部</option>
+            <option value="1">待审核</option>
+            <option value="2">审核完成</option>
+            <option value="3">失败</option>
+        </select>
         <select style="width: 200px;"  class="form-control" id="is">
             <option value="0">全部</option>
             <option value="1">新品</option>
@@ -61,7 +66,7 @@
 
         initDataGrid();
         loadCommodityType();
-        loadStatus();
+        //loadStatus();
         queryAllDran();
     });
 
@@ -209,32 +214,7 @@
     }
 
 
-    //查询上下架
-    function loadStatus(){
-        $.ajax({
-            url:"../zch/queryStatus",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                var html = "<option value=''>全部</option>";
-                for(var i=0;i<data.length;i++){
-                    if(data[i].status==1){
-                        status = "已发布";
-                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
-                    }else{
-                        status = "未发布";
-                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
-                    }
 
-                }
-
-                $("#status").html(html);
-            },
-            error:function(){
-                alert("查询商品类型失败");
-            }
-        })
-    }
 
     //查询商品类型
     function loadCommodityType(){
