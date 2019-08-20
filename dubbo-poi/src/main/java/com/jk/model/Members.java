@@ -26,12 +26,20 @@ public class Members implements Serializable {
 
     private Integer id;
     private String username;
-    private String gender;
-    private String headportrait;
-    private String wechataddress;
-    private String zctime;
     private String password;
-    private Integer phone;
+    private String mimg;
+    private String phone;
+    private Integer gender;
+    private Integer type;
+    private String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public Integer getId() {
         return id;
@@ -57,43 +65,35 @@ public class Members implements Serializable {
         this.password = password;
     }
 
-    public Integer getPhone() {
+    public String getMimg() {
+        return mimg;
+    }
+
+    public void setMimg(String mimg) {
+        this.mimg = mimg;
+    }
+
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
-    public String getHeadportrait() {
-        return headportrait;
+    public Integer getType() {
+        return type;
     }
 
-    public void setHeadportrait(String headportrait) {
-        this.headportrait = headportrait;
-    }
-
-    public String getWechataddress() {
-        return wechataddress;
-    }
-
-    public void setWechataddress(String wechataddress) {
-        this.wechataddress = wechataddress;
-    }
-
-    public String getZctime() {
-        return zctime;
-    }
-
-    public void setZctime(String zctime) {
-        this.zctime = zctime;
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
