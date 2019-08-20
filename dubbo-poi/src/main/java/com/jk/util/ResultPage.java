@@ -34,47 +34,7 @@ public class ResultPage implements Serializable {
 
 	private Integer is;//新品或热销
 
-	private Integer dran;//品牌
-
-	public Integer getDran() {
-		return dran;
-	}
-
-	public void setDran(Integer dran) {
-		this.dran = dran;
-	}
-
-	public Integer getIs() {
-		return is;
-	}
-
-	public void setIs(Integer is) {
-		this.is = is;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public String getCommodityName() {
-		return commodityName;
-	}
-
-	public void setCommodityName(String commodityName) {
-		this.commodityName = commodityName;
-	}
-
-	public Integer getTypeIds() {
-		return typeIds;
-	}
-
-	public void setTypeIds(Integer typeIds) {
-		this.typeIds = typeIds;
-	}
+	private String dran;//品牌
 
 	public Integer getTotal() {
 		return total;
@@ -108,6 +68,46 @@ public class ResultPage implements Serializable {
 		this.pageSize = pageSize;
 	}
 
+	public Integer getTypeIds() {
+		return typeIds;
+	}
+
+	public void setTypeIds(Integer typeIds) {
+		this.typeIds = typeIds;
+	}
+
+	public String getCommodityName() {
+		return commodityName;
+	}
+
+	public void setCommodityName(String commodityName) {
+		this.commodityName = commodityName;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Integer getIs() {
+		return is;
+	}
+
+	public void setIs(Integer is) {
+		this.is = is;
+	}
+
+	public String getDran() {
+		return dran;
+	}
+
+	public void setDran(String dran) {
+		this.dran = dran;
+	}
+
 	@Override
 	public String toString() {
 		return "ResultPage{" +
@@ -115,6 +115,11 @@ public class ResultPage implements Serializable {
 				", rows=" + rows +
 				", pageNumber=" + pageNumber +
 				", pageSize=" + pageSize +
+				", typeIds=" + typeIds +
+				", commodityName='" + commodityName + '\'' +
+				", status=" + status +
+				", is=" + is +
+				", dran='" + dran + '\'' +
 				'}';
 	}
 }

@@ -140,4 +140,7 @@ public class ToShowController {
         request.getSession().removeAttribute("user");
         return "redirect:../toshow/toIndex";
     }
+
+    @RequestMapping("showye")
+    public String showye(){ return "showye"; }
 }
