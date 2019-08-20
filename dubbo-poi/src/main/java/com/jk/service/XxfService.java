@@ -22,5 +22,6 @@ public interface XxfService {
 
     Members frontLogin(String username);
 
-    Members yz(String username);
+    void addMembers(Members members);
+
 }
