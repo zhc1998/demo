@@ -6,6 +6,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Familyhead;
 import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
+import com.jk.util.HttpClientUtil;
 import com.jk.util.ParameUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("zhf")
@@ -65,6 +67,30 @@ public class ZhfController {
     @RequestMapping("queryordertable")
     @ResponseBody
     public HashMap<String, Object> queryordertable(Integer oid) {
+
         return zhfService.queryordertable(oid);
+    }
+
+    //查询(自己)登录人的订单列表
+    @RequestMapping("queryorderbyuid")
+    @ResponseBody
+    public HashMap<String, Object> queryorderbyuid(@RequestBody ParameUtil parame) {
+       Integer userid=1;
+        return zhfService.queryorderbyuid(userid,parame);
+    }
+    //快递单号查询
+    @RequestMapping("querytnumber")
+    @ResponseBody
+    public HashMap<String,Object>querytnumber() throws Exception {
+
+         String url= "http://www.kuaidi100.com/query";
+        HashMap<String,Object>params=new HashMap<>();
+
+      params.put("type","yuantong");
+        params.put("postid","806913122366095579");
+        String string = HttpClientUtil.get(url, params);
+        System.err.println(string);
+        HashMap<String,Object>map=new HashMap<>();
+        return null;
     }
 }

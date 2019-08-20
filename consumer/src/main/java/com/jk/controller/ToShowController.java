@@ -1,15 +1,18 @@
 package com.jk.controller;
 
+import com.jk.model.Orderone;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("toshow")
 public class ToShowController {
+
 
 
 //跳转展示普通订单页面
@@ -23,6 +26,20 @@ public class ToShowController {
     public String toCommodity(){
         return "commodity";
     }
+
+    //跳转自己的订单列表
+    @RequestMapping("showmyorder")
+    public String showmyorder(){
+        return "showmyorder";
+    }
+
+    //跳转订单查询页面
+    @RequestMapping("kuaidi")
+    public String kuaidi(){
+        return "kuaidi";
+    }
+
+
 
 
     // clp  优惠券 查询 跳页面
@@ -123,4 +140,6 @@ public class ToShowController {
         request.getSession().removeAttribute("user");
         return "redirect:../toshow/toIndex";
     }
+
+
 }

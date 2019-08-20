@@ -29,7 +29,6 @@ public class ZhfServiceImpl implements ZhfService{
     public HashMap<String, Object> queryorderone(ParameUtil parame) {
         long count=orderoneDao.QueryorOrderonecount(parame);
          int statr=(parame.getPageNumber()-1)*parame.getPageSize();
-        System.err.println(parame.getOrdernumber());
         List<Orderone>list=orderoneDao.queryOreryone(statr,parame.getPageSize(),parame);
         HashMap<String,Object>hashMap=new HashMap<>();
         hashMap.put("total",count);
@@ -51,6 +50,18 @@ public class ZhfServiceImpl implements ZhfService{
         hashMap.put("total",1);
         hashMap.put("rows",list);
         return hashMap;
+    }
+
+    @Override
+    public HashMap<String, Object> queryorderbyuid(Integer userid, ParameUtil parame) {
+        long count=orderoneDao.QueryorOrderbyuidcount(userid);
+        int statr=(parame.getPageNumber()-1)*parame.getPageSize();
+        List<Orderone>list=orderoneDao.queryorderbyuid(statr,parame.getPageSize(),userid);
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("total",count);
+        hashMap.put("rows",list);
+        return hashMap;
+
     }
 
 
