@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入fileinput的css -->
+    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
+
+    <!-- 引入my97 -->
+    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
+    <!-- 引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
+    <!--  引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+    <style type="text/css">
+        body {padding-top:55px;}
+    </style>
+</head>
+<body>
+<form id="formId">
+    <h1><span id="mag"></span></h1>
+    <table>
+        <tr>
+            <td>旧密码<font color="red">*</font></td>
+            <td><input type="text" name="password" id="password" placeholder="请填写原密码"></td>
+        </tr>
+        <tr>
+            <td>新密码<font color="red">*</font></td>
+            <td><input type="text" name="sysNewPWInp" id="sysNewPWInp"  placeholder="请填写新密码"></td>
+        </tr>
+        <tr>
+            <td>确认密码<font color="red">*</font></td>
+            <td><input type="text" id="sysConfirmPWInp" name="sysConfirmPWInp"  placeholder="请填写确认密码"></td>
+        </tr>
+        <tr>
+            <td><a href="javaScript:saveDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提交</a></td>
+            <td><a href="javaScript:cancelDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a></td>
+        </tr>
+    </table>
+</form>
+</body>
+<script>
+   function saveDialog(){
+         var password =$("#password").val();
+         var sysNewPWInp =$("#sysNewPWInp").val();
+         var sysConfirmPWInp =$("#sysConfirmPWInp").val();
+      $.ajax({
+          url:"../hb/saveDialog",
+          data:{password:password,sysNewPWInp:sysNewPWInp,sysConfirmPWInp:sysConfirmPWInp},
+          success:function(data){
+              if (data=="1") {
+                  $("#mag").html("<font color='red'>旧密码错误</font>");
+              }
+              if (data=="2") {
+                  $("#mag").html("<font color='red'>旧密码与新密码不能保持一致</font>");
+              }
+              if (data=="3") {
+                  $("#mag").html("<font color='red'>新密码错误与确认密码不一致</font>");
+              }
+              if (data=="4") {
+                  alert("修改成功，请重新登录")
+              }
+          }
+      })
+   }
+</script>
+</html>

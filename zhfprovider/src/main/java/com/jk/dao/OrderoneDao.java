@@ -1,6 +1,7 @@
 package com.jk.dao;
 
 import com.jk.model.Orderone;
+import com.jk.util.ParameUtil;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,7 +20,9 @@ public interface OrderoneDao {
 
     int updateByPrimaryKey(Orderone record);
 
-    long QueryorOrderonecount();
+    long QueryorOrderonecount(@Param("pa") ParameUtil parame);
 
-    List<Orderone> queryOreryone(@Param("st") int statr,@Param("ro") Integer pageNumber);
+    List<Orderone> queryOreryone(@Param("st") int statr,@Param("ro") Integer pageNumber,@Param("pa") ParameUtil parame);
+   @Select("select t.commodityName commodityname,o.artNo,t.commodityPrice commodityprice,o.amount,o.amountpayable from orderone o,t_item t where o.artno=t.artNo and o.id=#{oid}")
+    Orderone queryordertable(@Param("oid") Integer oid);
 }

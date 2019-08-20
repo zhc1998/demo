@@ -5,4 +5,16 @@
  <select id="getTreeAll" resultType="Tree">
      select * from t_tree
  </select>
+
+    <select id="querymenmberscount" parameterType="HashMap" resultType="Int">
+        select count(*) from members
+    </select>
+
+    <select id="HashMap" parameterType="HashMap" resultType="Members">
+        select * from  members LIMIT #{start},#{end}
+    </select>
+
+    <update id="saveDialog" parameterType="map">
+        update t_user set password=#{sysNewPWInp} where userid=#{userid}
+    </update>
 </mapper>

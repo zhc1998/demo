@@ -1,11 +1,11 @@
-package com.jk.util; /**
+/** 
  * <pre>项目名称:yasyui 
  * 文件名称:ResultPage.java 
  * 包名:com.jk.zc.utils 
  * 创建日期:2019年5月17日下午8:13:02 
  * Copyright (c) 2019, yuxy123@gmail.com All Rights Reserved.</pre> 
- */
-
+ */  
+package com.jk.util;
 
 import java.io.Serializable;
 
@@ -21,10 +21,20 @@ import java.io.Serializable;
  * @version </pre>   
  */
 public class ResultPage implements Serializable {
-       private Integer total;
-       private Object rows;
-       private Integer pageNumber;//当前页
-       private Integer pageSize;//每页条数
+   private Integer total;
+   private Object rows;
+   private Integer pageNumber;//当前页
+   private Integer pageSize;//每页条数
+
+   private Integer typeIds;//类型Id
+
+   private String commodityName;//商品名称
+
+	private Integer status;//上下架
+
+	private Integer is;//新品或热销
+
+	private String dran;//品牌
 
 	public Integer getTotal() {
 		return total;
@@ -58,6 +68,46 @@ public class ResultPage implements Serializable {
 		this.pageSize = pageSize;
 	}
 
+	public Integer getTypeIds() {
+		return typeIds;
+	}
+
+	public void setTypeIds(Integer typeIds) {
+		this.typeIds = typeIds;
+	}
+
+	public String getCommodityName() {
+		return commodityName;
+	}
+
+	public void setCommodityName(String commodityName) {
+		this.commodityName = commodityName;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Integer getIs() {
+		return is;
+	}
+
+	public void setIs(Integer is) {
+		this.is = is;
+	}
+
+	public String getDran() {
+		return dran;
+	}
+
+	public void setDran(String dran) {
+		this.dran = dran;
+	}
+
 	@Override
 	public String toString() {
 		return "ResultPage{" +
@@ -65,6 +115,11 @@ public class ResultPage implements Serializable {
 				", rows=" + rows +
 				", pageNumber=" + pageNumber +
 				", pageSize=" + pageSize +
+				", typeIds=" + typeIds +
+				", commodityName='" + commodityName + '\'' +
+				", status=" + status +
+				", is=" + is +
+				", dran='" + dran + '\'' +
 				'}';
 	}
 }

@@ -21,4 +21,10 @@ public interface YhqMapper {
     List<Yhq> queryYhq(@Param("sta") int sta, @Param("pageSize") Integer pageSize);
 
     long queryCount();
+
+    Yhq toUpdClpYhqPage(@Param("id")Integer id);
+
+    void addYhq(List<Yhq> list);
+
+    void deleteYhqByName(@Param("names")String names);
 }

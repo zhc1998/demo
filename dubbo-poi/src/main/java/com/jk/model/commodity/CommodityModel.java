@@ -21,7 +21,37 @@ public class CommodityModel implements Serializable {
 
     private Integer TypeId;//类型Id
 
+    private Integer itemId;//平牌Id
+
     private String pictureUrl;//图片路径
+
+    private String typeName;
+
+    private String name;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
 
     public Integer getId() {
         return id;
@@ -105,7 +135,7 @@ public class CommodityModel implements Serializable {
 
     @Override
     public String toString() {
-        return "commodityModel{" +
+        return "CommodityModel{" +
                 "id=" + id +
                 ", commodityName='" + commodityName + '\'' +
                 ", artNo='" + artNo + '\'' +
@@ -115,7 +145,10 @@ public class CommodityModel implements Serializable {
                 ", selllikeHotCakes=" + selllikeHotCakes +
                 ", inventory=" + inventory +
                 ", TypeId=" + TypeId +
+                ", itemId=" + itemId +
                 ", pictureUrl='" + pictureUrl + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
