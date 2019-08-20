@@ -17,6 +17,16 @@ public class DrandModel implements Serializable {
 
     private Integer itemId;//关联商品列表Id
 
+    private Integer type;//关联类型
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Integer getId() {
         return id;
     }

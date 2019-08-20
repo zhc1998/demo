@@ -1,19 +1,22 @@
 package com.jk.controller;
 
-import com.jk.model.Orderone;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 @RequestMapping("toshow")
 public class ToShowController {
 
 
+    //跳转前台登陆页面
+    @RequestMapping("tofrontLogin")
+    public String tofrontLogin(){
+        return "frontLogin";
+    }
 
 //跳转展示普通订单页面
     @RequestMapping("showorderone")
@@ -140,6 +143,4 @@ public class ToShowController {
         request.getSession().removeAttribute("user");
         return "redirect:../toshow/toIndex";
     }
-
-
 }

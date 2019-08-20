@@ -38,11 +38,13 @@
 </head>
 <body>
 <center>
+
     <button type="button"  class="btn btn-Warning btn-lg" onclick="ret()">返回</button>
     <button type="button"  class="btn btn-success" onclick="imageText()">图文信息</button>
     <button type="button"  class="btn btn-Warning btn-lg" onclick="upd()">修改</button>
     <form role="form" id="updForm">
         <input type="hidden" name="id" id="ids" style="width: 300px;" th:value="${id}"  >
+        <input type="hidden" name="id" id="TypeIds" style="width: 300px;" th:value="${com.TypeId}">
         <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  >
         <div class="form-group">
             <label >商品名称</label>
@@ -54,11 +56,7 @@
         </div>
         <div class="form-group">
             <label >商品分类</label>
-            <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId"></select>
-        </div>
-        <div class="form-group">
-            <label >品牌</label>
-            <select style="width: 300px;"  class="form-control"  id="name" name="itemId"></select>
+            <select  style="width: 300px;"  class="form-control"  id="commodityType" name="TypeId" onchange="queryAllDran(this.value)"></select>
         </div>
         <div class="form-group">
             <label >供货商</label>
@@ -77,6 +75,7 @@
                 </div>
             </div>
         </div>
+
     </form>
 
 </center>
@@ -84,7 +83,7 @@
 <script>
     $(function(){
         loadCommodityType();
-        queryAllDran();
+        //queryAllDran();
     })
 
     //返回
@@ -170,17 +169,21 @@
 
     //回显类型
     function  loadCommodityType() {
+        var TypeIds = $("#TypeIds").val();
         $.ajax({
             url:"../zch/queryCommodityType",
             type:"post",
             data:{},
             dataType:"json",
             success:function(data){
-                var html = "<option value=''>所有分类</option>";
+                var html = "<option value='-1'>所有分类</option>";
                 for(var i=0;i<data.length;i++){
-
-                        html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
-
+                    //th:field="*{cus.locationid}"
+                    if(data[i].typeId==TypeIds){
+                        html+="<option value='"+data[i].typeId+"' selected >"+data[i].typeName+"</option>";
+                    }else{
+                        html+="<option value='"+data[i].typeId+"' ${data[i].typeId==2? selected:''}  >"+data[i].typeName+"</option>";
+                    }
                 }
 
                 $("#commodityType").html(html);
@@ -195,23 +198,24 @@
 
     //回显平牌
     function  queryAllDran() {
+        var ids = $("#commodityType").val();
         $.ajax({
             url:"../zch/queryAllDran",
             type:"post",
-            data:{},
+            data:{ids:ids},
             dataType:"json",
             success:function(data){
                 var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
 
-                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                    html+="<option value='"+data[i].type+"'>"+data[i].name+"</option>";
 
                 }
 
                 $("#name").html(html);
             },
             error:function(){
-                alert("查询商品类型失败");
+                alert("查询商品平牌失败");
             }
         })
     }

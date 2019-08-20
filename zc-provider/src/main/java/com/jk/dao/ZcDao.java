@@ -11,8 +11,7 @@ import java.util.List;
 public interface ZcDao {
 
     //查询总条数
-    @Select("select count(*)  from t_item")
-    Integer queryCommodityCount(HashMap<String, Object> hashMap);
+    long queryCommodityCount(HashMap<String, Object> hashMap);
 
     //分页查询
     List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
@@ -33,8 +32,8 @@ public interface ZcDao {
     List<DrandModel> zcService();
 
     //查询品牌名称
-    @Select("select id,name  from  brand")
-    List<DrandModel> queryAllDran();
+    //@Select("select id,name  from  brand")
+    List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
     //@Select("SELECT *  from t_item WHERE id = 1")
@@ -56,4 +55,8 @@ public interface ZcDao {
     //查询描述
     @Select("select *  from  brand WHERE id = #{value}")
     DrandModel loadDescribe(Integer ids);
+
+    //查询平牌
+    @Select("select br.name,br.id  from brand br")
+    List<DrandModel> queryDran();
 }

@@ -24,8 +24,8 @@ public class CommodityService implements ZcService {
         hashMap.put("result", result);
 
         //查询总条数
-        Integer count = zcDao.queryCommodityCount(hashMap);
-        resultPage.setTotal(count);
+        Long count = zcDao.queryCommodityCount(hashMap);
+        resultPage.setTotal(Integer.parseInt(count.toString()));
 
         resultPage.setPageNumber(result.getPageNumber());
         resultPage.setPageSize(result.getPageSize());
@@ -65,8 +65,14 @@ public class CommodityService implements ZcService {
 
     //查询品牌名称
     @Override
-    public List<DrandModel> queryAllDran() {
-        return zcDao.queryAllDran();
+    public List<DrandModel> queryAllDran(Integer ids,String zt) {
+
+        if(zt==null){
+            return zcDao.queryAllDran(ids);
+        }else{
+            List<DrandModel> drandModels = zcDao.queryDran();
+            return drandModels;
+        }
     }
 
     //查询回显
@@ -77,6 +83,7 @@ public class CommodityService implements ZcService {
 
     @Override
     public void updCommodity(CommodityModel commodityModel) {
+
         zcDao.updCommodity(commodityModel);
     }
 

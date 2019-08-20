@@ -3,6 +3,9 @@ package com.jk.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.jk.model.Express;
 import com.jk.model.Familyhead;
 import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -81,16 +85,21 @@ public class ZhfController {
     //快递单号查询
     @RequestMapping("querytnumber")
     @ResponseBody
-    public HashMap<String,Object>querytnumber() throws Exception {
-
+    public HashMap<String,Object>querytnumber(@RequestBody ParameUtil parame) throws Exception {
          String url= "http://www.kuaidi100.com/query";
         HashMap<String,Object>params=new HashMap<>();
-
-      params.put("type","yuantong");
-        params.put("postid","806913122366095579");
+        System.err.println(parame.getType());
+        System.err.println(parame.getPostid());
+        params.put("type",parame.getType());
+        params.put("postid",parame.getPostid());
         String string = HttpClientUtil.get(url, params);
         System.err.println(string);
+        JSONObject jsonObject= JSONObject.parseObject(string);
+        String datastr = jsonObject.getString("data");
+        JSONArray  arr = JSONArray.parseArray(datastr);
+        List<Express> list = (List<Express>) JSONObject.parseArray(arr.toJSONString(), Express.class);
         HashMap<String,Object>map=new HashMap<>();
-        return null;
+        map.put("rows",list);
+        return map;
     }
 }
