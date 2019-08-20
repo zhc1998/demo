@@ -174,7 +174,6 @@
 
     //条件查询
     function queryData(){
-        alert($("#dran").val());
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
                 "commodityName": $("#commodityName").val(),
@@ -191,16 +190,15 @@
     function queryAllDran(){
         var zt = "a";
         $.ajax({
-            url:"../zch/queryAllDran",
+            url:"../zch/queryCommodityType",
             type:"post",
             dataType:"json",
             data:{zt:zt},
             success:function(data){
-                var html = "<option value=''>所有品牌</option>";
+                var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].name+"'>"+data[i].name+"</option>";
+                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
                 }
-
                 $("#dran").html(html);
             },
             error:function(){

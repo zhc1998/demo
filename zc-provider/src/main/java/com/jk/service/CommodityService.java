@@ -24,8 +24,8 @@ public class CommodityService implements ZcService {
         hashMap.put("result", result);
 
         //查询总条数
-        Integer count = zcDao.queryCommodityCount(hashMap);
-        resultPage.setTotal(count);
+        Long count = zcDao.queryCommodityCount(hashMap);
+        resultPage.setTotal(Integer.parseInt(count.toString()));
 
         resultPage.setPageNumber(result.getPageNumber());
         resultPage.setPageSize(result.getPageSize());
