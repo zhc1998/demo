@@ -46,7 +46,7 @@
 
     <!--修改-->
     <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-        update t_item t set t.commodityName = #{commodityName},t.inventory = #{inventory},t.artNo = #{artNo},t.TypeId = #{TypeId},t.commodityPrice=#{commodityPrice},t.pictureUrl = #{pictureUrl},newProduct = #{newProduct},itemId = #{itemId}    WHERE t.id = #{id}
+        update t_item t set t.commodityName = #{commodityName},t.inventory = #{inventory},t.artNo = #{artNo},t.TypeId = #{typeId},t.commodityPrice=#{commodityPrice},t.pictureUrl = #{pictureUrl},newProduct = #{newProduct},itemId = #{itemId}    WHERE t.id = #{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
@@ -59,7 +59,7 @@
              1,
              #{newProduct},
              #{inventory},
-             #{TypeId},
+             #{typeId},
              #{pictureUrl},
              #{itemId}
          )
