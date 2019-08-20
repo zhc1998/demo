@@ -51,7 +51,7 @@
         </div>
         <div class="form-group">
             <label >库存</label>
-            <input type="text" class="form-control" style="width: 300px;" th:value="${com.inventory}"  name="commodityName">
+            <input type="text" class="form-control" style="width: 300px;" th:value="${com.inventory}"  name="inventory">
         </div>
         <div class="form-group">
             <label >商品货号</label>
@@ -154,33 +154,6 @@
             }
         })
     }
-
-
-
-    //回显平牌
-    function  queryAllDran() {
-        var ids = $("#commodityType").val();
-        $.ajax({
-            url:"../zch/queryAllDran",
-            type:"post",
-            data:{ids:ids},
-            dataType:"json",
-            success:function(data){
-                var html = "<option value=''>所有分类</option>";
-                for(var i=0;i<data.length;i++){
-
-                    html+="<option value='"+data[i].type+"'>"+data[i].name+"</option>";
-
-                }
-
-                $("#name").html(html);
-            },
-            error:function(){
-                alert("查询商品平牌失败");
-            }
-        })
-    }
-
 
 </script>
 </html>
