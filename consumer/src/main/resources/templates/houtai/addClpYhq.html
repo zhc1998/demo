@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form role="form" id="formId">
+    <div class="form-group">
+        <label for="name">优惠券名称</label>
+        <input type="text" class="form-control"  name="yhqname" placeholder="优惠券名称"/>
+    </div>
+    <div class="form-group">
+        <label for="name">优惠券总数</label>
+        <input type="text" class="form-control"  name="yhqcount" placeholder="优惠券总数"/>
+    </div>
+    <div class="form-group">
+        <label for="name">优惠金额</label>
+        <input type="number" class="form-control"  name="yhqprice" placeholder="优惠金额"/>
+    </div>
+    <div class="form-group">
+        <label for="name">使用门槛</label>
+        <select class="form-control" name="yhqmenkan">
+            <option value="-1">请选择</option>
+            <option value="1">不限制</option>
+            <option value="2">满100元使用</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="name">会员等级</label>
+        <select class="form-control" name="yhqlevel">
+            <option value="-1">请选择</option>
+            <option value="1">所有会员</option>
+            <option value="2">超级会员</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="name">每人限领</label>
+        <select class="form-control" name="yhqlimit">
+            <option value="-1">请选择</option>
+            <option value="0">不限张</option>
+            <option value="1">1张</option>
+            <option value="2">2张</option>
+            <option value="3">3张</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="name">到期时间</label>
+        <input type="date" class="form-control"  name="yhqdate" placeholder="到期时间"/>
+    </div>
+    <div class="form-group">
+        <label for="name">使用说明</label><br>
+        <textarea name="yhqdes" placeholder="使用说明" rows="3"/>
+    </div>
+
+</form>
+</body>
+</html>

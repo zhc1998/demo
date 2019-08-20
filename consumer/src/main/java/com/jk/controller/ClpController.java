@@ -26,11 +26,6 @@ public class ClpController {
 
 
 
-    //班级课程管理 查询 跳页面
-    @RequestMapping("toShowYhq")
-    public String toShowYhq(){
-        return "showYhq";
-    }
 
     //优惠券 查询
     @RequestMapping("queryYhq")
@@ -80,7 +75,7 @@ public class ClpController {
     public String toUpdClpYhqPage(Model model,Integer id){
         Yhq yhq=clpService.toUpdClpYhqPage(id);
         model.addAttribute("yhq",yhq);
-        return "updClpYhqPage";
+        return "houtai/updClpYhqPage";
     }
 
     //updateYhq  修改 优惠券
@@ -96,7 +91,6 @@ public class ClpController {
     @RequestMapping("deleteYhqByName")
     @ResponseBody
     public void deleteYhqByName(String names){
-        System.out.println(names);
         clpService.deleteYhqByName(names);
     }
 

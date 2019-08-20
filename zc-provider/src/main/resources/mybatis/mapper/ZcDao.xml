@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.dao.ZcDao" >
-
+    <!--查询条数-->
     <select id="queryCommodityCount" resultType="long">
         select count(*) from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
         <include refid="sq"></include>
     </select>
-  <!--分页查询-->
-  <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
-      select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.selllikeHotCakes,te.inventory,ty.typeName   from t_item te
-      left join t_commoditytype ty on ty.typeId=te.TypeId
-      <include refid="sq"></include>
-      LIMIT #{start},#{end}
-  </select>
+    <!--分页查询-->
+    <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        <include refid="sq"></include>
+        LIMIT #{start},#{end}
+    </select>
 
-  <!--条件查询-->
+    <!--条件查询-->
     <sql id="sq">
         <where>
             <if test="result.typeIds!=null and result.typeIds!=''">
-               and ty.typeId = #{result.typeIds}
+                and ty.typeId = #{result.typeIds}
             </if>
             <if test="result.commodityName!=null and result.commodityName!=''">
-                and te.commodityName like '%${result.commodityName}%'
+                and te.commodityName = #{result.commodityName}
             </if>
             <if test="result.status!=null and result.status!=''">
                 and te.status = #{result.status}
             </if>
             <if test="result.is!=null and result.is!=0">
-                and te.newProduct = #{result.is} or te.selllikeHotCakes = #{result.is}
+                and te.newProduct = #{result.is}
             </if>
             <if test="result.dran!=null and result.dran!=''">
                 and br.name = #{result.dran}

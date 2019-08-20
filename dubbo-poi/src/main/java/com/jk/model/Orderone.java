@@ -23,7 +23,7 @@ public class Orderone implements Serializable {
 
     private Double amountpayable;//应付金额
 
-    private Integer state;//订单状态
+    private Integer state=1;//订单状态
 
     private String buyer;
 

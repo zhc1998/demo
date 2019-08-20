@@ -17,4 +17,37 @@
     <update id="saveDialog" parameterType="map">
         update t_user set password=#{sysNewPWInp} where userid=#{userid}
     </update>
+
+    <update id="updateAll1" parameterType="Integer">
+        update members set type =2 where id=#{id}
+    </update>
+
+    <update id="updateAll2" parameterType="Integer">
+        update members set type =1 where id=#{id}
+    </update>
+
+    <select id="login" parameterType="String" resultType="Audit">
+        select * from audit where name=#{name}
+    </select>
+
+    <update id="updateaudit1" parameterType="Integer">
+        update t_item set status =2 where id=#{id}
+    </update>
+
+    <update id="updateaudit2" parameterType="Integer">
+        update t_item set status =3 where id=#{id}
+    </update>
+
+    <!--查询条数-->
+    <select id="queryCommodityCount" resultType="long">
+        select count(*) from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+    </select>
+
+    <!--分页查询-->
+    <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        LIMIT #{start},#{end}
+    </select>
 </mapper>

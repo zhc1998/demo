@@ -9,9 +9,13 @@ import com.jk.model.Orderone;
 import com.jk.util.ParameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 
 @Service
 public class ZhfServiceImpl implements ZhfService{
@@ -38,6 +42,7 @@ public class ZhfServiceImpl implements ZhfService{
 
     @Override
     public Orderone queryorderbyid(Integer id) {
+
         return orderoneDao.selectByPrimaryKey(id);
     }
 
@@ -63,6 +68,21 @@ public class ZhfServiceImpl implements ZhfService{
         return hashMap;
 
     }
+
+    @Override
+    public void addorder(Orderone orderone) {
+
+
+
+        Random random = new Random();
+        String subjectno="";
+        SimpleDateFormat allTime = new SimpleDateFormat("YYYYMMddHHmmSSS");
+         subjectno += allTime.format(new Date())+random.nextInt(10);
+
+        orderone.setOrdernumber(subjectno);
+        orderoneDao.insertSelective(orderone);
+    }
+
 
 
 }

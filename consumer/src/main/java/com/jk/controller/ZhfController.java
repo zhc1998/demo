@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.model.Express;
 import com.jk.model.Familyhead;
+import com.jk.model.Members;
 import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
 import com.jk.util.HttpClientUtil;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +68,7 @@ public class ZhfController {
     public String showorderinfo(Integer id, Model model){
         Orderone orderone= zhfService.queryorderbyid(id);
         model.addAttribute("orderone",orderone);
-        return "showorderinfo";
+        return "houtai/showorderinfo";
     }
 //查询订单的商品列表
     @RequestMapping("queryordertable")
@@ -101,5 +104,30 @@ public class ZhfController {
         HashMap<String,Object>map=new HashMap<>();
         map.put("rows",list);
         return map;
+    }
+    //新增订单
+    @RequestMapping("addorbder")
+    @ResponseBody
+    public String addorbder(HttpSession session){
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Members members =new Members();
+        members.setId(1);
+        members.setNickname("赵浩范");
+        String artno="HHZC123";
+        Integer amount=3;
+        double commodityPrice=20.0;
+        Orderone orderone=new Orderone();
+        orderone.setConsignee("花祈梦");
+        orderone.setTel("12012541554");
+        orderone.setAddress("河南省洛阳市");
+        orderone.setAmount(amount);
+        Double count=amount*commodityPrice;
+        orderone.setTotalmoney(count);
+        orderone.setBuyer(members.getNickname());
+        orderone.setArtno(artno);
+        orderone.setOrdertime(sdf.format(new Date()));
+        zhfService.addorder(orderone);
+        return "suc";
     }
 }

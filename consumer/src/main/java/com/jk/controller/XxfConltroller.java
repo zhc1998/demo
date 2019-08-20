@@ -2,8 +2,10 @@ package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Highcharts;
+import com.jk.model.Members;
 import com.jk.model.User;
 import com.jk.service.XxfService;
+import com.jk.util.CheckImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("xxf")
@@ -22,20 +24,12 @@ public class XxfConltroller {
     private XxfService xxfService;
    /* @Autowired
     private StringRedisTemplate redisTemplate2;*/
-
-
-
-
-
-
     @RequestMapping("queryDayCount")
     @ResponseBody
     public List<Highcharts> queryDayCount(){
         List<Highcharts> list=xxfService.queryDayCount();
         return list;
     }
-
-
     @RequestMapping("login")
     @ResponseBody
     public String login(User user, HttpServletRequest request) {
@@ -69,6 +63,42 @@ public class XxfConltroller {
         }
         redisTemplate2.delete(key);*/
         request.getSession().setAttribute("user", user1);
+        return "0";
+    }
+
+
+
+    @RequestMapping("frontLogin")
+    @ResponseBody
+    public String frontLogin(Members members, HttpServletRequest request) {
+        Members members1 = xxfService.frontLogin(members.getUsername());
+        if (members1 == null) {
+            return "1";
+        }
+        if(!members1.getPassword().equals(members.getPassword())){
+            return "2";
+        }
+        request.getSession().setAttribute("members", members1);
+        return "0";
+    }
+
+
+    @RequestMapping("getcode")
+    public void df(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        CheckImgUtil.checkImg(request, response);
+    }
+
+    @RequestMapping("yz")
+    @ResponseBody
+    public String yz(Members members,String code,HttpServletRequest request){
+        String realcode = request.getSession().getAttribute("checkcode").toString();
+        if(!realcode.toLowerCase().equals(code.toLowerCase())){
+            return "1";
+        }
+        Members members1= xxfService.yz(members.getUsername());
+        if(members1==null){
+            return "2";
+        }
         return "0";
     }
 }
