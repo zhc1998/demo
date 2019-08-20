@@ -77,7 +77,7 @@ public class ZchController {
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
         model.addAttribute("list",list);
-        return "updCommodity";
+        return "houtai/updCommodity";
     }
 
     //修改商品
