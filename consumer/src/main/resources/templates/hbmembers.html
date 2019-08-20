@@ -93,18 +93,56 @@
             columns: [
                 {field: 'checkbox', checkbox: true},  //开启复选框
                 {field: 'id', title: '编号', width: 300},      //  列    field   代表是 后台  传过来的值
-                {field: 'name', title: '昵称', width: 300},
-                {field: 'gender', title: '性别', width: 300},
-                {field: 'headportrait', title: '头像', width: 300},
-                {field: 'wechataddress', title: '微信地址', width: 300},
-                {field: 'zctime', title: '注册日期', width: 300},
-                {field: 'xxxx', title: '操作',
+                {field: 'username', title: '昵称', width: 300},
+                {field: 'password', title: '密码', width: 300},
+                {field: 'ming', title: '头像',
                     formatter: function (value,row,index){
-                        var content = "";
-                        return content;}
-                    , width: 300}
+                    return "<img src='../"+value+"'>"
+                    }
+                ,width: 300},
+                {field: 'phone', title: '手机号', width: 300},
+                {field: 'gender', title: '性别',
+                    formatter: function (value,row,index){
+                        if(value=="1"){
+                            return "男";
+                        }
+                        if(value=="2"){
+                            return "女";
+                        }
+                        },
+                    width: 300},
+                {field:'type',title:'状态',
+                    formatter: function(value,row,index){
+                        var content ="";
+                        if (value =="1") {
+                            content+="<a href='javascript:updateAll1("+row.id+")'>拉黑</a>";
+                        }else if(value =="2"){
+                            content+= "<a href='javascript:updateAll2("+row.id+")'>正常</a>";
+                        }
+                        return content;
+                    },width: 300}
             ]
         });
     }
+
+    updateAll1 = function(id){
+        $.ajax({
+            url:"../hb/updateAll1",
+            data:{id:id},
+            success:function(data){
+                location.href=location;
+            }
+        })
+    };
+
+    updateAll2 = function(id){
+        $.ajax({
+            url:"../hb/updateAll2",
+            data:{id:id},
+            success:function(data){
+                location.href=location;
+            }
+        })
+    };
 </script>
 </html>

@@ -129,6 +129,15 @@ public class ToShowController {
         return "redirect:../toshow/toIndex";
     }
 
+    //跳转到用户前台
     @RequestMapping("showye")
     public String showye(){ return "showye"; }
+
+    //跳转审核登录
+    @RequestMapping("audit")
+    public String audit(){ return "audit"; }
+
+    //跳转审核页面
+    @RequestMapping("querygoods")
+    public String querygoods(){ return "querygoods"; }
 }
