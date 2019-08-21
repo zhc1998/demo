@@ -5,6 +5,7 @@ import com.jk.dao.ZcDao;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
+import com.jk.model.commodity.ParticularsModel;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -121,6 +122,18 @@ public class CommodityService implements ZcService {
     @Override
     public List<DrandModel> queryAllDranList(Integer itemId) {
         return zcDao.queryAllDranList(itemId);
+    }
+
+    //查询详情
+    @Override
+    public ParticularsModel loadParticulars(Integer ids) {
+        return zcDao.loadParticulars(ids);
+    }
+
+    //根据类型Id查询品牌
+    @Override
+    public List<DrandModel> angeDran(Integer id) {
+        return zcDao.angeDran(id);
     }
 
 

@@ -37,7 +37,7 @@
     <button type="button"  class="btn btn-Warning btn-lg" onclick="upd()">修改</button>
     <form role="form" id="updForm">
         <input type="hidden" name="id" id="ids" style="width: 300px;" th:value="${id}"  />
-        <input type="text" name="id" id="typeIds" style="width: 300px;" th:value="${com.typeId}"/>
+        <input type="hidden" name="id" id="typeIds" style="width: 300px;" th:value="${com.typeId}"/>
         <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  />
         <div class="form-group">
             <label >商品名称</label>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-md-10" >
                     <img id="aa" th:src="${com.pictureUrl}" height="50px">
-                    <input type="hidden" id="qqq" th:name="pictureUrl" />
+                    <input type="hidden" id="qqq" name="pictureUrl" />
                     <input type="file" style="width: 10px;"  name="imgg" id="headImg">
                 </div>
             </div>
