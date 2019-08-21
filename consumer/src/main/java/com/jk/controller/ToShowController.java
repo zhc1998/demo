@@ -17,6 +17,13 @@ public class ToShowController {
     public String tofrontLogin(){
         return "ffqt/frontLogin";
     }
+    //跳转前台修改密码手机验证
+    @RequestMapping("toYz")
+    public String toYz(){
+        return "yz";
+    }
+
+
     //跳转修改密码页面
     @RequestMapping("toUpdatePassword")
     public String toUpdatePassword(){
@@ -134,6 +141,15 @@ public class ToShowController {
         return "redirect:../toshow/toIndex";
     }
 
+    //跳转到用户前台
     @RequestMapping("showye")
     public String showye(){ return "hbqt/showye"; }
+
+    //跳转审核登录
+    @RequestMapping("audit")
+    public String audit(){ return "audit"; }
+
+    //跳转审核页面
+    @RequestMapping("querygoods")
+    public String querygoods(){ return "querygoods"; }
 }

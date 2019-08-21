@@ -61,23 +61,21 @@ public class ZchController {
         return resultPage;
     }
 
-    //品牌条件查询
+    //加载品牌
     @RequestMapping("queryAllDran")
     @ResponseBody
-    public List<DrandModel> queryAllDran(Integer ids,String zt){
+    public List<DrandModel> queryAllDran(){
 
-        return zcService.queryAllDran(ids,zt);
+        return zcService.queryAllDran();
     }
 
     //查询回显
     @RequestMapping("loadOneModel")
     public String loadOneModel(Integer id,Model model){
         CommodityModel commodityModel = zcService.loadOneModel(id);
-        List<CommodityTypeModel> list = zcService.queryCommodityType();
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
-        model.addAttribute("list",list);
-        return "houtai/updCommodity";
+        return "updCommodity";
     }
 
     //修改商品
@@ -128,6 +126,18 @@ public class ZchController {
     public DrandModel loadDescribe(Integer ids){
         DrandModel drandModel =  zcService.loadDescribe(ids);
         return drandModel;
+    }
+
+    //修改或新增品牌
+    @RequestMapping("updAllDran")
+    @ResponseBody
+    public List<DrandModel> updAllDran(Integer ids){
+        //根据类型Id查询平牌类型关联Id
+        DrandModel list = zcService.updAllDran(ids);
+        //根据批品牌类型管理Id查询 itemid 平牌关联商品Id
+        Integer itemId = list.getType();
+        List<DrandModel> drandModels = zcService.queryAllDranList(itemId);
+        return drandModels;
     }
 
 }

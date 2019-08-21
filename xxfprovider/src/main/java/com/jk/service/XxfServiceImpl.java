@@ -45,10 +45,14 @@ public class XxfServiceImpl implements XxfService{
         return xxfDao.frontLogin(username);
     }
 
+
+
     @Override
-    public Members yz(String username) {
-        return xxfDao.yz(username);
+    public void addMembers(Members members) {
+        xxfDao.addMembers(members);
     }
+
+
 
 
 }

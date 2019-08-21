@@ -10,6 +10,7 @@
  */
 package com.jk.dao;
 
+import com.jk.model.Audit;
 import com.jk.model.Tree;
 import com.jk.model.commodity.CommodityModel;
 
@@ -35,4 +36,18 @@ public interface HbDao {
     List<CommodityModel> HashMap(HashMap<String, Object> hashMap);
 
     void saveDialog(Map map);
+
+    void updateAll1(Integer id);
+
+    void updateAll2(Integer id);
+
+    Audit login(String name);
+
+    void updateaudit1(Integer id);
+
+    void updateaudit2(Integer id);
+
+    Long queryCommodityCount(HashMap<String, Object> hashMap);
+
+    List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
 }
