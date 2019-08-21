@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,15 @@ public class ToShowController {
     public String tofrontLogin(){
         return "ffqt/frontLogin";
     }
+    //跳转前台修改密码手机验证
+    @RequestMapping("toYz")
+    public String toYz(){
+        return "yz";
+    }
+
+
+
+
     //跳转修改密码页面
     @RequestMapping("toUpdatePassword")
     public String toUpdatePassword(){
@@ -27,6 +37,10 @@ public class ToShowController {
     @RequestMapping("toZhuCe")
     public String toZhuCe(){
         return "zhuCe";
+    }
+    @RequestMapping("toZhuCe2")
+    public String toZhuCe2(){
+        return "zhuCe2";
     }
 
 
@@ -160,4 +174,19 @@ public class ToShowController {
     //跳转审核页面
     @RequestMapping("querygoods")
     public String querygoods(){ return "querygoods"; }
+
+
+    //跳转到详情页面
+    @RequestMapping("particulars")
+    public String particulars(Integer id,Model model){
+        model.addAttribute("ids",id);
+        return "houtai/particulars";
+    }
+
+
+    //跳转到前台HTML
+    @RequestMapping("index")
+    public String index(){
+        return "hbqt/index";
+    }
 }

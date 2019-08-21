@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,12 +33,13 @@ public class SysLogAspect {
 	 private XxfService xxfService;
 
 
+
 	
-	@Pointcut("execution(* com.jk.controller.XxfConltroller.login(..))")
+	@Pointcut("execution(* com.jk.controller.XxfConltroller.frontLogin (..))")
 	public void logPointCut() {}
 	 //后置通知
     @AfterReturning( value= "logPointCut()" ,returning="returningValue" ) 
-    public void myAfter(JoinPoint jp,Object returningValue) throws UnknownHostException {//returningValue是返回值，但需要告诉spring
+    public void myAfter(JoinPoint jp,Object returningValue){//returningValue是返回值，但需要告诉spring
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			Date date=new Date();
 			String time = sdf.format(date);
@@ -50,4 +53,11 @@ public class SysLogAspect {
 				xxfService.updateHighcharts(highcharts2.getId());
 			}
     }
+
+
+
+
+
+
+
 }

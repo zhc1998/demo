@@ -34,7 +34,7 @@ public class ResultPage implements Serializable {
 
 	private Integer is;//新品或热销
 
-	private String dran;//品牌
+	private Integer dran;//品牌
 
 	public Integer getTotal() {
 		return total;
@@ -100,11 +100,11 @@ public class ResultPage implements Serializable {
 		this.is = is;
 	}
 
-	public String getDran() {
+	public Integer getDran() {
 		return dran;
 	}
 
-	public void setDran(String dran) {
+	public void setDran(Integer dran) {
 		this.dran = dran;
 	}
 

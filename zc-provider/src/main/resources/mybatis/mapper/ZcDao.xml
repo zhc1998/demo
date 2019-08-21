@@ -3,35 +3,36 @@
 <mapper namespace="com.jk.dao.ZcDao" >
     <!--查询条数-->
     <select id="queryCommodityCount" resultType="long">
-        select count(*) from t_item te
+        select count(*)  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
         <include refid="sq"></include>
     </select>
     <!--分页查询-->
     <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
-        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
+        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
         <include refid="sq"></include>
         LIMIT #{start},#{end}
     </select>
 
+
     <!--条件查询-->
     <sql id="sq">
         <where>
+            and  te.status = 2
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>
             <if test="result.commodityName!=null and result.commodityName!=''">
                 and te.commodityName = #{result.commodityName}
             </if>
-            <if test="result.status!=null and result.status!=''">
-                and te.status = #{result.status}
-            </if>
             <if test="result.is!=null and result.is!=0">
                 and te.newProduct = #{result.is}
             </if>
             <if test="result.dran!=null and result.dran!=''">
-                and br.name = #{result.dran}
+                and br.itemId = #{result.dran}
             </if>
         </where>
     </sql>
@@ -43,21 +44,20 @@
 
     <!--修改-->
     <update id="updCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-        UPDATE t_item SET commodityName = #{commodityName},artNo = #{artNo},commodityPrice = #{commodityPrice},TypeId = #{TypeId},itemId = #{itemId}  ,pictureUrl = #{pictureUrl}  WHERE id = #{id}
+        update t_item t set t.commodityName = #{commodityName},t.inventory = #{inventory},t.artNo = #{artNo},t.TypeId = #{typeId},t.commodityPrice=#{commodityPrice},t.pictureUrl = #{pictureUrl},newProduct = #{newProduct},itemId = #{itemId}    WHERE t.id = #{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
 
-         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,selllikeHotCakes,inventory,TypeId,pictureUrl,itemId)
+         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId)
          VALUES(
              #{commodityName},
              #{artNo},
              #{commodityPrice},
              1,
-             1,
-             1,
+             #{newProduct},
              #{inventory},
-             #{TypeId},
+             #{typeId},
              #{pictureUrl},
              #{itemId}
          )
@@ -75,5 +75,21 @@
         select br.name,br.type  from brand br
         left join t_commoditytype ty on ty.itemId = br.type
         WHERE br.type = #{value}
+    </select>
+
+    <!--查询平牌Id-->
+    <select id="updAllDran" parameterType="int" resultType="com.jk.model.commodity.DrandModel">
+        select br.type  from brand br
+        left join t_commoditytype ty on ty.itemId = br.type
+        WHERE ty.itemId = #{value} GROUP BY ty.itemId
+    </select>
+
+    <!--查询详情-->
+    <select id="loadParticulars" parameterType="int" resultType="com.jk.model.commodity.ParticularsModel">
+        select t.color ,t.color ,t.weight,t.crowd,it.commodityName,ty.typeName,br.name,br.introduction as introduction   from  t_toyproperties t,t_item it,t_commoditytype ty,brand br
+        WHERE t.itemId = it.itemId
+        and   t.typeId = ty.typeId
+        and   t.dranId = br.itemId
+        and   it.id = #{value}
     </select>
 </mapper>

@@ -22,5 +22,9 @@ public interface XxfService {
 
     Members frontLogin(String username);
 
-    Members yz(String username);
+    void addMembers(Members members);
+
+    Members queryMembers(String phone);
+
+    void updateMembers(Members members);
 }
