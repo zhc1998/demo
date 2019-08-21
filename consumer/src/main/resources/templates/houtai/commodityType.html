@@ -74,11 +74,31 @@
                 {field:'idShow',title:'是否展示',formatter:function () {
                         return "<font color='royalblue'>√</font>";
                     }},
-                {field:'cz',title:'操作',formatter:function(){
-                    return "a";
+                {field:'brand',title:'品牌',formatter:function (value,row,index) {
+                        return "<select  style='width: 300px;'  class='form-control' name='"+row.typeId+"' id='"+row.typeId+"' onchange='angeDran("+row.typeId+")'><option  >请选择</option><option  value='"+row.typeId+"'>品牌</option><option>带开发</option></select>";
                     }},
             ]
         });
+    }
+    
+    //查询平牌
+    function angeDran(id) {
+        $.ajax({
+            url:"../zch/angeDran",
+            type:"post",
+            data:{id:id},
+            dataType:"json",
+            success:function(data){
+                var html = '';
+                for(var i=0;i<data.length;i++){
+                    html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+                }
+                $("[name='"+id+"']").html(html);
+            },
+            error:function () {
+                alert("查询品牌失败");
+            }
+        })
     }
 </script>
 </html>

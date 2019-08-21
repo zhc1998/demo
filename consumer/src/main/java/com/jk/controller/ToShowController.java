@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -158,4 +159,19 @@ public class ToShowController {
     //跳转审核页面
     @RequestMapping("querygoods")
     public String querygoods(){ return "querygoods"; }
+
+
+    //跳转到详情页面
+    @RequestMapping("particulars")
+    public String particulars(Integer id,Model model){
+        model.addAttribute("ids",id);
+        return "houtai/particulars";
+    }
+
+
+    //跳转到前台HTML
+    @RequestMapping("index")
+    public String index(){
+        return "hbqt/index";
+    }
 }

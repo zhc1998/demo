@@ -72,13 +72,6 @@
                 {field:'introduction',title:'品牌描述',formatter:function(value,row,index){
                     return "<a href='javascript:queryDescribe("+row.id+")'>描述</a>";
                     }},
-                {field:'version',title:'是否展示',formatter:function(value,row,index){
-                    var version = value==0?"<font color='royalblue'>√</font>":"";
-                    return version;
-                    }},
-                {field:'zc',title:'操作',formatter:function(){
-                    return "<button type='button' style='size: A3' class='btn btn-success' >修改</button>";
-                }},
             ]
         });
     }

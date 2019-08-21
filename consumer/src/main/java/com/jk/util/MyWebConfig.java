@@ -4,12 +4,13 @@ package com.jk.util;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-@Configuration
+//@Configuration
 public class MyWebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MyInterceptor())
                 .addPathPatterns("/**")       //拦截项目中的哪些请求
+                //不拦截的请求
                 .excludePathPatterns("/toshow/toIndex")
                 .excludePathPatterns("/toshow/toUpdatePassword")
                 .excludePathPatterns("/toshow/tofrontLogin")

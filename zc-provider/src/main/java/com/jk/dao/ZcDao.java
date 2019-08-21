@@ -3,6 +3,7 @@ package com.jk.dao;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
+import com.jk.model.commodity.ParticularsModel;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -32,11 +33,9 @@ public interface ZcDao {
     List<DrandModel> zcService();
 
     //查询品牌名称
-    //@Select("select id,name  from  brand")
     List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
-    //@Select("SELECT *  from t_item WHERE id = 1")
     CommodityModel loadOneModel(Integer id);
 
     //修改
@@ -57,6 +56,20 @@ public interface ZcDao {
     DrandModel loadDescribe(Integer ids);
 
     //查询平牌
-    @Select("select br.name,br.id  from brand br")
+    @Select("SELECT *  from  brand")
     List<DrandModel> queryDran();
+
+    //根据类型Id查询平牌类型管理Id
+    DrandModel updAllDran(Integer ids);
+
+    //根据批品牌类型管理Id查询 itemid 平牌关联商品Id
+    @Select("select itemId,name from  brand WHERE type = #{value}")
+    List<DrandModel> queryAllDranList(Integer itemId);
+
+    //查询详情
+    ParticularsModel loadParticulars(Integer ids);
+
+    //根据类型Id查询品牌
+    @Select("select br.name,br.id  from  t_commoditytype ty,brand br WHERE ty.typeId = br.type and ty.typeId = #{value}")
+    List<DrandModel> angeDran(Integer id);
 }

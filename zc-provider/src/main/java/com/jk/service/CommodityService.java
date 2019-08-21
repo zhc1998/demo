@@ -5,6 +5,7 @@ import com.jk.dao.ZcDao;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
+import com.jk.model.commodity.ParticularsModel;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -65,14 +66,10 @@ public class CommodityService implements ZcService {
 
     //查询品牌名称
     @Override
-    public List<DrandModel> queryAllDran(Integer ids,String zt) {
+    public List<DrandModel> queryAllDran() {
 
-        if(zt==null){
-            return zcDao.queryAllDran(ids);
-        }else{
             List<DrandModel> drandModels = zcDao.queryDran();
             return drandModels;
-        }
     }
 
     //查询回显
@@ -112,6 +109,31 @@ public class CommodityService implements ZcService {
     @Override
     public DrandModel loadDescribe(Integer ids) {
         return zcDao.loadDescribe(ids);
+    }
+
+    //查询平牌Id
+    @Override
+    public DrandModel updAllDran(Integer ids) {
+        DrandModel dran = zcDao.updAllDran(ids);
+        return dran;
+    }
+
+    //根据批品牌类型管理Id查询 itemid 平牌关联商品Id
+    @Override
+    public List<DrandModel> queryAllDranList(Integer itemId) {
+        return zcDao.queryAllDranList(itemId);
+    }
+
+    //查询详情
+    @Override
+    public ParticularsModel loadParticulars(Integer ids) {
+        return zcDao.loadParticulars(ids);
+    }
+
+    //根据类型Id查询品牌
+    @Override
+    public List<DrandModel> angeDran(Integer id) {
+        return zcDao.angeDran(id);
     }
 
 
