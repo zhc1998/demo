@@ -21,14 +21,12 @@
     <!--条件查询-->
     <sql id="sq">
         <where>
+            and  te.status = 2
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>
             <if test="result.commodityName!=null and result.commodityName!=''">
                 and te.commodityName = #{result.commodityName}
-            </if>
-            <if test="result.status!=null and result.status!=''">
-                and te.status = #{result.status}
             </if>
             <if test="result.is!=null and result.is!=0">
                 and te.newProduct = #{result.is}
@@ -84,5 +82,14 @@
         select br.type  from brand br
         left join t_commoditytype ty on ty.itemId = br.type
         WHERE ty.itemId = #{value} GROUP BY ty.itemId
+    </select>
+
+    <!--查询详情-->
+    <select id="loadParticulars" parameterType="int" resultType="com.jk.model.commodity.ParticularsModel">
+        select t.color ,t.color ,t.weight,t.crowd,it.commodityName,ty.typeName,br.name,br.introduction as introduction   from  t_toyproperties t,t_item it,t_commoditytype ty,brand br
+        WHERE t.itemId = it.itemId
+        and   t.typeId = ty.typeId
+        and   t.dranId = br.itemId
+        and   it.id = #{value}
     </select>
 </mapper>

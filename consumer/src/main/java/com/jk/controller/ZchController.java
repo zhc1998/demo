@@ -6,6 +6,7 @@ import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
 import com.jk.model.Orderone;
+import com.jk.model.commodity.ParticularsModel;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class ZchController {
     @RequestMapping("queryCommodityType")
     @ResponseBody
     public List<CommodityTypeModel> queryCommodityType(){
+
         return zcService.queryCommodityType();
     }
 
@@ -82,6 +84,8 @@ public class ZchController {
     @RequestMapping("updCommodity")
     @ResponseBody
     public boolean updCommodity(CommodityModel commodityModel){
+        String str=commodityModel.getPictureUrl().substring(1);
+        commodityModel.setPictureUrl(str);
         if(commodityModel.getId()!=null){
             zcService.updCommodity(commodityModel);
             return true;
@@ -138,6 +142,23 @@ public class ZchController {
         Integer itemId = list.getType();
         List<DrandModel> drandModels = zcService.queryAllDranList(itemId);
         return drandModels;
+    }
+
+    //加载商品详情
+    @RequestMapping("loadParticulars")
+    @ResponseBody
+    public ParticularsModel loadParticulars(Integer ids){
+        ParticularsModel particularsModel = zcService.loadParticulars(ids);
+        System.out.println(particularsModel);
+        return particularsModel;
+    }
+
+    //根据类型查询品牌
+    @RequestMapping("angeDran")
+    @ResponseBody
+    public List<DrandModel> angeDran(Integer id){
+        return zcService.angeDran(id);
+
     }
 
 }

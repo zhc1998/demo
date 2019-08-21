@@ -4,6 +4,7 @@ import com.jk.model.Orderone;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
+import com.jk.model.commodity.ParticularsModel;
 import com.jk.util.ResultPage;
 
 import java.util.List;
@@ -38,4 +39,8 @@ public interface ZcService {
     DrandModel updAllDran(Integer ids);
 
     List<DrandModel> queryAllDranList(Integer itemId);
+
+    ParticularsModel loadParticulars(Integer ids);
+
+    List<DrandModel> angeDran(Integer id);
 }
