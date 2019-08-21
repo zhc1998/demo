@@ -25,6 +25,8 @@ public class ToShowController {
     }
 
 
+
+
     //跳转修改密码页面
     @RequestMapping("toUpdatePassword")
     public String toUpdatePassword(){
@@ -34,6 +36,10 @@ public class ToShowController {
     @RequestMapping("toZhuCe")
     public String toZhuCe(){
         return "zhuCe";
+    }
+    @RequestMapping("toZhuCe2")
+    public String toZhuCe2(){
+        return "zhuCe2";
     }
 
 
@@ -160,11 +166,18 @@ public class ToShowController {
         return "suditFailure";
     }
 
+
     //跳转到详情页面
     @RequestMapping("particulars")
     public String particulars(Integer id,Model model){
         model.addAttribute("ids",id);
         return "houtai/particulars";
+    }
 
+
+    //跳转到前台HTML
+    @RequestMapping("index")
+    public String index(){
+        return "hbqt/index";
     }
 }

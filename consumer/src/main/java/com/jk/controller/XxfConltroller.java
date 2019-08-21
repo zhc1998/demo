@@ -112,8 +112,13 @@ public class XxfConltroller {
 
     @RequestMapping("huoCode")
     @ResponseBody
-    public String huoCode(String phone){
-        String url = "https://api.netease.im/sms/sendcode.action";
+    public String huoCode(Members members2){
+        Members members =xxfService.queryMembers(members2.getPhone());
+        if(members==null||!members.getUsername().equals(members2.getUsername())){
+                 return "1";
+        }
+
+       /* String url = "https://api.netease.im/sms/sendcode.action";
         String CurTime=String.valueOf(new Date().getTime());
         String Nonce= UUID.randomUUID().toString().replace("-", "");
 
@@ -125,7 +130,7 @@ public class XxfConltroller {
 
 
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("mobile",phone);
+        params.put("mobile",members2.getPhone());
         params.put("templateid","14798448");
 
         try {
@@ -134,30 +139,60 @@ public class XxfConltroller {
             String code=jsonObject.getString("code");
 
             if("200".equals(code)){
-                String objcode = jsonObject.getString("obj");
-
-                String key="phone"+phone;
+                String objcode = jsonObject.getString("obj");*/
+                String objcode="1234";
+                String key="phone"+members2.getPhone();
                 List<Object> list = new ArrayList<Object>();
-                StringBuffer stringBuffer = new StringBuffer(objcode);
-                stringBuffer.append(":"+code);
-
-                if(!redisTemplate.hasKey(key)){
-                    redisTemplate.opsForList().leftPush(key, stringBuffer);
+                    redisTemplate.opsForValue().set(key, objcode);
                     redisTemplate.expire(key, 5, TimeUnit.MINUTES);
-                }else{
-                    redisTemplate.opsForList().leftPop(key);
-                    redisTemplate.opsForList().leftPush(key, stringBuffer);
-                    redisTemplate.expire(key, 5, TimeUnit.MINUTES);
-                }
-            }
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
         return "0";
     }
 
+    @RequestMapping("huoCode2")
+    @ResponseBody
+    public String huoCode2(Members members2){
+        Members members =xxfService.queryMembers(members2.getPhone());
+          if(members!=null){
+               return "1";
+          }
 
+       /* String url = "https://api.netease.im/sms/sendcode.action";
+        String CurTime=String.valueOf(new Date().getTime());
+        String Nonce= UUID.randomUUID().toString().replace("-", "");
+
+        HashMap<String, Object> headers = new HashMap<String, Object>();
+        headers.put("AppKey", "b9fa9dcb8c8661b78808db9dd18977c0");
+        headers.put("Nonce", Nonce);
+        headers.put("CurTime", CurTime);
+        headers.put("CheckSum", CheckSumBuilder.getCheckSum("7c7427caa619", Nonce, CurTime));
+
+
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("mobile",members2.getPhone());
+        params.put("templateid","14798448");
+
+        try {
+            String str= HttpClientUtil.post(url, params, headers);
+            JSONObject jsonObject = JSONObject.parseObject(str);
+            String code=jsonObject.getString("code");
+
+            if("200".equals(code)){
+                String objcode = jsonObject.getString("obj");*/
+        String objcode="1234";
+        String key="phone"+members2.getPhone();
+        List<Object> list = new ArrayList<Object>();
+        redisTemplate.opsForValue().set(key, objcode);
+        redisTemplate.expire(key, 5, TimeUnit.MINUTES);
+        /*} catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }*/
+        return "0";
+    }
 
     @RequestMapping("addMembers")
     @ResponseBody
@@ -186,15 +221,12 @@ public class XxfConltroller {
     @RequestMapping("queryCodeByPhone")
     @ResponseBody
     public String queryCodeByPhone(Members members){
-        Members members1=xxfService.frontLogin(members.getUsername());
-        if(!members1.getPhone().equals(members.getPhone())){
-            return "1";
-        }
         String key="phone"+members.getPhone();
         String code = (String) redisTemplate.opsForValue().get(key);
         if(!members.getCode().equals(code)){
               return "2";
         }
+        xxfService.updateMembers(members);
         return "0";
     }
 

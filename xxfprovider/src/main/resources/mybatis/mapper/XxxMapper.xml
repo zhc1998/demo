@@ -20,8 +20,13 @@
         select * from members where username=#{username}
     </select>
     <insert id="addMembers">
-        insert into members(username,password,mimg,phone,gender,type) values(#{username},#{password},#{mimg},#{phone},#{gender},#{type})
+        insert into members(username,password,mimg,phone,gender,type,nickname) values(#{username},#{password},#{mimg},#{phone},#{gender},#{type},#{nickname})
     </insert>
-
+<select id="queryMembers" resultType="members">
+    select * from members where phone=#{phone}
+</select>
+    <update id="updateMembers">
+        update members set password=#{newpassword} where phone=#{phone}
+    </update>
  
 </mapper>
