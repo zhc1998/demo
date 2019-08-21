@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="formId">
+    <div class="form-group" style="margin-left:50%">
+        <label >账号</label>
+        <input  name="username" type="text" class="form-control" style="width:200px;"></input>
+    </div >
+    <div class="form-group" style="margin-left:50%">
+        <label >密码</label>
+        <input  name="password" type="text" class="form-control" style="width:200px;"></input>
+    </div>
+    <div class="form-group" style="margin-left:50%">
+        <label >昵称</label>
+        <input  name="nickname" type="text" class="form-control" style="width:200px;"></input>
+    </div>
+    <div class="form-group " style="margin-left:50%">
+        <label >密保手机号</label>
+        <input  name="phone" id="phone" type="text" class="form-control" style="width:200px;" onblur="aaPhone()"></input>
+        <span id="msg"></span><br>
+        <a href="javascript:huo()" class="easyui-linkbutton">获取验证码</a>   <span id="date"></span>
+        <input id="code" name="code" type="text" class="form-control" style="width:200px;"></input>
+    </div>
+    <div class="form-group" style="margin-left:50%">
+        <label >性别</label>
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" value="1" checked> 男
+            </label>
+            <label>
+                <input type="radio" name="gender" value="2" checked>女
+            </label>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:50%">
+        <label >头像</label>
+        <input type="hidden" name="mimg" id="imgId"/>
+        <input type="file" id="imgFileBTN" />
+        <div id="showImgDiv" style="width: 150px;height: 200px;border-style:solid;border-width:1px; border-color:black;">
+            <img src="" id="showImg" style="width: 80px">
+        </div>
+        <div id="showBars" ></div>
+    </div>
+</form>
+</body>
+</html>

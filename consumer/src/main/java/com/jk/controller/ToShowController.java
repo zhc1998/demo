@@ -24,6 +24,8 @@ public class ToShowController {
     }
 
 
+
+
     //跳转修改密码页面
     @RequestMapping("toUpdatePassword")
     public String toUpdatePassword(){
@@ -33,6 +35,10 @@ public class ToShowController {
     @RequestMapping("toZhuCe")
     public String toZhuCe(){
         return "zhuCe";
+    }
+    @RequestMapping("toZhuCe2")
+    public String toZhuCe2(){
+        return "zhuCe2";
     }
 
 

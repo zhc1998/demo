@@ -52,7 +52,15 @@ public class XxfServiceImpl implements XxfService{
         xxfDao.addMembers(members);
     }
 
+    @Override
+    public Members queryMembers(String phone) {
+        return xxfDao.queryMembers(phone);
+    }
 
+    @Override
+    public void updateMembers(Members members) {
+        xxfDao.updateMembers(members);
+    }
 
 
 }
