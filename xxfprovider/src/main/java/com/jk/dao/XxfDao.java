@@ -22,4 +22,7 @@ public interface XxfDao {
 
     void addMembers(Members members);
 
+    Members queryMembers(String phone);
+
+    void updateMembers(Members members);
 }
