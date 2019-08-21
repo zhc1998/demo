@@ -25,4 +25,8 @@ public interface HbService {
     void updateaudit2(Integer id);
 
     ResultPage queryCommodity(ResultPage result);
+
+    ResultPage suditFailure(ResultPage result);
+
+    void delAll(Integer [] ids);
 }

@@ -43,4 +43,6 @@ public interface ZcService {
     ParticularsModel loadParticulars(Integer ids);
 
     List<DrandModel> angeDran(Integer id);
+
+    void delCommodity(Integer ids);
 }

@@ -136,5 +136,11 @@ public class CommodityService implements ZcService {
         return zcDao.angeDran(id);
     }
 
+    //删除
+    @Override
+    public void delCommodity(Integer ids) {
+        zcDao.delCommodity(ids);
+    }
+
 
 }

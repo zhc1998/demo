@@ -21,7 +21,7 @@
     <!--条件查询-->
     <sql id="sq">
         <where>
-            and  te.status = 2
+            and  te.status = 1
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>

@@ -4,6 +4,7 @@ import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
 import com.jk.model.commodity.ParticularsModel;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -72,4 +73,8 @@ public interface ZcDao {
     //根据类型Id查询品牌
     @Select("select br.name,br.id  from  t_commoditytype ty,brand br WHERE ty.typeId = br.type and ty.typeId = #{value}")
     List<DrandModel> angeDran(Integer id);
+
+    //删除
+    @Delete("DELETE from t_item WHERE id = #{value}")
+    void delCommodity(Integer ids);
 }

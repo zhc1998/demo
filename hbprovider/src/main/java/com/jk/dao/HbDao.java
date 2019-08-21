@@ -50,4 +50,10 @@ public interface HbDao {
     Long queryCommodityCount(HashMap<String, Object> hashMap);
 
     List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
+
+    Long suditFailure(HashMap<String, Object> hashMap);
+
+    List<CommodityModel> suditFailureList(HashMap<String, Object> hashMap);
+
+    void delAll(Integer[] ids);
 }

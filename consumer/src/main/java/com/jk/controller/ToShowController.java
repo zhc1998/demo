@@ -154,6 +154,12 @@ public class ToShowController {
     @RequestMapping("querygoods")
     public String querygoods(){ return "querygoods"; }
 
+    //跳转审核失败
+    @RequestMapping("suditFailure")
+    public String suditFailure(){
+        return "suditFailure";
+    }
+
     //跳转到详情页面
     @RequestMapping("particulars")
     public String particulars(Integer id,Model model){

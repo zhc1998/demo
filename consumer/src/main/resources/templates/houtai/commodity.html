@@ -143,10 +143,30 @@
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>||<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button>";
+                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>||<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button><button type='button' class='btn btn-default btn-danger' onclick='del("+row.id+")'>删除</button>";
                     }},
             ]
         });
+    }
+
+    //删除
+    function del(ids) {
+        if(confirm("你确定删除Id为"+ids+"的这条数据吗")){
+            $.ajax({
+                url:"../zch/delCommodity",
+                type:"post",
+                data:{ids:ids},
+                dataType:"json",
+                success:function(data){
+                    location.href="../toshow/toCommodity";
+                },
+                error:function(){
+                    alert("删除失败");
+                }
+
+            })
+        }
+
     }
 
     //详情

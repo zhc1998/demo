@@ -5,7 +5,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
-import com.jk.model.Orderone;
 import com.jk.model.commodity.ParticularsModel;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
+import java.util.Random;
+
 @Controller
 @RequestMapping("zch")
 public class ZchController {
@@ -107,6 +108,24 @@ public class ZchController {
     @RequestMapping("addCommodity")
     @ResponseBody
     public boolean addCommodity(CommodityModel commodityModel){
+        String val = "";
+        Random random = new Random();
+        for ( int i = 0; i < 7; i++ )
+        {
+            String str = random.nextInt( 2 ) % 2 == 0 ? "num" : "char";
+            if ( "char".equalsIgnoreCase( str ) )
+            { // 产生字母
+                int nextInt = random.nextInt( 2 ) % 2 == 0 ? 65 : 97;
+                // System.out.println(nextInt + "!!!!"); 1,0,1,1,1,0,0
+                val += (char) ( nextInt + random.nextInt( 26 ) );
+            }
+            else if ( "num".equalsIgnoreCase( str ) )
+            { // 产生数字
+                val += String.valueOf( random.nextInt( 10 ) );
+            }
+        }
+        commodityModel.setArtNo(val);
+
         if(commodityModel.getId()==null){
             zcService.addCommodity(commodityModel);
             return true;
@@ -158,6 +177,15 @@ public class ZchController {
     @ResponseBody
     public List<DrandModel> angeDran(Integer id){
         return zcService.angeDran(id);
+
+    }
+
+    //删除商品
+    @RequestMapping("delCommodity")
+    @ResponseBody
+    public Integer delCommodity(Integer ids){
+            zcService.delCommodity(ids);
+            return 0;
 
     }
 
