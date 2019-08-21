@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,77 +34,27 @@
     <!--  引入fileinput的js -->
     <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
     <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
-
 </head>
 <body>
-<div class="panel panel-info">
-    <div class="panel-heading"  >
-        <a href="javaScript:groupback()"  class="pull-right">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <h3 class="panel-title">订单详情</h3>
-    </div>
-    <!-- 基本信息 -->
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-        <h5> 基本信息</h5>.
-        </div>
-
-    <ul class="list-group">
-        <input type="hidden" id="oid"th:value="${orderone.id}">
-    <li class="list-group-item"><b>订单号:</b><span id="ordernumber" th:text="${orderone.ordernumber}"></span></li>
-<!--
-   <li class="list-group-item"><b>订单状态:</b><span id="typeid" th:value="${orderone.state}"th:text="${orderone.state}"></span></li>
--->
-    <li class="list-group-item"><b>下单时间:</b><span th:text="${orderone.ordertime}"></span></li>
-    <li class="list-group-item"><b>下单人:</b><span th:text="${orderone.buyer}"></span></li>
-    <li class="list-group-item"><b>付款时间:<span th:text="${orderone.paydate}"></span></b></li>
-    </ul>
-    </div>
-<!-- 收货人信息 -->
-<div class="panel panel-warning">
-    <div class="panel-heading">
-    <h5>收货人信息</h5>
-    </div>
-<ul class="list-group">
-    <li class="list-group-item"><b>收货人:</b><span th:text="${orderone.consignee}"></span></li>
-    <li class="list-group-item"><b>电话:</b><span th:text="${orderone.tel}"></span></li>
-    <li class="list-group-item"><b>地址:</b><span th:text="${orderone.address}"></span></li>
-    <li class="list-group-item"><b>邮编:</b><span th:text="${orderone.buyer}"></span></li>
-
-</ul>
-</div>
 
 
-    <!--  商品信息 -->
-    <div class="panel panel-warning">
-        <div class="panel-heading">
-            <h5> 商品信息</h5>
-        </div>
-        <table id="showordertable"></table>
-    </div>
+<table id="showmyorder"></table>
 
-</div>
-</div>
 <script>
- function groupback() {
-     history.back();
- }
 
 
 
-   var oid= document.getElementById("oid").value;
-   // alert(oid);
-    $("#showordertable").bootstrapTable({
-        url:"../zhf/queryordertable?oid="+oid,
+
+    $("#showmyorder").bootstrapTable({
+        url:"../zhf/queryorderbyuid",
         method: 'post',
         striped: true,  	// 斑马线效果     默认false
         //只允许选中一行
         singleSelect: false,
         //选中行是不选中复选框或者单选按钮
         clickToSelect: true,
-       // showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
-       // cardView: false,                    //是否显示详细视图
+        showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+        cardView: false,                    //是否显示详细视图
         uniqueId: "id",                 //每一行的唯一标识，一般为主键列
         showColumns: true,                  //是否显示所有的列
         showRefresh: true,                  //是否显示刷新按钮
@@ -113,10 +63,10 @@
         toolbar: '#tabToolBar',   //  工具定义位置
         sidePagination: 'server',
         toolbar: '#toolbar',
-      //  pagination: true, //是否展示分页
-      //  pageList: [10,15,20],//分页组件
-      //  pageNumber: 1,
-      //  pageSize: 10,//默认每页条数
+        pagination: true, //是否展示分页
+        pageList: [10,15,20],//分页组件
+        pageNumber: 1,
+        pageSize: 10,//默认每页条数
         //启动回车键做搜索功能
         searchOnEnterKey: true,
         //设置为false 将禁止所有列的排序。
@@ -129,7 +79,7 @@
         // 设置为limit可以获取limit, offset, search, sort, order
         queryParamsType: 'undefined',
         // 请求服务器数据
-      /*  queryParams: function queryParams(params) {
+        queryParams: function queryParams(params) {
             var param = {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize,
@@ -144,40 +94,64 @@
 
             };
             return param;
-        },*/
+        },
         columns: [
             {
-                field: 'commodityname',
-                title: '商品名称',
+                checkbox:true,
+            },{
+                field: 'ordernumber',
+                title: '订单编号',
                 idField:true,
                 width: 50
             },{
-                field: 'artno',
-                title: '货号',
+                field: 'ordertime',
+                title: '下单时间',
                 idField:true,
                 width: 100
             },{
-                field: 'commodityprice',
-                title: '价格',
-                width: 100
+                field: 'consignee',
+                title: '收货人',
+                width: 100,
+                formatter:function(value,row,index){
+                    var str="[tel:"+row.tel+"]<br>";
+                    var str2=row.address;
+                    return value+""+str+""+str2;
+                }
+
             },{
-                field: 'amount',
-                title: '数量',
-                width: 100
-            },
-            {
-                field: 'aaaaaa',
-                title: '规格',
-                width: 100
+                field: 'totalmoney',
+                title: '商品总金额',
+                width: 80,
+
             },{
                 field: 'amountpayable',
-                title: '小计',
+                title: '应付金额',
                 width: 100
-            },
-        ]
+            },{
+                field: 'state',
+                title: '订单状态',
+                width: 100,
+                formatter:function(value,row,index){
+                   if(value==1){
+                       return "代付款";
+                   }else if(value==2){
+                       return "代发货";
+                   }if(value==3){
+                        return "待收货";
+                    }if(value==4){
+                        return "已关闭";
+                    }if(value==5){
+                        return "已完成";
+                    }
+                }
+            }
+            ]
 
     })
 
+    function showorderinfo(id) {
+location.href="../zhf/showorderinfo?id="+id;
+    }
 </script>
 
 </body>

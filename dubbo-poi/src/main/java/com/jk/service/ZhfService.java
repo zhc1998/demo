@@ -9,10 +9,13 @@ import java.util.HashMap;
 public interface ZhfService {
     Familyhead loginf(Familyhead familyhead);
 
-
     HashMap<String, Object> queryorderone(ParameUtil parame);
 
     Orderone queryorderbyid(Integer id);
 
     HashMap<String, Object> queryordertable(Integer oid);
+
+    HashMap<String, Object> queryorderbyuid(Integer userid, ParameUtil parame);
+
+    void addorder(Orderone orderone);
 }

@@ -20,6 +20,9 @@ public class ParameUtil implements Serializable {
    private String mindate;
    private String maxdate;
 
+   private String type;
+   private String postid;
+
 
 
 	public String getDrugName() {
@@ -100,5 +103,21 @@ public class ParameUtil implements Serializable {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPostid() {
+        return postid;
+    }
+
+    public void setPostid(String postid) {
+        this.postid = postid;
     }
 }
