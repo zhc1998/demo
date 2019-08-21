@@ -16,6 +16,7 @@
         <module>xxfprovider</module>
         <module>zhfprovider</module>
         <module>hbprovider</module>
+        <module>zc-provider</module>
     </modules>
 
 

@@ -145,4 +145,5 @@ public class ToShowController {
     //跳转审核页面
     @RequestMapping("querygoods")
     public String querygoods(){ return "querygoods"; }
+
 }
