@@ -160,6 +160,12 @@ public class ToShowController {
     public String particulars(Integer id,Model model){
         model.addAttribute("ids",id);
         return "houtai/particulars";
+    }
 
+
+    //跳转到前台HTML
+    @RequestMapping("index")
+    public String index(){
+        return "hbqt/index";
     }
 }
