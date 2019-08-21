@@ -32,7 +32,7 @@ public class SysLogAspect {
 
 
 	
-	@Pointcut("execution(* com.jk.controller.XxfConltroller.login(..))")
+	@Pointcut("execution(* com.jk.controller.XxfConltroller.frontLogin (..))")
 	public void logPointCut() {}
 	 //后置通知
     @AfterReturning( value= "logPointCut()" ,returning="returningValue" ) 

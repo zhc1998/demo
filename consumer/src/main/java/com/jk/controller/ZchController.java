@@ -6,6 +6,7 @@ import com.jk.model.commodity.CommodityModel;
 import com.jk.model.commodity.CommodityTypeModel;
 import com.jk.model.commodity.DrandModel;
 import com.jk.model.Orderone;
+import com.jk.model.commodity.ParticularsModel;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class ZchController {
     @RequestMapping("queryCommodityType")
     @ResponseBody
     public List<CommodityTypeModel> queryCommodityType(){
+
         return zcService.queryCommodityType();
     }
 
@@ -61,22 +63,20 @@ public class ZchController {
         return resultPage;
     }
 
-    //品牌条件查询
+    //加载品牌
     @RequestMapping("queryAllDran")
     @ResponseBody
-    public List<DrandModel> queryAllDran(Integer ids,String zt){
+    public List<DrandModel> queryAllDran(){
 
-        return zcService.queryAllDran(ids,zt);
+        return zcService.queryAllDran();
     }
 
     //查询回显
     @RequestMapping("loadOneModel")
     public String loadOneModel(Integer id,Model model){
         CommodityModel commodityModel = zcService.loadOneModel(id);
-        List<CommodityTypeModel> list = zcService.queryCommodityType();
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
-        model.addAttribute("list",list);
         return "houtai/updCommodity";
     }
 
@@ -84,6 +84,8 @@ public class ZchController {
     @RequestMapping("updCommodity")
     @ResponseBody
     public boolean updCommodity(CommodityModel commodityModel){
+        String str=commodityModel.getPictureUrl().substring(1);
+        commodityModel.setPictureUrl(str);
         if(commodityModel.getId()!=null){
             zcService.updCommodity(commodityModel);
             return true;
@@ -128,6 +130,35 @@ public class ZchController {
     public DrandModel loadDescribe(Integer ids){
         DrandModel drandModel =  zcService.loadDescribe(ids);
         return drandModel;
+    }
+
+    //修改或新增品牌
+    @RequestMapping("updAllDran")
+    @ResponseBody
+    public List<DrandModel> updAllDran(Integer ids){
+        //根据类型Id查询平牌类型关联Id
+        DrandModel list = zcService.updAllDran(ids);
+        //根据批品牌类型管理Id查询 itemid 平牌关联商品Id
+        Integer itemId = list.getType();
+        List<DrandModel> drandModels = zcService.queryAllDranList(itemId);
+        return drandModels;
+    }
+
+    //加载商品详情
+    @RequestMapping("loadParticulars")
+    @ResponseBody
+    public ParticularsModel loadParticulars(Integer ids){
+        ParticularsModel particularsModel = zcService.loadParticulars(ids);
+        System.out.println(particularsModel);
+        return particularsModel;
+    }
+
+    //根据类型查询品牌
+    @RequestMapping("angeDran")
+    @ResponseBody
+    public List<DrandModel> angeDran(Integer id){
+        return zcService.angeDran(id);
+
     }
 
 }
