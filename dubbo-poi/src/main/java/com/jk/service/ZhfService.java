@@ -9,7 +9,6 @@ import java.util.HashMap;
 public interface ZhfService {
     Familyhead loginf(Familyhead familyhead);
 
-
     HashMap<String, Object> queryorderone(ParameUtil parame);
 
     Orderone queryorderbyid(Integer id);

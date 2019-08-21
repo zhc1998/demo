@@ -12,6 +12,8 @@ import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
 import com.jk.util.HttpClientUtil;
 import com.jk.util.ParameUtil;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,8 @@ import java.util.Map;
 public class ZhfController {
     @Reference
     private ZhfService zhfService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @RequestMapping("familylogin")
     public String familylogin(){
@@ -108,8 +112,8 @@ public class ZhfController {
     //新增订单
     @RequestMapping("addorbder")
     @ResponseBody
-    public String addorbder(HttpSession session){
 
+    public void addorbder(HttpSession session){
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Members members =new Members();
         members.setId(1);
@@ -118,7 +122,7 @@ public class ZhfController {
         Integer amount=3;
         double commodityPrice=20.0;
         Orderone orderone=new Orderone();
-        orderone.setConsignee("花祈梦");
+        orderone.setConsignee("花祈梦2");
         orderone.setTel("12012541554");
         orderone.setAddress("河南省洛阳市");
         orderone.setAmount(amount);
@@ -127,7 +131,10 @@ public class ZhfController {
         orderone.setBuyer(members.getNickname());
         orderone.setArtno(artno);
         orderone.setOrdertime(sdf.format(new Date()));
-        zhfService.addorder(orderone);
-        return "suc";
+
+
+        amqpTemplate.convertAndSend("AddOrder",orderone);
+       // zhfService.addorder(orderone);
+       // return "suc";
     }
 }
