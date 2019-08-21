@@ -75,7 +75,7 @@ public class ZchController {
         CommodityModel commodityModel = zcService.loadOneModel(id);
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
-        return "updCommodity";
+        return "houtai/updCommodity";
     }
 
     //修改商品
