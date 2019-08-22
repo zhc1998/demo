@@ -11,6 +11,9 @@
 package com.jk.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -27,6 +30,24 @@ public class Comments implements Serializable {
     private Integer pid;
     private Integer sid;
     private Integer uid;
+    private Map<String, Object> attributes = new HashMap<String, Object>(); // 添加到节点的自定义属性
+    private List<Comments> nodes; //子节点数据
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    public List<Comments> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Comments> nodes) {
+        this.nodes = nodes;
+    }
 
     public Integer getId() {
         return id;

@@ -5,6 +5,7 @@ import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.service.HbService;
+import com.jk.util.CommentsNoteUtil;
 import com.jk.util.ResultPage;
 import com.jk.util.TreeNoteUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,7 +136,8 @@ public class HbController {
     public List<Comments> comments(Integer id){
 
         List<Comments>list =hbService.comments(id);
-        return list;
+        List<Comments>list2=CommentsNoteUtil.getFatherNode(list);
+        return list2;
     }
 
 
