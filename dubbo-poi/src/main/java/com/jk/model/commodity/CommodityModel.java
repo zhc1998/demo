@@ -30,6 +30,26 @@ public class CommodityModel implements Serializable {
 
     private Integer issue;
 
+    private Integer coloId;
+
+    private Integer sellquantity;
+
+    public Integer getColoId() {
+        return coloId;
+    }
+
+    public void setColoId(Integer coloId) {
+        this.coloId = coloId;
+    }
+
+    public Integer getSellquantity() {
+        return sellquantity;
+    }
+
+    public void setSellquantity(Integer sellquantity) {
+        this.sellquantity = sellquantity;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -150,6 +170,8 @@ public class CommodityModel implements Serializable {
                 ", typeName='" + typeName + '\'' +
                 ", name='" + name + '\'' +
                 ", issue=" + issue +
+                ", coloId=" + coloId +
+                ", sellquantity=" + sellquantity +
                 '}';
     }
 }
