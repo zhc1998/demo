@@ -170,7 +170,7 @@
     function updateUseYhq(id,yhqname){
         $.ajax({
             url: "../clp/updateClpUseYhq",
-            data: {id: id},
+            data: {id: id,yhqname:yhqname},
             type: "post",
             success: function (data) {
                 oBox= document.getElementById('timer');

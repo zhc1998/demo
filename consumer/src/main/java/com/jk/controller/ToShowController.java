@@ -64,6 +64,13 @@ public class ToShowController {
     }
 
 
+    //优惠券前台展示
+    @RequestMapping("toshowClpYhq2")
+    public String toshowClpYhq2(){
+        return "houtai/showClpYhq2";
+    }
+
+
 
 
 

@@ -4,6 +4,7 @@ import com.jk.model.Yhq;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface YhqMapper {
     int deleteByPrimaryKey(Integer id);
@@ -27,4 +28,10 @@ public interface YhqMapper {
     void addYhq(List<Yhq> list);
 
     void deleteYhqByName(@Param("names")String names);
+
+    List<Yhq> queryClpYhq();
+
+    List<Yhq> queryClpYhq2(@Param("i")int i);
+
+    void updateYhqUse(@Param("id")Integer id);
 }
