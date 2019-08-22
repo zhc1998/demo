@@ -5,17 +5,37 @@ import java.io.Serializable;
 public class DetailsModel implements Serializable {
     private Integer id;
 
-    private String commodityName;
+    private String commodityName;//商品描述
 
-    private Double commodityPrice;
+    private Double commodityPrice;//商品价格
 
     private Integer inventory;//剩余数量
 
-    private String  typeName;
+    private String  typeName;//类型
 
-    private String name;
+    private String name;//平牌名称
 
-    private String introduction;
+    private String introduction;//描述
+
+    private Integer sellquantity;//出售数量
+
+    private String pictureUrl;//图片
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public Integer getSellquantity() {
+        return sellquantity;
+    }
+
+    public void setSellquantity(Integer sellquantity) {
+        this.sellquantity = sellquantity;
+    }
 
     public Integer getId() {
         return id;

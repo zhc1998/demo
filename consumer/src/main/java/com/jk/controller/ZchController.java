@@ -196,9 +196,9 @@ public class ZchController {
     }
 
     //查询前台详情
-    @RequestMapping("loadDetails")
+    @RequestMapping("queryOneDetails")
     @ResponseBody
-    public DetailsModel loadDetails(Integer ids){
+    public DetailsModel queryOneDetails(Integer ids){
         DetailsModel detailsModel = zcService.loadDetails(ids);
         return detailsModel;
 

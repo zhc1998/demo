@@ -31,8 +31,6 @@
     <script type="text/javascript" src="/js3/bootstrap-fileinput/js/locales/zh.js"></script>
 </head>
 <body>
-<input type="text" id="ids" th:value="${ids}">
-
 <form role="form" id="addForm">
     <div class="form-group">
         <label for="name">详情</label>
@@ -76,7 +74,7 @@
         queryColor();
     })
     
-    //查询详情
+    //查询详情1
     function loadDetails() {
         var ids = $("#loadDetails").val();
         $.ajax({

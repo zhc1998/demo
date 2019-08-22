@@ -201,6 +201,6 @@ public class ToShowController {
     public String toParticulars(Integer ids,Model model){
 
         model.addAttribute("ids",ids);
-        return "houtai/details";
+        return "index";
     }
 }
