@@ -17,4 +17,10 @@ public class pageController {
     public String toaddimg(){
         return "addimg";
     }
+
+
+    @RequestMapping("/tojqshouye")
+    public  String tojqshouye(){
+        return "tojqshouye";
+    }
 }
