@@ -11,6 +11,7 @@
 package com.jk.dao;
 
 import com.jk.model.Audit;
+import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.commodity.CommodityModel;
 
@@ -50,6 +51,8 @@ public interface HbDao {
     Long queryCommodityCount(HashMap<String, Object> hashMap);
 
     List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
+
+    List<Comments> comments(Integer id);
 
     Long suditFailure(HashMap<String, Object> hashMap);
 
