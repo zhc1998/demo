@@ -9,35 +9,37 @@ import java.util.Date;
 
 
 public class Orderone implements Serializable {
-    private Integer id;
+    private Integer id;//主键id
 
-    private String ordernumber;
+    private String ordernumber;//订单编号
 
-    private String consignee;
+    private String consignee;//收货人
 
-    private String tel;
+    private String tel;//电话
 
-    private String address;
+    private String address;//收货地址
 
-    private Double totalmoney;
+    private Double totalmoney;//商品金额
 
-    private Double amountpayable;
+    private Double amountpayable;//应付金额
 
-    private Integer state;
+    private Integer state=1;//订单状态
 
     private String buyer;
 
-    private String ordertime;
+    private String ordertime;//下单时间
 
-    private Integer amount;
+    private Integer amount;//购买数量
 
-    private String artno;
+    private String artno;//商品编号
 
-    private String commodityname;
+    private String commodityname; //商品名称
 
-    private Integer commodityprice;
+    private Integer commodityprice; //应付金额
 
-    private String paydate;
+    private String paydate;//付款时间
+
+    private Integer userid;
 
     public Integer getId() {
         return id;
@@ -157,5 +159,13 @@ public class Orderone implements Serializable {
 
     public void setPaydate(String paydate) {
         this.paydate = paydate;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 }

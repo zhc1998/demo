@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,15 +18,29 @@ public class ToShowController {
     public String tofrontLogin(){
         return "ffqt/frontLogin";
     }
+    //跳转前台修改密码手机验证
+    @RequestMapping("toYz")
+    public String toYz(){
+        return "yz";
+    }
+
+
+
+
     //跳转修改密码页面
     @RequestMapping("toUpdatePassword")
     public String toUpdatePassword(){
         return "updatePassword";
     }
+
     //跳转注册页面
     @RequestMapping("toZhuCe")
     public String toZhuCe(){
         return "zhuCe";
+    }
+    @RequestMapping("toZhuCe2")
+    public String toZhuCe2(){
+        return "zhuCe2";
     }
 
 
@@ -40,6 +55,20 @@ public class ToShowController {
     public String toCommodity(){
         return "houtai/commodity";
     }
+
+    //跳转自己的订单列表
+    @RequestMapping("showmyorder")
+    public String showmyorder(){
+        return "showmyorder";
+    }
+
+    //跳转订单查询页面
+    @RequestMapping("kuaidi")
+    public String kuaidi(){
+        return "kuaidi";
+    }
+
+
 
 
     // clp  优惠券 查询 跳页面
@@ -134,6 +163,44 @@ public class ToShowController {
         return "redirect:../toshow/toIndex";
     }
 
+    //跳转到用户前台
     @RequestMapping("showye")
     public String showye(){ return "hbqt/showye"; }
+
+    //跳转审核登录
+    @RequestMapping("audit")
+    public String audit(){ return "audit"; }
+
+    //跳转审核页面
+    @RequestMapping("querygoods")
+    public String querygoods(){ return "querygoods"; }
+
+    //跳转审核失败
+    @RequestMapping("suditFailure")
+    public String suditFailure(){
+        return "suditFailure";
+    }
+
+
+    //跳转到详情页面
+    @RequestMapping("particulars")
+    public String particulars(Integer id,Model model){
+        model.addAttribute("ids",id);
+        return "houtai/particulars";
+    }
+
+
+    //跳转到前台HTML
+    @RequestMapping("index")
+    public String index(){
+        return "hbqt/index";
+    }
+
+    //跳转到前台商品详情
+    @RequestMapping("toParticulars")
+    public String toParticulars(Integer ids,Model model){
+
+        model.addAttribute("ids",ids);
+        return "houtai/details";
+    }
 }

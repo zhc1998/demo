@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Random;
 
 public class OSSClientUtil {
-
     public static final Logger logger = LoggerFactory.getLogger(OSSClientUtil.class);
+
     private String endpoint = "oss-cn-beijing.aliyuncs.com";
     // accessKey
     private String accessKeyId = "LTAIHucFLBR7JD2K";

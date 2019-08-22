@@ -13,19 +13,9 @@ public class DrandModel implements Serializable {
 
     private String introduction;//品牌描述
 
-    private Integer version;//是否展示
-
     private Integer itemId;//关联商品列表Id
 
     private Integer type;//关联类型
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
 
     public Integer getId() {
         return id;
@@ -67,14 +57,6 @@ public class DrandModel implements Serializable {
         this.introduction = introduction;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Integer getItemId() {
         return itemId;
     }
@@ -83,16 +65,24 @@ public class DrandModel implements Serializable {
         this.itemId = itemId;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "DrandModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", log='" + logo + '\'' +
+                ", logo='" + logo + '\'' +
                 ", url='" + url + '\'' +
                 ", introduction='" + introduction + '\'' +
-                ", version=" + version +
                 ", itemId=" + itemId +
+                ", type=" + type +
                 '}';
     }
 }

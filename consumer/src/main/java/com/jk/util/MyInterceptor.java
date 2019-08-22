@@ -25,6 +25,7 @@ public class MyInterceptor implements HandlerInterceptor {
                              Object arg2) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
         if(user==null){
+            //失败后跳的方法
             response.sendRedirect("../toshow/toIndex");
             return false;
         }else{

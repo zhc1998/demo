@@ -4,48 +4,43 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <!-- 引入jquery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- 引入bootstrap的css -->
-    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-treeview的css -->
-    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-addTabs的css -->
-    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
-    <!-- 引入bootstrap-table的css -->
-    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
-    <!-- 引入fileinput的css -->
-    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
-
-    <!-- 引入my97 -->
-    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
-    <!-- 引入bootstrap-table的js-->
-    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
-    <!-- 引入bootbox.js -->
-    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
-    <!-- 引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
-    <!--  引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
-    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
+    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
+    <!-- 引入tree的js、css -->
+    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入选项卡的js、css -->
+    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- 引入table的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
+    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- 引入删除提示框 -->
+    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
+    <!-- 引入时间的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- 引入文件上传的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-fileinput/css/fileinput.css">
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/fileinput.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/locales/zh.js"></script>
+</head>
 </head>
 <body>
 
 <form id="pro_from" class="form-inline">
     <div class="form-group">
         <select style="width: 200px;"  class="form-control" id="commodityType"></select>
-        <select style="width: 200px;"  class="form-control" id="status"></select>
         <select style="width: 200px;"  class="form-control" id="is">
             <option value="0">全部</option>
             <option value="1">新品</option>
             <option value="2">热销</option>
         </select>
+        <select id="dran" class="form-control"></select>
         <input type="text" class="form-control"  id="commodityName" placeholder="商品名称">
     </div>
     <button type="button" style="size: A3" class="btn btn-success" onclick="queryData()">搜索</button>
@@ -60,7 +55,7 @@
 
         initDataGrid();
         loadCommodityType();
-        loadStatus();
+        //loadStatus();
         queryAllDran();
     });
 
@@ -86,7 +81,7 @@
             pagination: true,           //是否展示分页
             pageList: [2, 4, 8, 10],    //分页组件
             pageNumber: 1,
-            pageSize: 2,                //默认每页条数
+            pageSize: 8,                //默认每页条数
             searchOnEnterKey: true,     //启动回车键做搜索功能
             sortable: true,             //设置为false 将禁止所有列的排序。
             sortName: 'clientId',             //设置默认排序为 name,直接对应数据库的字段
@@ -112,15 +107,10 @@
                 {field:'commodityName',title:'商品名称'},
                 {field:'artNo',title:'商品货号'},
                 {field:'commodityPrice',title:'价格'},
-                {field:'status',title:'上架',formatter:function(value,row,index){
-                    var status
-                        if(value==1){
-                            status = "✔";
-                            return "<font color='royalblue'>"+status+"</font>";
-                        }else {
-                            status = "×";
-                            return "<font color='crimson'>"+status+"</font>";
-                        }
+                {field:'name',title:'品牌'},
+                {field:'status',title:'发布商品状态',formatter:function(value,row,index){
+
+                        return "审核通过";
 
                     }},
                 {field:'newProduct',title:'新品',formatter:function(value,row,index){
@@ -134,7 +124,7 @@
                         }
 
                     }},
-                {field:'selllikeHotCakes',title:'热销',formatter:function (value,row,index) {
+                {field:'newProduct',title:'热销',formatter:function (value,row,index) {
                         var selllikeHotCakes
                         if(value==2){
                             selllikeHotCakes = "✔";
@@ -147,25 +137,42 @@
                     }},
 
                 {field:'inventory',title:'库存'},
-                {field:'pictureUrl',title:'图片',formatter:function (value,row,index) {
+                {field:'pictureUrl',title:'图片',formatter:function (value) {
                         //return "<img alt='"+value+"' height='50' width='50'>"//return "<img src='../"+value+"' height='50' width='50'>";
-
-                        return "<div class=\"container-fluid\">\n" +
-                            "                            <div class=\"row-fluid\">\n" +
-                            "                            <div class=\"span12\">\n" +
-                            "                            <img alt=\"140x140\" src="+value+"'../..' />\n" +
-                            "                            </div>\n" +
-                            "                            </div>\n" +
-                            "                            </div>";
+                        return "<img width='100' src='"+value+"'height='50' width='50'>";
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                        return "<button type='button' style='size: A3' class='btn btn-success' onclick='upd("+row.id+")'>修改</button>";
+                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>||<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button><button type='button' class='btn btn-default btn-danger' onclick='del("+row.id+")'>删除</button>";
                     }},
             ]
         });
     }
 
+    //删除
+    function del(ids) {
+        if(confirm("你确定删除Id为"+ids+"的这条数据吗")){
+            $.ajax({
+                url:"../zch/delCommodity",
+                type:"post",
+                data:{ids:ids},
+                dataType:"json",
+                success:function(data){
+                    location.href="../toshow/toCommodity";
+                },
+                error:function(){
+                    alert("删除失败");
+                }
+
+            })
+        }
+
+    }
+
+    //详情
+    function particulars(id) {
+        location.href="../toshow/particulars?id="+id;
+    }
 
     //重置
     function reset(){
@@ -174,6 +181,7 @@
 
     //条件查询
     function queryData(){
+        //alert($("#commodityType").val());
         $("#dataGrid").bootstrapTable("refresh", {
             "query": {
                 "commodityName": $("#commodityName").val(),
@@ -188,17 +196,16 @@
 
     //查询所有品牌
     function queryAllDran(){
-        var zt = "a";
         $.ajax({
-            url:"../zch/queryCommodityType",
+            url:"../zch/queryAllDran",
             type:"post",
             dataType:"json",
-            data:{zt:zt},
             success:function(data){
-                var html = "<option value=''>所有分类</option>";
+                var html = "<option value=''>所有平牌</option>";
                 for(var i=0;i<data.length;i++){
-                    html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
+                    html+="<option value='"+data[i].itemId+"'>"+data[i].name+"</option>";
                 }
+
                 $("#dran").html(html);
             },
             error:function(){
@@ -213,32 +220,7 @@
     }
 
 
-    //查询上下架
-    function loadStatus(){
-        $.ajax({
-            url:"../zch/queryStatus",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                var html = "<option value=''>全部</option>";
-                for(var i=0;i<data.length;i++){
-                    if(data[i].status==1){
-                        status = "上架";
-                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
-                    }else{
-                        status = "下架";
-                        html+="<option value='"+data[i].status+"'>"+status+"</option>";
-                    }
 
-                }
-
-                $("#status").html(html);
-            },
-            error:function(){
-                alert("查询商品类型失败");
-            }
-        })
-    }
 
     //查询商品类型
     function loadCommodityType(){
@@ -248,6 +230,7 @@
             data:{},
             dataType:"json",
             success:function(data){
+                //alert(data[i].itemId);
                 var html = "<option value=''>所有分类</option>";
                 for(var i=0;i<data.length;i++){
                     html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";

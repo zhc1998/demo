@@ -38,13 +38,16 @@
 </head>
 <body>
 <div class="panel panel-info">
-    <div class="panel-heading">
+    <div class="panel-heading"  >
+        <a href="javaScript:groupback()"  class="pull-right">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
         <h3 class="panel-title">订单详情</h3>
     </div>
     <!-- 基本信息 -->
     <div class="panel panel-warning">
         <div class="panel-heading">
-        <h5> 基本信息</h5>
+        <h5> 基本信息</h5>.
         </div>
 
     <ul class="list-group">
@@ -84,7 +87,9 @@
 </div>
 </div>
 <script>
-
+ function groupback() {
+     history.back();
+ }
 
 
 
