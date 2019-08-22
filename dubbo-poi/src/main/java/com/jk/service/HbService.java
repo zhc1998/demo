@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.model.Audit;
+import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.util.ResultPage;
@@ -25,4 +26,6 @@ public interface HbService {
     void updateaudit2(Integer id);
 
     ResultPage queryCommodity(ResultPage result);
+
+    List<Comments> comments(Integer id);
 }

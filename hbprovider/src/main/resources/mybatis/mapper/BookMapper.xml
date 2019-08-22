@@ -50,4 +50,8 @@
         left join t_commoditytype ty on ty.typeId=te.TypeId
         LIMIT #{start},#{end}
     </select>
+
+    <select id="comments" parameterType="Integer" resultType="Comments">
+        select * from comments where sid=#{id}
+    </select>
 </mapper>

@@ -143,7 +143,9 @@
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>||<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button>";
+                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>||" +
+                            "<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button>||" +
+                            "<button type='button'  class='btn btn-success' onclick='comments("+row.id+")'>评论</button>";
                     }},
             ]
         });
@@ -152,6 +154,11 @@
     //详情
     function particulars(id) {
         location.href="../toshow/particulars?id="+id;
+    }
+
+    //评论
+    function comments(id) {
+        location.href="../toshow/comments?id="+id;
     }
 
     //重置

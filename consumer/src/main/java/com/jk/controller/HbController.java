@@ -1,6 +1,7 @@
 package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.Audit;
+import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.service.HbService;
@@ -127,4 +128,14 @@ public class HbController {
         ResultPage resultPage = hbService.queryCommodity(result);
         return resultPage;
     }
+
+    //评论
+    @RequestMapping("comments")
+    @ResponseBody
+    public List<Comments> comments(Integer id){
+
+        List<Comments>list =hbService.comments(id);
+        return list;
+    }
+
     }

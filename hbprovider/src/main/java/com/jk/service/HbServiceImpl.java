@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 
 import com.jk.dao.HbDao;
 import com.jk.model.Audit;
+import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.model.commodity.CommodityModel;
@@ -106,5 +107,11 @@ public class HbServiceImpl implements HbService {
         resultPage.setRows(list);
         return resultPage;
     }
+
+    @Override
+    public List<Comments> comments(Integer id) {
+        return hbDao.comments(id);
+    }
+
 
 }
