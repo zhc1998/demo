@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 
 import com.jk.dao.HbDao;
 import com.jk.model.Audit;
+import com.jk.model.Comments;
 import com.jk.model.Tree;
 import com.jk.model.User;
 import com.jk.model.commodity.CommodityModel;
@@ -105,6 +106,41 @@ public class HbServiceImpl implements HbService {
         List<CommodityModel> list = hbDao.queryCommodity(hashMap);
         resultPage.setRows(list);
         return resultPage;
+    }
+
+    @Override
+    public List<Comments> comments(Integer id) {
+        return hbDao.comments(id);
+    }
+
+
+    //查询审核失败
+    @Override
+    public ResultPage suditFailure(ResultPage result) {
+        ResultPage resultPage = new ResultPage();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("result", result);
+
+        //查询总条数
+        Long count = hbDao.suditFailure(hashMap);
+        resultPage.setTotal(Integer.parseInt(count.toString()));
+
+        resultPage.setPageNumber(result.getPageNumber());
+        resultPage.setPageSize(result.getPageSize());
+
+        hashMap.put("start", (result.getPageNumber()-1)*result.getPageSize());
+        hashMap.put("end", result.getPageSize());
+
+        //查询所有数据
+        List<CommodityModel> list = hbDao.suditFailureList(hashMap);
+        resultPage.setRows(list);
+        return resultPage;
+    }
+
+    //删除所有审核失败商品
+    @Override
+    public void delAll(Integer [] ids) {
+        hbDao.delAll(ids);
     }
 
 }

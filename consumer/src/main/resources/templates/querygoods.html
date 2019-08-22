@@ -92,21 +92,8 @@
                 {field:'commodityName',title:'商品名称'},
                 {field:'artNo',title:'商品货号'},
                 {field:'commodityPrice',title:'价格'},
-                {field:'status',title:'审核',formatter:function(value,row,index){
-                        var status
-                        if(value==1){
-                            status = "待审核";
-                            return "<font color='royalblue'>"+status+"</font>";
-                        }
-                        if(value==2){
-                            status = "审核通过";
-                            return "<font color='royalblue'>"+status+"</font>";
-                        }
-                        if(value==3){
-                            status = "审核失败";
-                            return "<font color='royalblue'>"+status+"</font>";
-                        }
-
+                {field:'status',title:'审核',formatter:function(){
+                    return "审核中";
                     }},
                 {field:'newProduct',title:'新品',formatter:function(value,row,index){
                         var newProduct

@@ -1,10 +1,7 @@
 package com.jk.service;
 
 import com.jk.model.Orderone;
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
 import com.jk.util.ResultPage;
 
 import java.util.List;
@@ -43,4 +40,12 @@ public interface ZcService {
     ParticularsModel loadParticulars(Integer ids);
 
     List<DrandModel> angeDran(Integer id);
+
+    void delCommodity(Integer ids);
+
+    List<CommodityModel> loadHuaWei();
+
+    DetailsModel loadDetails(Integer ids);
+
+    List<ColorModel> queryColor();
 }
