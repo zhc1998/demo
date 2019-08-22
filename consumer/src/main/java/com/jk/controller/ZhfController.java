@@ -3,10 +3,17 @@ package com.jk.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.jk.model.Express;
 import com.jk.model.Familyhead;
+import com.jk.model.Members;
 import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
+import com.jk.util.HttpClientUtil;
 import com.jk.util.ParameUtil;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +22,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("zhf")
 public class ZhfController {
     @Reference
     private ZhfService zhfService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @RequestMapping("familylogin")
     public String familylogin(){
@@ -65,6 +78,63 @@ public class ZhfController {
     @RequestMapping("queryordertable")
     @ResponseBody
     public HashMap<String, Object> queryordertable(Integer oid) {
+
         return zhfService.queryordertable(oid);
+    }
+
+    //查询(自己)登录人的订单列表
+    @RequestMapping("queryorderbyuid")
+    @ResponseBody
+    public HashMap<String, Object> queryorderbyuid(@RequestBody ParameUtil parame) {
+       Integer userid=1;
+        return zhfService.queryorderbyuid(userid,parame);
+    }
+    //快递单号查询
+    @RequestMapping("querytnumber")
+    @ResponseBody
+    public HashMap<String,Object>querytnumber(@RequestBody ParameUtil parame) throws Exception {
+         String url= "http://www.kuaidi100.com/query";
+        HashMap<String,Object>params=new HashMap<>();
+        System.err.println(parame.getType());
+        System.err.println(parame.getPostid());
+        params.put("type",parame.getType());
+        params.put("postid",parame.getPostid());
+        String string = HttpClientUtil.get(url, params);
+        System.err.println(string);
+        JSONObject jsonObject= JSONObject.parseObject(string);
+        String datastr = jsonObject.getString("data");
+        JSONArray  arr = JSONArray.parseArray(datastr);
+        List<Express> list = (List<Express>) JSONObject.parseArray(arr.toJSONString(), Express.class);
+        HashMap<String,Object>map=new HashMap<>();
+        map.put("rows",list);
+        return map;
+    }
+    //新增订单
+    @RequestMapping("addorbder")
+    @ResponseBody
+
+    public void addorbder(HttpSession session){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Members members =new Members();
+        members.setId(1);
+        members.setNickname("赵浩范");
+        String artno="HHZC123";
+        Integer amount=3;
+        double commodityPrice=20.0;
+        Orderone orderone=new Orderone();
+        orderone.setConsignee("花祈梦2");
+        orderone.setTel("12012541554");
+        orderone.setAddress("河南省洛阳市");
+        orderone.setAmount(amount);
+        Double count=amount*commodityPrice;
+        orderone.setTotalmoney(count);
+        orderone.setBuyer(members.getNickname());
+        orderone.setArtno(artno);
+        orderone.setOrdertime(sdf.format(new Date()));
+
+
+        amqpTemplate.convertAndSend("AddOrder",orderone);
+       // zhfService.addorder(orderone);
+       // return "suc";
     }
 }

@@ -25,4 +25,8 @@ public interface OrderoneDao {
     List<Orderone> queryOreryone(@Param("st") int statr,@Param("ro") Integer pageNumber,@Param("pa") ParameUtil parame);
    @Select("select t.commodityName commodityname,o.artNo,t.commodityPrice commodityprice,o.amount,o.amountpayable from orderone o,t_item t where o.artno=t.artNo and o.id=#{oid}")
     Orderone queryordertable(@Param("oid") Integer oid);
+@Select("select count(*) from orderone where userid=#{userid}")
+    long QueryorOrderbyuidcount(@Param("userid") Integer userid);
+@Select(" select *  from orderone where userid=#{userid} limit #{st},#{ro}")
+    List<Orderone> queryorderbyuid(@Param("st")int statr,@Param("ro") Integer pageSize,@Param("userid") Integer userid);
 }

@@ -15,10 +15,11 @@
     <result column="amount" property="amount" jdbcType="INTEGER" />
     <result column="artno" property="artno" jdbcType="VARCHAR" />
     <result column="paydate" property="paydate" jdbcType="DATE" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, ordernumber, consignee, tel, address, totalmoney, amountpayable, state, buyer, 
-    ordertime, amount, artno, paydate
+    ordertime, amount, artno, paydate, userid
   </sql>
 
 
@@ -71,6 +72,9 @@
 
 
 
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -86,12 +90,12 @@
       tel, address, totalmoney, 
       amountpayable, state, buyer, 
       ordertime, amount, artno, 
-      paydate)
+      paydate, userid)
     values (#{id,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, 
       #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{totalmoney,jdbcType=DOUBLE}, 
       #{amountpayable,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, 
       #{ordertime,jdbcType=DATE}, #{amount,jdbcType=INTEGER}, #{artno,jdbcType=VARCHAR}, 
-      #{paydate,jdbcType=DATE})
+      #{paydate,jdbcType=DATE}, #{userid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jk.model.Orderone" >
     insert into orderone
@@ -135,6 +139,9 @@
       <if test="paydate != null" >
         paydate,
       </if>
+      <if test="userid != null" >
+        userid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -175,6 +182,9 @@
       </if>
       <if test="paydate != null" >
         #{paydate,jdbcType=DATE},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -217,6 +227,9 @@
       <if test="paydate != null" >
         paydate = #{paydate,jdbcType=DATE},
       </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -233,7 +246,8 @@
       ordertime = #{ordertime,jdbcType=DATE},
       amount = #{amount,jdbcType=INTEGER},
       artno = #{artno,jdbcType=VARCHAR},
-      paydate = #{paydate,jdbcType=DATE}
+      paydate = #{paydate,jdbcType=DATE},
+      userid = #{userid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

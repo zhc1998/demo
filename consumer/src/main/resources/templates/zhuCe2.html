@@ -8,20 +8,23 @@
 <form id="formId">
     <div class="form-group" style="margin-left:50%">
         <label >账号</label>
-        <input  name="username" type="text" class="form-control" style="width:200px;"></input>
+        <input  name="username" id="username" type="text" class="form-control" style="width:200px;" onblur="yzUsername()"></input>
+        <span id="msg"></span>
     </div >
     <div class="form-group" style="margin-left:50%">
         <label >密码</label>
-        <input  name="password" type="text" class="form-control" style="width:200px;"></input>
+        <input  name="password" id="password" type="text" class="form-control" style="width:200px;" onblur="yzPassword()"></input>
+        <span id="msg2"></span>
     </div>
     <div class="form-group" style="margin-left:50%">
         <label >昵称</label>
-        <input  name="nickname" type="text" class="form-control" style="width:200px;"></input>
+        <input  name="nickname" type="text" id="nickname" class="form-control" style="width:200px;" onblur="yzNickname()"></input>
+        <span id="msg3"></span>
     </div>
     <div class="form-group " style="margin-left:50%">
         <label >密保手机号</label>
         <input  name="phone" id="phone" type="text" class="form-control" style="width:200px;" onblur="aaPhone()"></input>
-        <span id="msg"></span><br>
+        <span id="msg4"></span><br>
         <a href="javascript:huo()" class="easyui-linkbutton">获取验证码</a>   <span id="date"></span>
         <input id="code" name="code" type="text" class="form-control" style="width:200px;"></input>
     </div>
@@ -32,7 +35,7 @@
                 <input type="radio" name="gender" value="1" checked> 男
             </label>
             <label>
-                <input type="radio" name="gender" value="2" checked>女
+                <input type="radio" name="gender" value="2" >女
             </label>
         </div>
     </div>

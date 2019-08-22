@@ -32,6 +32,7 @@ public class ToShowController {
     public String toUpdatePassword(){
         return "updatePassword";
     }
+
     //跳转注册页面
     @RequestMapping("toZhuCe")
     public String toZhuCe(){
@@ -54,6 +55,20 @@ public class ToShowController {
     public String toCommodity(){
         return "houtai/commodity";
     }
+
+    //跳转自己的订单列表
+    @RequestMapping("showmyorder")
+    public String showmyorder(){
+        return "showmyorder";
+    }
+
+    //跳转订单查询页面
+    @RequestMapping("kuaidi")
+    public String kuaidi(){
+        return "kuaidi";
+    }
+
+
 
 
     // clp  优惠券 查询 跳页面
