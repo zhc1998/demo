@@ -180,4 +180,12 @@ public class ToShowController {
     public String index(){
         return "hbqt/index";
     }
+
+    //跳转到前台商品详情
+    @RequestMapping("toParticulars")
+    public String toParticulars(Integer ids,Model model){
+
+        model.addAttribute("ids",ids);
+        return "houtai/details";
+    }
 }

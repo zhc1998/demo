@@ -1,9 +1,6 @@
 package com.jk.dao;
 
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
@@ -77,4 +74,15 @@ public interface ZcDao {
     //删除
     @Delete("DELETE from t_item WHERE id = #{value}")
     void delCommodity(Integer ids);
+
+    //图片展示
+    //@Select("select pictureUrl,id  from  t_item")
+    List<CommodityModel> loadHuaWei();
+
+    //查询前台详情
+    DetailsModel loadDetails(Integer ids);
+
+    //加载颜色
+    @Select("select id,colorName  from  t_color")
+    List<ColorModel> queryColor();
 }

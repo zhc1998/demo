@@ -2,10 +2,7 @@ package com.jk.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
 import org.springframework.stereotype.Controller;
@@ -187,6 +184,32 @@ public class ZchController {
             zcService.delCommodity(ids);
             return 0;
 
+    }
+
+
+    //图片展示
+    @RequestMapping("loadHuaWei")
+    @ResponseBody
+    public List<CommodityModel> loadHuaWei(){
+        List<CommodityModel> commodityModels = zcService.loadHuaWei();
+        return commodityModels;
+    }
+
+    //查询前台详情
+    @RequestMapping("loadDetails")
+    @ResponseBody
+    public DetailsModel loadDetails(Integer ids){
+        DetailsModel detailsModel = zcService.loadDetails(ids);
+        return detailsModel;
+
+    }
+
+    //加载颜色
+    @RequestMapping("queryColor")
+    @ResponseBody
+    public List<ColorModel> queryColor(){
+        List<ColorModel> colorModels = zcService.queryColor();
+        return colorModels;
     }
 
 }

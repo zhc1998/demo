@@ -31,7 +31,7 @@
     </select>
 
     <update id="updateaudit1" parameterType="Integer">
-        update t_item set status =2 where id=#{id}
+        update t_item set status =1 where id=#{id}
     </update>
 
     <update id="updateaudit2" parameterType="Integer">
