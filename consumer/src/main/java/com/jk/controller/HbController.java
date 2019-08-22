@@ -138,4 +138,23 @@ public class HbController {
         return list;
     }
 
+
+
+    //跳转到审核失败列表
+    @RequestMapping("suditFailure")
+    @ResponseBody
+    public ResultPage suditFailure(@RequestBody ResultPage result){
+        ResultPage resultPage = hbService.suditFailure(result);
+        return resultPage;
+    }
+
+    //清空所有审核失败商品
+    @RequestMapping("delAll")
+    @ResponseBody
+    public Integer delAll(Integer [] ids){
+        hbService.delAll(ids);
+        return 1;
+
+    }
+
     }

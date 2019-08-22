@@ -28,4 +28,8 @@ public interface HbService {
     ResultPage queryCommodity(ResultPage result);
 
     List<Comments> comments(Integer id);
+
+    ResultPage suditFailure(ResultPage result);
+
+    void delAll(Integer [] ids);
 }

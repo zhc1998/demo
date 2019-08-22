@@ -2,10 +2,7 @@ package com.jk.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.jk.dao.ZcDao;
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -134,6 +131,30 @@ public class CommodityService implements ZcService {
     @Override
     public List<DrandModel> angeDran(Integer id) {
         return zcDao.angeDran(id);
+    }
+
+    //删除
+    @Override
+    public void delCommodity(Integer ids) {
+        zcDao.delCommodity(ids);
+    }
+
+    //图片展示
+    @Override
+    public List<CommodityModel> loadHuaWei() {
+        return zcDao.loadHuaWei();
+    }
+
+    //查询前台详情
+    @Override
+    public DetailsModel loadDetails(Integer ids) {
+        return zcDao.loadDetails(ids);
+    }
+
+    //加载颜色
+    @Override
+    public List<ColorModel> queryColor() {
+        return zcDao.queryColor();
     }
 
 

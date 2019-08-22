@@ -21,7 +21,7 @@
     <!--条件查询-->
     <sql id="sq">
         <where>
-            and  te.status = 2
+            and  te.status = 1
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>
@@ -54,7 +54,7 @@
              #{commodityName},
              #{artNo},
              #{commodityPrice},
-             1,
+             2,
              #{newProduct},
              #{inventory},
              #{typeId},
@@ -91,5 +91,20 @@
         and   t.typeId = ty.typeId
         and   t.dranId = br.itemId
         and   it.id = #{value}
+    </select>
+
+    <!--前台的图片展示-->
+    <select id="loadHuaWei" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
+    </select>
+
+    <!--查询前台详情-->
+    <select id="loadDetails" parameterType="int" resultType="com.jk.model.commodity.DetailsModel">
+        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,br.introduction  from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
+		WHERE te.id = 1
     </select>
 </mapper>

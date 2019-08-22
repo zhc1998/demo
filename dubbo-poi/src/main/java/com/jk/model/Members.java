@@ -33,6 +33,15 @@ public class Members implements Serializable {
     private Integer type;
     private String nickname;
     private String code;
+    private String newpassword;
+
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
+    }
 
     public String getCode() {
         return code;
