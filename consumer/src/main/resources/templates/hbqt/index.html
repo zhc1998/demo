@@ -599,7 +599,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img id="0" src="" alt="2"  onclick="particulars()"/>
+													<img id="0" src="" alt="2"  onclick="particulars(0)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -609,7 +609,7 @@
 													</a>
 													<br>
 													<h4> <span id="price0"></span> </h4>
-													<a  id="aa"  class="add-btn">添加到购物车1</a>
+													<a  id="aa0" class="add-btn">添加到购物车1</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -619,7 +619,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img id="1" src="" alt="2" />
+													<img id="1" src="" alt="2"  onclick="particulars(1)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -629,7 +629,7 @@
 													</a>
 													<br>
 													<h4> <span id="price1"></span> </h4>
-													<a href="#" class="add-btn">添加到购物车2</a>
+													<a id="aa1" class="add-btn">添加到购物车2</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -639,7 +639,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img id="2" src="" alt="2" />
+													<img id="2" src="" alt="2" onclick="particulars(2)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -649,7 +649,7 @@
 													</a>
 													<br>
 													<h4> <span id="price2"></span> </h4>
-													<a href="#" class="add-btn">添加到购物车</a>
+													<a id="aa2" class="add-btn">添加到购物车</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -659,7 +659,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img id="3" src="" alt="2" />
+													<img id="3" src="" alt="2" onclick="particulars(3)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -669,7 +669,7 @@
 													</a>
 													<br>
 													<h4> <span id="price3"></span> </h4>
-													<a href="#" class="add-btn">添加到购物车</a>
+													<a id="aa3" class="add-btn">添加到购物车</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -679,7 +679,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img id="4" src="" alt="2" />
+													<img id="4" src="" alt="2" onclick="particulars(4)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -689,7 +689,7 @@
 													</a>
 													<br>
 													<h4> <span id="price4"></span> </h4>
-													<a href="#" class="add-btn">添加到购物车</a>
+													<a id="aa4" class="add-btn">添加到购物车</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -699,7 +699,7 @@
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
 												<div class="pro-img">
-													<img  id="5" src="" alt="2" />
+													<img  id="5" src="" alt="2" onclick="particulars(5)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
@@ -709,7 +709,7 @@
 													</a>
 													<br>
 													<h4> <span id="price5"></span> </h4>
-													<a href="#" class="add-btn">添加到购物车</a>
+													<a id="aa5" class="add-btn">添加到购物车</a>
 												</div>
 											</div>
 											<!-- /.pro-text -->
@@ -6189,6 +6189,7 @@
 		loadHuaWei();
 	})
 
+	var ii;
 	//查询华为
 	function loadHuaWei() {
 		$.ajax({
@@ -6200,8 +6201,8 @@
 					if(i==i){
 						// 循环 i下表和 img 的Id保持一致
 						$("#"+i).attr("src",data[i].pictureUrl);
-						$("#aa").val(data[i].id);
-						//alert(data.commodityName);
+						//alert(data[i].id);
+						$("#aa"+i).val(data[i].id);
 						$("#span"+i).html(data[i].commodityName);
 						$("#price"+i).html("<font color='red'>$"+data[i].commodityPrice+"</font>");
 					}
@@ -6214,9 +6215,31 @@
 		})
 	}
 
-	function particulars() {
-		var ids = $("#aa").val();
-		location.href = "../toshow/toParticulars?ids="+ids;
+	function particulars(val) {
+		if(val == 0){
+			var ids = $("#aa0").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
+		if(val == 1){
+			var ids = $("#aa1").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
+		if(val == 2){
+			var ids = $("#aa2").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
+		if(val == 3){
+			var ids = $("#aa3").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
+		if(val == 4){
+			var ids = $("#aa4").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
+		if(val == 5){
+			var ids = $("#aa5").val();
+			location.href = "../toshow/toParticulars?ids="+ids;
+		}
 	}
 </script>
 
