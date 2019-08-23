@@ -30,6 +30,8 @@ public class CommodityModel implements Serializable {
 
     private Integer issue;
 
+    private Integer sellquantity;//累计出售数量
+
     public Integer getId() {
         return id;
     }
@@ -134,6 +136,14 @@ public class CommodityModel implements Serializable {
         this.issue = issue;
     }
 
+    public Integer getSellquantity() {
+        return sellquantity;
+    }
+
+    public void setSellquantity(Integer sellquantity) {
+        this.sellquantity = sellquantity;
+    }
+
     @Override
     public String toString() {
         return "CommodityModel{" +
@@ -150,6 +160,7 @@ public class CommodityModel implements Serializable {
                 ", typeName='" + typeName + '\'' +
                 ", name='" + name + '\'' +
                 ", issue=" + issue +
+                ", sellquantity=" + sellquantity +
                 '}';
     }
 }

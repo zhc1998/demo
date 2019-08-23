@@ -4,46 +4,43 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- 引入jquery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- 引入bootstrap的css -->
-    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-treeview的css -->
-    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-addTabs的css -->
-    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
-    <!-- 引入bootstrap-table的css -->
-    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
-    <!-- 引入fileinput的css -->
-    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
-
-    <!-- 引入my97 -->
-    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
-    <!-- 引入bootstrap-table的js-->
-    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
-    <!-- 引入bootbox.js -->
-    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
-    <!-- 引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
-    <!--  引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
-    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
+    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
+    <!-- 引入tree的js、css -->
+    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入选项卡的js、css -->
+    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- 引入table的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
+    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- 引入删除提示框 -->
+    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
+    <!-- 引入时间的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- 引入文件上传的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-fileinput/css/fileinput.css">
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/fileinput.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/locales/zh.js"></script>
 </head>
 <body>
 <button type="button" class="btn btn-success" onclick="addPlay()">新建优惠券</button>
 <button type="button" class="btn btn-success" onclick="deleteYhqByName()">批量删除</button>
 <!--  表格 -->
 <table id="dataGrid"></table>
+<!--  优惠券 -->
+<div id="timer" style="color:red"></div>
 </body>
 <script type="text/javascript">
     $(function () {
         initDataGrid();
+
     })
 
     function initDataGrid() {
@@ -96,7 +93,7 @@
                 {field: 'id', title: '编号', width: 300},      //  列    field   代表是 后台  传过来的值
                 {field: 'yhqname', title: '优惠券名称',idth: 300,
                 },
-                {field: 'yhqprice', title: '优惠形式',idth: 300,
+                {field: 'yhqprice', title: '优惠金额',idth: 300,
                     formatter: function (value,row,index){
 
                             return value+"元";
@@ -119,7 +116,14 @@
 
                     }
                 },
-                {field: 'yhqdate', title: '有效期',width: 300,
+                {field: 'yhqstartdate', title: '生效时间',width: 300,
+                },
+                {field: 'yhqdate', title: '到期时间',width: 300,
+                },
+                {field: 'yhqimg', title: '优惠券图片',width: 300,
+                    formatter: function (value,row,index){
+                        return "<img width='100' src='"+value+"'>";
+                    }
                 },
                 {field: 'yhqmenkan', title: '优惠券门槛',width: 300,
                     formatter: function (value,row,index){
@@ -155,12 +159,46 @@
                 {field: 'cz', title: '操作', width: 300,
                     formatter: function (value,row,index){
                         var content = "<a href='javascript:update("+row.id+")'>修改</a>";
+                        content+="   <a href='javascript:updateUseYhq("+row.id+",&quot;"+row.yhqname+"&quot;)'>使用</a> ";
                         return content;
                     }}
 
             ]
         });
     }
+
+    function updateUseYhq(id,yhqname){
+        $.ajax({
+            url: "../clp/updateClpUseYhq",
+            data: {id: id,yhqname:yhqname},
+            type: "post",
+            success: function (data) {
+                oBox= document.getElementById('timer');
+                maxtime = data*60;
+                yhqname="'"+yhqname+"'";
+               alert(maxtime)
+                if (maxtime >0) {
+                    minutes = Math.floor(maxtime / 60);
+                    seconds = Math.floor(maxtime % 60);
+                    msg = "距离结束还有" + minutes + "分" + seconds + "秒";
+                    oBox.innerHTML = msg;
+                    if (maxtime == 5 * 60)alert("还剩5分钟");
+                    --maxtime;
+
+                } else{
+                    clearInterval(timer);
+                    alert("优惠券已失效!");
+                    deleteYhqByName(yhqname);
+                  }
+
+                $("#dataGrid").bootstrapTable("refresh");
+
+            }, error: function () {
+                alert("失败");
+            }
+        })
+    }
+        setInterval("updateUseYhq(id)", 1000);
 
     var res;
 
