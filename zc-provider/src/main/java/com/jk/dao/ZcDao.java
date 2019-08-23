@@ -85,4 +85,11 @@ public interface ZcDao {
     //加载颜色
     @Select("select id,colorName  from  t_color")
     List<ColorModel> queryColor();
+
+    //查询配件
+    List<AccessoriesModel> queryAccessories(Integer typeId);
+
+    //查询内存
+    @Select("select *  from  t_memory")
+    List<LickMemoryModel> queryLickMemory();
 }

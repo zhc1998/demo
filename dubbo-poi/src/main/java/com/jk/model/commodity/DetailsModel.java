@@ -21,6 +21,28 @@ public class DetailsModel implements Serializable {
 
     private String pictureUrl;//图片
 
+    private String artNo;//品牌
+
+    private String createDate;//商品创建时间
+
+    private Integer typeId;//商品类型Id
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getArtNo() {
+        return artNo;
+    }
+
+    public void setArtNo(String artNo) {
+        this.artNo = artNo;
+    }
+
     public String getPictureUrl() {
         return pictureUrl;
     }
@@ -93,6 +115,14 @@ public class DetailsModel implements Serializable {
         this.introduction = introduction;
     }
 
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
     @Override
     public String toString() {
         return "DetailsModel{" +
@@ -103,6 +133,11 @@ public class DetailsModel implements Serializable {
                 ", typeName='" + typeName + '\'' +
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
+                ", sellquantity=" + sellquantity +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", artNo='" + artNo + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", typeId=" + typeId +
                 '}';
     }
 }

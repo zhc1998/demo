@@ -48,4 +48,8 @@ public interface ZcService {
     DetailsModel loadDetails(Integer ids);
 
     List<ColorModel> queryColor();
+
+    List<AccessoriesModel> queryAccessories(Integer typeId);
+
+    List<LickMemoryModel> queryLickMemory();
 }

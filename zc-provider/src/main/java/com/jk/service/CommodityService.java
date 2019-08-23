@@ -157,5 +157,17 @@ public class CommodityService implements ZcService {
         return zcDao.queryColor();
     }
 
+    //查询配件
+    @Override
+    public List<AccessoriesModel> queryAccessories(Integer typeId) {
+        return zcDao.queryAccessories(typeId);
+    }
+
+    //查询内存
+    @Override
+    public List<LickMemoryModel> queryLickMemory() {
+        return zcDao.queryLickMemory();
+    }
+
 
 }

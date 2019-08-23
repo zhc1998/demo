@@ -212,4 +212,19 @@ public class ZchController {
         return colorModels;
     }
 
+    //查询配件
+    @RequestMapping("queryAccessories")
+    @ResponseBody
+    public List<AccessoriesModel> queryAccessories(Integer typeId){
+        List<AccessoriesModel> accessoriesModels = zcService.queryAccessories(typeId);
+        return accessoriesModels;
+    }
+
+    //查询内存
+    @RequestMapping("queryLickMemory")
+    @ResponseBody
+    public List<LickMemoryModel> queryLickMemory(){
+        return zcService.queryLickMemory();
+    }
+
 }
