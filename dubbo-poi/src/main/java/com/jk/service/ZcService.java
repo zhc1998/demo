@@ -38,15 +38,17 @@ public interface ZcService {
 
     List<DrandModel> queryAllDranList(Integer itemId);
 
-    ParticularsModel loadParticulars(String ids);
+    ParticularsModel loadParticulars(Integer ids);
 
     List<DrandModel> angeDran(Integer id);
 
-    void delCommodity(String ids);
+    void delCommodity(Integer ids);
 
     List<CommodityModel> loadHuaWei();
 
     DetailsModel loadDetails(Integer ids);
 
     List<ColorModel> queryColor();
+
+    CommodityModel queryCommodityByArtNo(String artNo);
 }

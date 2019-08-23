@@ -81,7 +81,7 @@
             pagination: true,           //是否展示分页
             pageList: [2, 4, 8, 10],    //分页组件
             pageNumber: 1,
-            pageSize: 8,                //默认每页条数
+            pageSize: 4,                //默认每页条数
             searchOnEnterKey: true,     //启动回车键做搜索功能
             sortable: true,             //设置为false 将禁止所有列的排序。
             sortName: 'clientId',             //设置默认排序为 name,直接对应数据库的字段
@@ -108,9 +108,7 @@
                 {field:'commodityPrice',title:'价格'},
                 {field:'name',title:'品牌'},
                 {field:'status',title:'发布商品状态',formatter:function(value,row,index){
-
                         return "审核通过";
-
                     }},
                 {field:'newProduct',title:'新品',formatter:function(value,row,index){
                     var newProduct
@@ -142,10 +140,10 @@
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
-                        return "<button type='button'  class='btn btn-success' onclick='upd(&quot;"+row.id+"&quot;)'>修改</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type='button'  class='btn btn-success' onclick='particulars(&quot;"+row.id+"&quot;)'>详情</button><br/>" +
-                            "<button type='button' class='btn btn-default btn-danger' onclick='del(&quot;"+row.id+"&quot;)'>删除</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "<button type='button'  class='btn btn-success' onclick='comments(&quot;"+row.id+"&quot;)'>评论</button>";
+                        return "<button type='button'  class='btn btn-success' onclick='upd("+row.id+")'>修改</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button type='button'  class='btn btn-success' onclick='particulars("+row.id+")'>详情</button><br/>" +
+                            "<button type='button' class='btn btn-default btn-danger' onclick='del("+row.id+")'>删除</button>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button type='button'  class='btn btn-success' onclick='comments("+row.id+")'>评论</button>";
                     }},
             ]
         });

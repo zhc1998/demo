@@ -27,7 +27,7 @@ public interface HbService {
 
     ResultPage queryCommodity(ResultPage result);
 
-    List<Comments> comments(String id);
+    List<Comments> comments(Integer id);
 
     ResultPage suditFailure(ResultPage result);
 

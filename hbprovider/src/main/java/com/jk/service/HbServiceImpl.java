@@ -109,7 +109,7 @@ public class HbServiceImpl implements HbService {
     }
 
     @Override
-    public List<Comments> comments(String id) {
+    public List<Comments> comments(Integer id) {
         return hbDao.comments(id);
     }
 

@@ -5,14 +5,14 @@
     <select id="queryCommodityCount" resultType="long">
         select count(*)  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
-        left join brand br on br.itemId = te.itemId
-        <include refid="sq"></include>
+        left join brand br on br.itemId = te.itemId where te.status = 1
+        <!--<include refid="sq"></include>-->
     </select>
     <!--分页查询-->
-    <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
+    <select id="queryCommodity"  resultType="HashMap">
         select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
-        left join brand br on br.itemId = te.itemId
+        left join brand br on br.itemId = te.itemId where te.status = 1
         <include refid="sq"></include>
         LIMIT #{start},#{end}
     </select>
@@ -20,8 +20,6 @@
 
     <!--条件查询-->
     <sql id="sq">
-        <where>
-            and  te.status = 1
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>
@@ -34,7 +32,6 @@
             <if test="result.dran!=null and result.dran!=''">
                 and br.itemId = #{result.dran}
             </if>
-        </where>
     </sql>
 
     <!--查询回显-->
@@ -47,10 +44,9 @@
         update t_item t set t.commodityName = #{commodityName},t.inventory = #{inventory},t.artNo = #{artNo},t.TypeId = #{typeId},t.commodityPrice=#{commodityPrice},t.pictureUrl = #{pictureUrl},newProduct = #{newProduct},itemId = #{itemId}    WHERE t.id = #{id}
     </update>
 
-    <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-         INSERT into t_item(id,commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId,sellquantity,createDate)
+    <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel" useGeneratedKeys="true" keyProperty="id">
+         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId,sellquantity,createDate)
          VALUES(
-             #{id},
              #{commodityName},
              #{artNo},
              #{commodityPrice},

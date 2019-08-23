@@ -133,7 +133,7 @@ public class HbController {
     //评论
     @RequestMapping("comments")
     @ResponseBody
-    public List<Comments> comments(String id){
+    public List<Comments> comments(Integer id){
 
         List<Comments>list =hbService.comments(id);
         List<Comments>list2=CommentsNoteUtil.getFatherNode(list);

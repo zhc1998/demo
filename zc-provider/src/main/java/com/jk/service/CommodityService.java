@@ -24,10 +24,10 @@ public class CommodityService implements ZcService {
         hashMap.put("result", result);
         //查询总条数
         Long count = zcDao.queryCommodityCount(hashMap);
-        map.put("start", (result.getPageNumber()-1)*result.getPageSize());
-        map.put("end", result.getPageSize());
+        hashMap.put("start", (result.getPageNumber()-1)*result.getPageSize());
+        hashMap.put("end", result.getPageSize());
         //查询所有数据
-        List<CommodityModel> list = zcDao.queryCommodity(hashMap);
+        List list = zcDao.queryCommodity(hashMap);
         map.put("rows",list);
         map.put("total",count);
         return map;
@@ -119,7 +119,7 @@ public class CommodityService implements ZcService {
 
     //查询详情
     @Override
-    public ParticularsModel loadParticulars(String ids) {
+    public ParticularsModel loadParticulars(Integer ids) {
         return zcDao.loadParticulars(ids);
     }
 
@@ -131,7 +131,7 @@ public class CommodityService implements ZcService {
 
     //删除
     @Override
-    public void delCommodity(String ids) {
+    public void delCommodity(Integer ids) {
         zcDao.delCommodity(ids);
     }
 
@@ -153,5 +153,8 @@ public class CommodityService implements ZcService {
         return zcDao.queryColor();
     }
 
-
+    @Override
+    public CommodityModel queryCommodityByArtNo(String artNo) {
+        return zcDao.queryCommodityByArtNo(artNo);
+    }
 }

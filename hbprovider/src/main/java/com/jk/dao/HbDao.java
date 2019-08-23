@@ -52,7 +52,7 @@ public interface HbDao {
 
     List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
 
-    List<Comments> comments(String id);
+    List<Comments> comments(Integer id);
 
     Long suditFailure(HashMap<String, Object> hashMap);
 

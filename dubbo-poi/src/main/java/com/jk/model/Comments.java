@@ -28,7 +28,7 @@ public class Comments implements Serializable {
     private Integer id;
     private String text;
     private Integer pid;
-    private String sid;
+    private Integer sid;
     private String uid;
     private Map<String, Object> attributes = new HashMap<String, Object>(); // 添加到节点的自定义属性
     private List<Comments> nodes; //子节点数据
@@ -81,11 +81,12 @@ public class Comments implements Serializable {
         this.uid = uid;
     }
 
-    public String getSid() {
+
+    public Integer getSid() {
         return sid;
     }
 
-    public void setSid(String sid) {
+    public void setSid(Integer sid) {
         this.sid = sid;
     }
 

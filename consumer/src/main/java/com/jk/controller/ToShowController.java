@@ -191,7 +191,7 @@ public class ToShowController {
 
     //跳转到详情页面
     @RequestMapping("particulars")
-    public String particulars(String id,Model model){
+    public String particulars(Integer id,Model model){
         model.addAttribute("ids",id);
         return "houtai/particulars";
     }
@@ -205,7 +205,7 @@ public class ToShowController {
 
     //跳转到评论页面
     @RequestMapping("comments")
-    public String comments(String id,Model model){
+    public String comments(Integer id,Model model){
         model.addAttribute("ids",id);
         return "hbqt/comments";
     }

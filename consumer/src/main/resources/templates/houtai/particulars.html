@@ -7,7 +7,6 @@
 </head>
 <body>
     <input type="hidden" id="ids" th:value="${ids}">
-                    <button type="button" class="close" onclick="tocommodity()" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4>
                         详情描述
                     </h4>
@@ -53,10 +52,6 @@
                 alert("加载详情失败");
             }
         })
-    }
-
-    function tocommodity() {
-        location.href="../toshow/toCommodity";
     }
 </script>
 </html>

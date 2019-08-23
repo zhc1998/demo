@@ -13,7 +13,7 @@ public interface ZcDao {
     long queryCommodityCount(HashMap<String, Object> hashMap);
 
     //分页查询
-    List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
+    List queryCommodity(HashMap<String, Object> hashMap);
 
     //查询商品类型
     @Select(" select *  from  t_commoditytype ")
@@ -65,7 +65,7 @@ public interface ZcDao {
     List<DrandModel> queryAllDranList(Integer itemId);
 
     //查询详情
-    ParticularsModel loadParticulars(String ids);
+    ParticularsModel loadParticulars(Integer ids);
 
     //根据类型Id查询品牌
     @Select("select br.name,br.id  from  t_commoditytype ty,brand br WHERE ty.typeId = br.type and ty.typeId = #{value}")
@@ -73,7 +73,7 @@ public interface ZcDao {
 
     //删除
     @Delete("DELETE from t_item WHERE id = #{value}")
-    void delCommodity(String ids);
+    void delCommodity(Integer ids);
 
     //图片展示
     //@Select("select pictureUrl,id  from  t_item")
@@ -85,4 +85,7 @@ public interface ZcDao {
     //加载颜色
     @Select("select id,colorName  from  t_color")
     List<ColorModel> queryColor();
+
+    @Select("select *  from  t_item where artNo = #{artNo}")
+    CommodityModel queryCommodityByArtNo(String artNo);
 }

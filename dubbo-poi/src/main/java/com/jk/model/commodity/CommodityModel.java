@@ -3,7 +3,7 @@ package com.jk.model.commodity;
 import java.io.Serializable;
 
 public class CommodityModel implements Serializable {
-    private String id;
+    private Integer id;
 
     private String commodityName;//商品名称
 
@@ -30,6 +30,26 @@ public class CommodityModel implements Serializable {
 
     private String createDate;
 
+    private String typeName;
+
+    private String name;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCreateDate() {
         return createDate;
     }
@@ -54,11 +74,11 @@ public class CommodityModel implements Serializable {
         this.sellquantity = sellquantity;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -137,7 +157,7 @@ public class CommodityModel implements Serializable {
     @Override
     public String toString() {
         return "CommodityModel{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", commodityName='" + commodityName + '\'' +
                 ", artNo='" + artNo + '\'' +
                 ", commodityPrice=" + commodityPrice +
@@ -150,6 +170,8 @@ public class CommodityModel implements Serializable {
                 ", colorId=" + colorId +
                 ", sellquantity=" + sellquantity +
                 ", createDate='" + createDate + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

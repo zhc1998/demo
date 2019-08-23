@@ -39,64 +39,7 @@ public class ZchController {
     @RequestMapping("queryCommodity")
     @ResponseBody
     public Map queryCommodity(@RequestBody ResultPage result){
-        Map<String,Object> mSolr=new HashMap<String,Object>();
-    List<CommodityModel> comlist=new ArrayList<>();
-    SolrQuery params=new SolrQuery();
-        if(!"".equals(result.getCommodityName())&&result.getCommodityName()!=null){
-        params.set("q",result.getCommodityName());
-    }else{
-        params.set("q","*:*");
-    }
-        params.set("df","commodityName");
-        params.set("fl","id,commodityName,artNo,commodityPrice,status,newProduct,inventory,typeId,pictureUrl,itemId,colorId,sellquantity");
-        params.addHighlightField("commodityName");//设置高亮字段
-    //分页
-        params.setStart(result.getPageNumber());
-        params.setRows(result.getPageSize());
-    //打开高亮
-        params.setHighlight(true);
-    //设置前缀
-        params.setHighlightSimplePre("<span style='color:red'>");
-    //设置后缀
-        params.setHighlightSimplePost("</span>");
-        try {
-        QueryResponse queryResponse=client.query(params);
-        SolrDocumentList results=queryResponse.getResults();
-        long numFound=results.getNumFound();
-        Map<String,Map<String,List<String>>> higlight=queryResponse.getHighlighting();
-        for (SolrDocument res:results){
-            CommodityModel com=new CommodityModel();
-            String highname="";
-            Map<String, List<String>> map=higlight.get(res.get("id"));
-            List<String> list=map.get("commodityName");
-            if(list==null){
-                highname=(String)res.get("commodityName");
-            }else{
-                highname=list.get(0);
-            }
-            com.setId((String) res.get("id"));
-            com.setSellquantity((Integer) res.get("sellquantity"));
-            com.setArtNo((String) res.get("artNo"));
-            com.setPictureUrl((String) res.get("pictureUrl"));
-            com.setColorId((Integer) res.get("coloId"));
-            com.setCommodityName((String) res.get("commodityName"));
-            com.setCommodityPrice(Double.parseDouble(res.get("commodityPrice").toString()));
-            com.setInventory((Integer) res.get("inventory"));
-            com.setItemId((Integer) res.get("itemId"));
-            com.setNewProduct((Integer) res.get("newProduct"));
-            com.setStatus((Integer) res.get("status"));
-            com.setTypeId((Integer) res.get("typeId"));
-            comlist.add(com);
-        }
-        mSolr.put("total",numFound);
-        mSolr.put("rows",comlist);
-    } catch (SolrServerException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-        return mSolr;
-    //return zcService.queryCommodity(result);
+        return zcService.queryCommodity(result);
 }
 
     //查询商品类型
@@ -197,8 +140,6 @@ public class ZchController {
     @ResponseBody
     public String addCommodity(CommodityModel commodityModel){
         String val = "";
-        //生成uuid
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         Random random = new Random();
         for ( int i = 0; i < 7; i++ )
         {
@@ -217,13 +158,13 @@ public class ZchController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         commodityModel.setCreateDate(format.format(new Date()));
         commodityModel.setStatus(2);
-        commodityModel.setId(uuid);
         commodityModel.setArtNo(val);
         commodityModel.setSellquantity(0);
         zcService.addCommodity(commodityModel);
+        CommodityModel com = zcService.queryCommodityByArtNo(commodityModel.getArtNo());
         try {
             SolrInputDocument doc = new SolrInputDocument();
-            doc.setField("id",uuid);
+            doc.setField("id",com.getId());
             doc.setField("commodityName",commodityModel.getCommodityName());
             doc.setField("artNo", commodityModel.getArtNo());
             doc.setField("commodityPrice", commodityModel.getCommodityPrice());
@@ -280,7 +221,7 @@ public class ZchController {
     //加载商品详情
     @RequestMapping("loadParticulars")
     @ResponseBody
-    public ParticularsModel loadParticulars(String ids){
+    public ParticularsModel loadParticulars(Integer ids){
         ParticularsModel particularsModel = zcService.loadParticulars(ids);
         return particularsModel;
     }
@@ -296,7 +237,7 @@ public class ZchController {
     //删除商品
     @RequestMapping("delCommodity")
     @ResponseBody
-    public String delCommodity(String ids){
+    public String delCommodity(Integer ids){
         zcService.delCommodity(ids);
         try {
             client.deleteById(String.valueOf(ids));
@@ -309,7 +250,7 @@ public class ZchController {
     }
 
 
-    //图片展示
+    //查询前台数据
     @RequestMapping("loadHuaWei")
     @ResponseBody
     public List<CommodityModel> loadHuaWei(){
