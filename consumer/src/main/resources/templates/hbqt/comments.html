@@ -56,32 +56,7 @@
                     data: data,
                     //tree默认展开的节点级别默认为2
                     levels: 0,
-                    //含有子节点的图标
-                    //collapseIcon:'glyphicon glyphicon-star-empty',
-                    //没有子节点的图标
-                    //emptyIcon:'glyphicon glyphicon-usd',
-                    //背景颜色
-                    //backColor: 'green'
-                    //是否显示复选框
-                    showCheckbox:false,
-                    //是否允许选中多个节点
-                    //multiSelect:true,
-                    //启用节点的超链接功能默认为false,节点需指定href属性
-                    enableLinks:true,
-                    //事件当节点选中时
-                    onNodeSelected:function(event,node){
-                        $.addtabs({iframeHeight:600});
-                        console.log(node);
-                        //动态向 nav-tabs 导航标签添加tab选项卡
-                        //addTabs方法  add() 添加tab  close()关闭tab  closeAll() 关闭全部tab
-                        if(null !=  node.url){
-                            $.addtabs.add({
-                                id:node.id,
-                                title:node.text,
-                                url:"../"+node.url
-                            })
-                        }
-                    }
+
                 })
             },error : function (){
                 alert("查询失败");
