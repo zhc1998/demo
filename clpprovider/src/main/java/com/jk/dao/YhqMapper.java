@@ -34,4 +34,6 @@ public interface YhqMapper {
     List<Yhq> queryClpYhq2(@Param("i")int i);
 
     void updateYhqUse(@Param("id")Integer id);
+
+    List<Yhq> queryClpYhqByName(@Param("yhqname")String yhqname);
 }

@@ -24,4 +24,6 @@ public interface ClpService {
     List<Yhq> queryClpYhq2(int i);
 
     void updateYhqUse(Integer id);
+
+    List<Yhq> queryClpYhqByName(String yhqname);
 }
