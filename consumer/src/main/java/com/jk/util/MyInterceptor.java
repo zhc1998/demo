@@ -1,4 +1,4 @@
-/*
+
 package com.jk.util;
 
 import com.jk.model.User;
@@ -33,4 +33,3 @@ public class MyInterceptor implements HandlerInterceptor {
         }
     }
 }
-*/
