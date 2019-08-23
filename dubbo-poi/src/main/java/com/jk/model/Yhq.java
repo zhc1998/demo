@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Yhq implements Serializable {
     private Integer id;
+    private Integer userid;
 
     private String yhqname;
 
@@ -23,12 +24,26 @@ public class Yhq implements Serializable {
 
     private Integer yhqlevel;
 
+    private String yhqstartdate;
+
+    private String yhqimg;
+
+    private Integer yhqstatus;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public String getYhqname() {
@@ -101,5 +116,29 @@ public class Yhq implements Serializable {
 
     public void setYhqlevel(Integer yhqlevel) {
         this.yhqlevel = yhqlevel;
+    }
+
+    public String getYhqstartdate() {
+        return yhqstartdate;
+    }
+
+    public void setYhqstartdate(String yhqstartdate) {
+        this.yhqstartdate = yhqstartdate == null ? null : yhqstartdate.trim();
+    }
+
+    public String getYhqimg() {
+        return yhqimg;
+    }
+
+    public void setYhqimg(String yhqimg) {
+        this.yhqimg = yhqimg == null ? null : yhqimg.trim();
+    }
+
+    public Integer getYhqstatus() {
+        return yhqstatus;
+    }
+
+    public void setYhqstatus(Integer yhqstatus) {
+        this.yhqstatus = yhqstatus;
     }
 }

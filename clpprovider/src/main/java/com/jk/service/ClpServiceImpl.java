@@ -67,12 +67,32 @@ public class ClpServiceImpl implements ClpService{
     @Override
     @Async
     public void addYhq(List<Yhq> list) {
-        yhqMapper.addYhq(list);
+         yhqMapper.addYhq(list);
     }
 
     @Override
     public void deleteYhqByName(String names) {
          yhqMapper.deleteYhqByName(names);
+    }
+
+    @Override
+    public List<Yhq> queryClpYhq() {
+        return yhqMapper.queryClpYhq();
+    }
+
+    @Override
+    public List<Yhq> queryClpYhq2(int i) {
+        return yhqMapper.queryClpYhq2(i);
+    }
+
+    @Override
+    public void updateYhqUse(Integer id) {
+        yhqMapper.updateYhqUse(id);
+    }
+
+    @Override
+    public List<Yhq> queryClpYhqByName(String yhqname) {
+        return yhqMapper.queryClpYhqByName(yhqname);
     }
 
 }
