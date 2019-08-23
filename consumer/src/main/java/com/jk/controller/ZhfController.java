@@ -89,6 +89,7 @@ public class ZhfController {
        Integer userid=1;
         return zhfService.queryorderbyuid(userid,parame);
     }
+
     //快递单号查询
     @RequestMapping("querytnumber")
     @ResponseBody
@@ -109,11 +110,12 @@ public class ZhfController {
         map.put("rows",list);
         return map;
     }
+
     //新增订单
     @RequestMapping("addorbder")
     @ResponseBody
-
     public void addorbder(HttpSession session){
+
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Members members =new Members();
         members.setId(1);
@@ -131,7 +133,6 @@ public class ZhfController {
         orderone.setBuyer(members.getNickname());
         orderone.setArtno(artno);
         orderone.setOrdertime(sdf.format(new Date()));
-
 
         amqpTemplate.convertAndSend("AddOrder",orderone);
        // zhfService.addorder(orderone);
