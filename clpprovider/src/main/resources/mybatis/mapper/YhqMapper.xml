@@ -36,11 +36,15 @@
   </select>
 
   <select id="queryClpYhq" resultMap="BaseResultMap">
-    select * from clp_yhq
+    select * from clp_yhq c where c.yhqstatus=1 GROUP BY c.yhqName
   </select>
 
   <select id="queryClpYhq2" resultMap="BaseResultMap">
     select * from clp_yhq where userid=#{i} and yhqstatus=2
+  </select>
+
+  <select id="queryClpYhqByName" resultMap="BaseResultMap">
+    select * from clp_yhq where yhqName=#{yhqname} and yhqstatus=2
   </select>
 
 
@@ -67,8 +71,9 @@
 
 
     <update id="updateYhqUse">
-      update clp_yhq set yhqstatus=2 where id=#{id}
+      update clp_yhq set yhqstatus=2  where id=#{id}
     </update>
+
 
 
 
