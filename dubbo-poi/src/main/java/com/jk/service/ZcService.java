@@ -1,17 +1,15 @@
 package com.jk.service;
 
 import com.jk.model.Orderone;
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
 import com.jk.util.ResultPage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ZcService {
 
-    ResultPage queryCommodity(ResultPage result);
+    Map queryCommodity(ResultPage result);
 
     List<CommodityTypeModel> queryCommodityType();
 
@@ -24,7 +22,7 @@ public interface ZcService {
     List<DrandModel> queryAllDran();
 
 
-    CommodityModel loadOneModel(Integer id);
+    CommodityModel loadOneModel(String id);
 
     void updCommodity(CommodityModel commodityModel);
 
@@ -40,7 +38,15 @@ public interface ZcService {
 
     List<DrandModel> queryAllDranList(Integer itemId);
 
-    ParticularsModel loadParticulars(Integer ids);
+    ParticularsModel loadParticulars(String ids);
 
     List<DrandModel> angeDran(Integer id);
+
+    void delCommodity(String ids);
+
+    List<CommodityModel> loadHuaWei();
+
+    DetailsModel loadDetails(Integer ids);
+
+    List<ColorModel> queryColor();
 }

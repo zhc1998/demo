@@ -31,7 +31,7 @@
     </select>
 
     <update id="updateaudit1" parameterType="Integer">
-        update t_item set status =2 where id=#{id}
+        update t_item set status =1 where id=#{id}
     </update>
 
     <update id="updateaudit2" parameterType="Integer">
@@ -42,12 +42,43 @@
     <select id="queryCommodityCount" resultType="long">
         select count(*) from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
+        WHERE te.status = 2
     </select>
 
     <!--分页查询-->
     <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
         select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
-        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join t_commoditytype ty on ty.typeId=te.TypeId WHERE te.status = 2
         LIMIT #{start},#{end}
     </select>
+
+    <select id="comments"  resultType="Comments">
+        select * from comments where sid=#{id}
+    </select>
+
+    <!--查询失败总条数-->
+    <select id="suditFailure" resultType="long">
+
+        select count(*) from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        WHERE te.status = 3
+    </select>
+
+    <!--查询失败所有数据-->
+    <select id="suditFailureList" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        WHERE te.status = 3
+        LIMIT #{start},#{end}
+    </select>
+
+    <!--删除-->
+    <delete id="delAll" >
+        DELETE from  t_delAllitem WHERE id in(
+           <foreach collection="array" index="index" separator="," item="item">
+               #{item}
+           </foreach>
+        )
+    </delete>
+
 </mapper>

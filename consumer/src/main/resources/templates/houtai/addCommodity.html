@@ -43,10 +43,6 @@
                 <input type="text" class="form-control" style="width: 300px;"  name="commodityName">
             </div>
             <div class="form-group">
-                <label >商品货号</label>
-                <input type="text" class="form-control" style="width: 300px;"  name="artNo" >
-            </div>
-            <div class="form-group">
                 <label >商品分类</label>
                 <select  style="width: 300px;"  class="form-control"  id="commodityType" name="typeId" onchange="queryAllDran(this.value)"></select>
             </div>
@@ -70,7 +66,7 @@
                 <br><br>
                 商品或热销只能选择一项
                 热销:<input type="radio" name="newProduct" value="2" />
-                新品:<input type="radio" name="newProduct" value="1"/>
+                新品:<input type="radio" name="newProduct" value="1" checked/>
             </div>
             <div class="form-group">
                 <div class="col-md-2">
@@ -161,9 +157,9 @@
             url:"../zch/addCommodity",
             type:"post",
             data:$("#addForm").serialize(),
-            dataType:"json",
             success:function(data){
-               location.href="../toshow/toCommodity";
+                alert("新增成功")
+               location.href=location;
             },
             error:function(){
                 alert("新增失败");

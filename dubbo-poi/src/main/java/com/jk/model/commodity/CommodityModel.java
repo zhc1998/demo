@@ -3,7 +3,7 @@ package com.jk.model.commodity;
 import java.io.Serializable;
 
 public class CommodityModel implements Serializable {
-    private Integer id;
+    private String id;
 
     private String commodityName;//商品名称
 
@@ -24,22 +24,26 @@ public class CommodityModel implements Serializable {
 
     private String pictureUrl;//图片路径
 
-    private String typeName;//类型
-
-    private String name;//品牌
-
-    private Integer issue;
-
-    private Integer coloId;
+    private Integer colorId;
 
     private Integer sellquantity;
 
-    public Integer getColoId() {
-        return coloId;
+    private String createDate;
+
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setColoId(Integer coloId) {
-        this.coloId = coloId;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Integer colorId) {
+        this.colorId = colorId;
     }
 
     public Integer getSellquantity() {
@@ -50,11 +54,11 @@ public class CommodityModel implements Serializable {
         this.sellquantity = sellquantity;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -130,34 +134,10 @@ public class CommodityModel implements Serializable {
         this.pictureUrl = pictureUrl;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getIssue() {
-        return issue;
-    }
-
-    public void setIssue(Integer issue) {
-        this.issue = issue;
-    }
-
     @Override
     public String toString() {
         return "CommodityModel{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", commodityName='" + commodityName + '\'' +
                 ", artNo='" + artNo + '\'' +
                 ", commodityPrice=" + commodityPrice +
@@ -167,11 +147,9 @@ public class CommodityModel implements Serializable {
                 ", typeId=" + typeId +
                 ", itemId=" + itemId +
                 ", pictureUrl='" + pictureUrl + '\'' +
-                ", typeName='" + typeName + '\'' +
-                ", name='" + name + '\'' +
-                ", issue=" + issue +
-                ", coloId=" + coloId +
+                ", colorId=" + colorId +
                 ", sellquantity=" + sellquantity +
+                ", createDate='" + createDate + '\'' +
                 '}';
     }
 }

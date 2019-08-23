@@ -175,10 +175,16 @@ public class ToShowController {
     @RequestMapping("querygoods")
     public String querygoods(){ return "querygoods"; }
 
+    //跳转审核失败
+    @RequestMapping("suditFailure")
+    public String suditFailure(){
+        return "suditFailure";
+    }
+
 
     //跳转到详情页面
     @RequestMapping("particulars")
-    public String particulars(Integer id,Model model){
+    public String particulars(String id,Model model){
         model.addAttribute("ids",id);
         return "houtai/particulars";
     }
@@ -188,5 +194,20 @@ public class ToShowController {
     @RequestMapping("index")
     public String index(){
         return "hbqt/index";
+    }
+
+    //跳转到评论页面
+    @RequestMapping("comments")
+    public String comments(String id,Model model){
+        model.addAttribute("ids",id);
+        return "hbqt/comments";
+    }
+
+    //跳转到前台商品详情
+    @RequestMapping("toParticulars")
+    public String toParticulars(Integer ids,Model model){
+
+        model.addAttribute("ids",ids);
+        return "index";
     }
 }

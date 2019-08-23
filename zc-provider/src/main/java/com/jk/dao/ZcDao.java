@@ -1,9 +1,7 @@
 package com.jk.dao;
 
-import com.jk.model.commodity.CommodityModel;
-import com.jk.model.commodity.CommodityTypeModel;
-import com.jk.model.commodity.DrandModel;
-import com.jk.model.commodity.ParticularsModel;
+import com.jk.model.commodity.*;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public interface ZcDao {
     List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
-    CommodityModel loadOneModel(Integer id);
+    CommodityModel loadOneModel(String id);
 
     //修改
     void updCommodity(CommodityModel commodityModel);
@@ -67,9 +65,24 @@ public interface ZcDao {
     List<DrandModel> queryAllDranList(Integer itemId);
 
     //查询详情
-    ParticularsModel loadParticulars(Integer ids);
+    ParticularsModel loadParticulars(String ids);
 
     //根据类型Id查询品牌
     @Select("select br.name,br.id  from  t_commoditytype ty,brand br WHERE ty.typeId = br.type and ty.typeId = #{value}")
     List<DrandModel> angeDran(Integer id);
+
+    //删除
+    @Delete("DELETE from t_item WHERE id = #{value}")
+    void delCommodity(String ids);
+
+    //图片展示
+    //@Select("select pictureUrl,id  from  t_item")
+    List<CommodityModel> loadHuaWei();
+
+    //查询前台详情
+    DetailsModel loadDetails(Integer ids);
+
+    //加载颜色
+    @Select("select id,colorName  from  t_color")
+    List<ColorModel> queryColor();
 }

@@ -21,7 +21,7 @@
     <!--条件查询-->
     <sql id="sq">
         <where>
-            and  te.status = 2
+            and  te.status = 1
             <if test="result.typeIds!=null and result.typeIds!=''">
                 and ty.typeId = #{result.typeIds}
             </if>
@@ -38,7 +38,7 @@
     </sql>
 
     <!--查询回显-->
-    <select id="loadOneModel" parameterType="int" resultType="com.jk.model.commodity.CommodityModel">
+    <select id="loadOneModel" resultType="com.jk.model.commodity.CommodityModel">
         select *  from t_item  WHERE id = #{value}
     </select>
 
@@ -48,20 +48,21 @@
     </update>
 
     <insert id="addCommodity" parameterType="com.jk.model.commodity.CommodityModel">
-
-         INSERT into t_item(commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId)
+         INSERT into t_item(id,commodityName,artNo,commodityPrice,status,newProduct,inventory,TypeId,pictureUrl,itemId,sellquantity,createDate)
          VALUES(
+             #{id},
              #{commodityName},
              #{artNo},
              #{commodityPrice},
-             1,
+             #{status},
              #{newProduct},
              #{inventory},
              #{typeId},
              #{pictureUrl},
-             #{itemId}
+             #{itemId},
+             #{sellquantity},
+             #{createDate}
          )
-
     </insert>
 
     <!--查询商品分类-->
@@ -85,11 +86,26 @@
     </select>
 
     <!--查询详情-->
-    <select id="loadParticulars" parameterType="int" resultType="com.jk.model.commodity.ParticularsModel">
-        select t.color ,t.color ,t.weight,t.crowd,it.commodityName,ty.typeName,br.name,br.introduction as introduction   from  t_toyproperties t,t_item it,t_commoditytype ty,brand br
+    <select id="loadParticulars" resultType="com.jk.model.commodity.ParticularsModel">
+        select t.color ,t.weight,t.crowd,it.commodityName,ty.typeName,br.name,br.introduction as introduction   from  t_toyproperties t,t_item it,t_commoditytype ty,brand br
         WHERE t.itemId = it.itemId
         and   t.typeId = ty.typeId
         and   t.dranId = br.itemId
         and   it.id = #{value}
+    </select>
+
+    <!--前台的图片展示-->
+    <select id="loadHuaWei" resultType="com.jk.model.commodity.CommodityModel">
+        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
+    </select>
+
+    <!--查询前台详情-->
+    <select id="loadDetails" parameterType="int" resultType="com.jk.model.commodity.DetailsModel">
+        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,br.introduction,te.sellquantity,te.pictureUrl  from t_item te
+        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join brand br on br.itemId = te.itemId
+		WHERE te.id = #{value}
     </select>
 </mapper>

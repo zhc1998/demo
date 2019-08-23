@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
+    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
+    <!-- 引入tree的js、css -->
+    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入选项卡的js、css -->
+    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- 引入table的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
+    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- 引入删除提示框 -->
+    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
+    <!-- 引入时间的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- 引入文件上传的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-fileinput/css/fileinput.css">
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/fileinput.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/locales/zh.js"></script>
+</head>
+<body>
+<form role="form" id="addForm">
+    <div class="form-group">
+        <label for="name">详情</label>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" onclick="tocommodity()" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>
+                            详情描述
+                        </h4>
+                        <hr>
+                        <span id="commodityName"></span>
+                        <hr>
+                        <span id="commodityPrice"></span>
+                        <hr>
+                        <span id="inventory"></span>
+                        <hr>
+                        <span id="typeName"></span>
+                        <hr>
+                        <span id="name"></span>
+                        <hr>
+                        <span id="introduction"></span>
+                        <hr>
+                        <h4>
+                            属性
+                        </h4>
+                        <hr>
+                        <span id="colorName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+<script>
+    $(function(){
+        loadDetails();
+        queryColor();
+    })
+    
+    //查询详情1
+    function loadDetails() {
+        var ids = $("#loadDetails").val();
+        $.ajax({
+            url:"../zch/loadDetails",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+
+                $("#commodityName").html("商品名称:"+data.commodityName);
+                $("#commodityPrice").html("商品价格:"+data.commodityPrice);
+                $("#inventory").html("剩余数量:"+data.inventory);
+                $("#typeName").html("类型:"+data.typeName);
+                $("#name").html("品牌:"+data.name);
+                $("#introduction").html("品牌描述:"+data.introduction);
+
+            },
+            error:function(){
+                alert("查询详情失败");
+            }
+        })
+    }
+
+    //加载颜色
+    function queryColor(){
+        $.ajax({
+            url:"../zch/queryColor",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                var html = "";
+                for(var i=0;i<data.length;i++){
+                    html += "----" + data[i].colorName;
+                }
+                $("#colorName").html("<font color='#a52a2a'>可选择颜色:</font>"+html);
+            },
+            error:function(){
+                alert("查询详情失败");
+            }
+        })
+    }
+</script>
+</html>
