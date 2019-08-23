@@ -296,7 +296,11 @@
 
             <div id="ui-c" class="ui-c">
                 <ul style="display:none;">
-
+                    <div class="plmain">
+                        <div class="plm clearfix">商品评价</div>
+                        <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
+                        <div class="tool_submit tr"> <a class="dp_wrap_pname" href="evaluation()" target="_blank">评论</a></div>
+                    </div>
                 </ul>
             </div>
             <!--售后保障-->
@@ -415,5 +419,18 @@
         };//参数定义
        // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
     });
+
+    //评论
+    evaluation = function(){
+        var text =$("#TextArea1").val().serialize();
+        var ids =$("#ids").val();
+       $.ajax({
+           url:"../hb/addevaluation",
+           data:{text:text,ids:ids},
+           success:function(data){
+            location.href=location;
+           }
+       })
+    }
 </script>
 </html>

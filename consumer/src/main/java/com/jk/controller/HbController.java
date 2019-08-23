@@ -1,9 +1,6 @@
 package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.jk.model.Audit;
-import com.jk.model.Comments;
-import com.jk.model.Tree;
-import com.jk.model.User;
+import com.jk.model.*;
 import com.jk.service.HbService;
 import com.jk.util.CommentsNoteUtil;
 import com.jk.util.ResultPage;
@@ -156,7 +153,13 @@ public class HbController {
     public Integer delAll(Integer [] ids){
         hbService.delAll(ids);
         return 1;
-
     }
 
+    //评论
+    @RequestMapping("addevaluation")
+    @ResponseBody
+    public void evaluation(HttpServletRequest request,Comments comments,Integer text,Integer ids){
+        Members members = (Members) request.getSession().getAttribute("members");
+        hbService.evaluation(members.getId(),comments,text,ids);
+    }
     }
