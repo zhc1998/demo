@@ -49,8 +49,11 @@
     <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
         select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
-        WHERE te.status = 2
         LIMIT #{start},#{end}
+    </select>
+
+    <select id="comments" parameterType="Integer" resultType="Comments">
+        select * from comments where sid=#{id}
     </select>
 
     <!--查询失败总条数-->

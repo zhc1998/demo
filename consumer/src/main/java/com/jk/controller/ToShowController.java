@@ -85,6 +85,13 @@ public class ToShowController {
     }
 
 
+    //优惠券前台展示
+    @RequestMapping("toshowClpYhq2")
+    public String toshowClpYhq2(){
+        return "houtai/showClpYhq2";
+    }
+
+
 
 
 
@@ -194,6 +201,13 @@ public class ToShowController {
     @RequestMapping("index")
     public String index(){
         return "hbqt/index";
+    }
+
+    //跳转到评论页面
+    @RequestMapping("comments")
+    public String comments(Integer id,Model model){
+        model.addAttribute("ids",id);
+        return "hbqt/comments";
     }
 
     //跳转到前台商品详情
