@@ -80,7 +80,7 @@
 			<div class="col-md-6">
 				<div class="top-header-right">
 					<ul>
-						<li><i class="icon-user icons" aria-hidden="true"></i><a href="#" style="color: aliceblue">个人中心</a></li>
+						<li><i class="icon-user icons" aria-hidden="true"></i><a href="javaScript:tousercenter()" style="color: aliceblue">个人中心</a></li>
 						<li><i class="icon-location-pin icons" aria-hidden="true"></i> Store Location</li>
 						<li><i class="icon-note icons" aria-hidden="true"></i> Track Your Order</li>
 						<li>
@@ -6186,6 +6186,11 @@
 <script src="../assets/js/custom.js"></script>
 </body>
 <script>
+    //去个人中心
+    function tousercenter(){
+        location.href = "../clp/showClpYhq3";
+    }
+
 	$(function(){
 		loadHuaWei();
 	})
@@ -6242,6 +6247,8 @@
 			location.href = "../toshow/toParticulars?ids="+ids;
 		}
 	}
+
+
 </script>
 
 </html>

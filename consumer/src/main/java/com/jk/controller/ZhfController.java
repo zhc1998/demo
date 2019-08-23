@@ -84,10 +84,15 @@ public class ZhfController {
 
     //查询(自己)登录人的订单列表
     @RequestMapping("queryorderbyuid")
-    @ResponseBody
-    public HashMap<String, Object> queryorderbyuid(@RequestBody ParameUtil parame) {
-       Integer userid=1;
-        return zhfService.queryorderbyuid(userid,parame);
+    public String queryorderbyuid(Model model,HttpSession session) {
+       //Integer userid=1;
+       Members members =(Members) session.getAttribute("members");
+       Integer userid= members.getId();
+       System.err.println(userid);
+        HashMap<String, Object> list = zhfService.queryorderbyuid(userid);
+        Object orderone = list.get("rows");
+        model.addAttribute("order",orderone);
+        return "myorder";
     }
     //快递单号查询
     @RequestMapping("querytnumber")
