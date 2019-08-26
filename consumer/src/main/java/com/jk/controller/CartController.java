@@ -115,4 +115,70 @@ public class CartController {
         return map;
     }
 
+
+
+    //删除购物车指定数据
+    @RequestMapping("delete")
+    @ResponseBody
+    public Boolean delete(Integer id){
+
+        try {
+            Members admin = (Members) session.getAttribute("members");
+            if(admin==null){
+                String cartList = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
+                List<CommodityModel> carts_cookie = JSON.parseArray(cartList, CommodityModel.class);
+                if(carts_cookie.size()==1){
+                    CookieUtil.deleteCookie(request,response,"cartList");
+                }else{
+                      for (int i=0;i<carts_cookie.size();i++){
+                          if (carts_cookie.get(i).getId()==id){
+                              carts_cookie.remove(i);
+                              i--;
+                          }
+
+                      }
+                    CookieUtil.setCookie(request, response, "cartList", JSON.toJSONString(carts_cookie),3600*24,"UTF-8");
+                }
+            }
+              if(admin!=null){
+                List<CommodityModel> cartListFromRedis = cartService.findCartListFromRedis(admin.getUsername());
+                if(cartListFromRedis.size()==1){
+                    CookieUtil.deleteCookie(request,response,"cartList");
+                }else{
+                    for (int i=0;i<cartListFromRedis.size();i++){
+                        if (cartListFromRedis.get(i).getId()==id){
+                            cartListFromRedis.remove(i);
+                            i--;
+                        }
+
+                    }
+                    cartService.saveCartListToRedis(admin.getUsername(),cartListFromRedis);
+                }
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    //清空购物车
+    @RequestMapping("deleteAll")
+    @ResponseBody
+    public Boolean deleteAll(){
+        try {
+            Members admin = (Members) session.getAttribute("members");
+            if(admin==null){
+                CookieUtil.deleteCookie(request,response,"cartList");
+            }else {
+                redisTemplate.delete(admin.getUsername());
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

@@ -36,6 +36,8 @@ public class ResultPage implements Serializable {
 
 	private Integer dran;//品牌
 
+	private String pName;
+
 	public Integer getTotal() {
 		return total;
 	}
@@ -108,6 +110,14 @@ public class ResultPage implements Serializable {
 		this.dran = dran;
 	}
 
+	public String getpName() {
+		return pName;
+	}
+
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+
 	@Override
 	public String toString() {
 		return "ResultPage{" +
@@ -119,7 +129,8 @@ public class ResultPage implements Serializable {
 				", commodityName='" + commodityName + '\'' +
 				", status=" + status +
 				", is=" + is +
-				", dran='" + dran + '\'' +
+				", dran=" + dran +
+				", pName='" + pName + '\'' +
 				'}';
 	}
 }

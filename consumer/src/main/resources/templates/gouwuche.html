@@ -458,7 +458,9 @@
                     <li>订单完成</li>
                 </ul>
             </div>
+
             <!--  表格 -->
+            <button type='button'  class='btn btn-success' onclick='empty()'>清空购物车</button>
             <table id="dataGrid" ></table>
         </div>
     </div>
@@ -741,8 +743,42 @@
                 {field:'pictureUrl',title:'图片',formatter:function(value,orw,index){
                     return "<img src='"+value+"' width='50'>";
                     }},
+                {field:'cz',title:'操作',formatter:function (value,row,index) {
+                        return "<button type='button'  class='btn btn-success' onclick='delShop("+row.id+")'>删除</button>";
+                    }}
             ]
         });
+    }
+
+    //删除指定数据
+    function delShop(id) {
+        $.ajax({
+            url:"../cart/delete",
+            type:"post",
+            data:{id:id},
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function () {
+                alert("删除失败");
+            }
+        })
+    }
+    
+    //清空购物车
+    function empty() {
+        $.ajax({
+            url:"../cart/deleteAll",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function(){
+                alert("清除失败");
+            }
+        })
     }
 </script>
 </html>
