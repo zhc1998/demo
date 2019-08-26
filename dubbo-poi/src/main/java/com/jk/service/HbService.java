@@ -31,5 +31,5 @@ public interface HbService {
 
     ResultPage suditFailure(ResultPage result);
 
-    void delAll(Integer [] ids);
+    void delAll(String [] ids);
 }

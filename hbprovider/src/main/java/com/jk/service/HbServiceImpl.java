@@ -139,7 +139,7 @@ public class HbServiceImpl implements HbService {
 
     //删除所有审核失败商品
     @Override
-    public void delAll(Integer [] ids) {
+    public void delAll(String [] ids) {
         hbDao.delAll(ids);
     }
 

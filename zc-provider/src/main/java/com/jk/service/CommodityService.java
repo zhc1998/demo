@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class CommodityService implements ZcService {
     @Autowired
@@ -16,25 +18,19 @@ public class CommodityService implements ZcService {
 
     //查询商品
     @Override
-    public ResultPage queryCommodity(ResultPage result) {
-        ResultPage resultPage = new ResultPage();
+    public Map queryCommodity(ResultPage result) {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
         hashMap.put("result", result);
-
         //查询总条数
         Long count = zcDao.queryCommodityCount(hashMap);
-        resultPage.setTotal(Integer.parseInt(count.toString()));
-
-        resultPage.setPageNumber(result.getPageNumber());
-        resultPage.setPageSize(result.getPageSize());
-
         hashMap.put("start", (result.getPageNumber()-1)*result.getPageSize());
         hashMap.put("end", result.getPageSize());
-
         //查询所有数据
-        List<CommodityModel> list = zcDao.queryCommodity(hashMap);
-        resultPage.setRows(list);
-        return resultPage;
+        List list = zcDao.queryCommodity(hashMap);
+        map.put("rows",list);
+        map.put("total",count);
+        return map;
     }
 
     //查询商品类型
@@ -71,7 +67,7 @@ public class CommodityService implements ZcService {
 
     //查询回显
     @Override
-    public CommodityModel loadOneModel(Integer id) {
+    public CommodityModel loadOneModel(String id) {
         return zcDao.loadOneModel(id);
     }
 
@@ -157,5 +153,8 @@ public class CommodityService implements ZcService {
         return zcDao.queryColor();
     }
 
-
+    @Override
+    public CommodityModel queryCommodityByArtNo(String artNo) {
+        return zcDao.queryCommodityByArtNo(artNo);
+    }
 }

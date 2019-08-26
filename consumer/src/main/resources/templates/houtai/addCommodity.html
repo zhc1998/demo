@@ -157,9 +157,9 @@
             url:"../zch/addCommodity",
             type:"post",
             data:$("#addForm").serialize(),
-            dataType:"json",
             success:function(data){
-               location.href="../toshow/toCommodity";
+                alert("新增成功")
+               location.href=location;
             },
             error:function(){
                 alert("新增失败");
