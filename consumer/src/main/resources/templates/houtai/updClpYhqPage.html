@@ -25,6 +25,9 @@
             <option value="-1">请选择</option>
             <option value="1" th:field="*{yhq.yhqmenkan}">不限制</option>
             <option value="2" th:field="*{yhq.yhqmenkan}">满100元使用</option>
+            <option value="3" th:field="*{yhq.yhqmenkan}">满200元使用</option>
+            <option value="4" th:field="*{yhq.yhqmenkan}">满500元使用</option>
+            <option value="5" th:field="*{yhq.yhqmenkan}">满1000元使用</option>
         </select>
     </div>
     <div class="form-group">
@@ -35,16 +38,7 @@
             <option value="2" th:field="*{yhq.yhqlevel}">超级会员</option>
         </select>
     </div>
-    <div class="form-group">
-        <label for="name">每人限领</label>
-        <select class="form-control" name="yhqlimit">
-            <option value="-1">请选择</option>
-            <option value="0" th:field="*{yhq.yhqlimit}">不限张</option>
-            <option value="1" th:field="*{yhq.yhqlimit}">1张</option>
-            <option value="2" th:field="*{yhq.yhqlimit}">2张</option>
-            <option value="3" th:field="*{yhq.yhqlimit}">3张</option>
-        </select>
-    </div>
+
     <div class="form-group">
         <label for="name">日期</label>
         <input type="date" class="form-control"  name="yhqdate" th:value="${yhq.yhqdate}" placeholder="日期"/>
