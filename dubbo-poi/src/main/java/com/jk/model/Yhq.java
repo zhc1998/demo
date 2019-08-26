@@ -4,13 +4,11 @@ import java.io.Serializable;
 
 public class Yhq implements Serializable {
     private Integer id;
-    private Integer userid;
 
     private String yhqname;
 
     private Double yhqprice;
 
-    private Integer yhqlimit;
 
     private String yhqdate;
 
@@ -30,6 +28,8 @@ public class Yhq implements Serializable {
 
     private Integer yhqstatus;
 
+    private Integer yhquserid;
+
     public Integer getId() {
         return id;
     }
@@ -38,13 +38,7 @@ public class Yhq implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
-    }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
 
     public String getYhqname() {
         return yhqname;
@@ -62,13 +56,7 @@ public class Yhq implements Serializable {
         this.yhqprice = yhqprice;
     }
 
-    public Integer getYhqlimit() {
-        return yhqlimit;
-    }
 
-    public void setYhqlimit(Integer yhqlimit) {
-        this.yhqlimit = yhqlimit;
-    }
 
     public String getYhqdate() {
         return yhqdate;
@@ -140,5 +128,13 @@ public class Yhq implements Serializable {
 
     public void setYhqstatus(Integer yhqstatus) {
         this.yhqstatus = yhqstatus;
+    }
+
+    public Integer getYhquserid() {
+        return yhquserid;
+    }
+
+    public void setYhquserid(Integer yhquserid) {
+        this.yhquserid = yhquserid;
     }
 }
