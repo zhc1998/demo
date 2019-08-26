@@ -60,10 +60,10 @@ public class ZhfServiceImpl implements ZhfService{
     }
 
     @Override
-    public HashMap<String, Object> queryorderbyuid(Integer userid, ParameUtil parame) {
+    public HashMap<String, Object> queryorderbyuid(Integer userid) {
         long count=orderoneDao.QueryorOrderbyuidcount(userid);
-        int statr=(parame.getPageNumber()-1)*parame.getPageSize();
-        List<Orderone>list=orderoneDao.queryorderbyuid(statr,parame.getPageSize(),userid);
+
+        List<Orderone>list=orderoneDao.queryorderbyuid(userid);
         HashMap<String,Object>hashMap=new HashMap<>();
         hashMap.put("total",count);
         hashMap.put("rows",list);

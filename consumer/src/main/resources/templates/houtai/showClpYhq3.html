@@ -15,7 +15,7 @@
     <script type="text/javascript" src="//misc.360buyimg.com/jdf/1.0.0/unit/??base/5.0.0/base.js,basePatch/1.0.0/basePatch.js"></script>
     <script type="text/javascript" src="//misc.360buyimg.com/jdf/??lib/jquery-1.6.4.js"></script>
     <link source="widget" type="text/css" rel="stylesheet" href="//misc.360buyimg.com/user/myjd/coupon/widget/??/common/common.css,/coupon-filter/coupon-filter.css,/coupon-item2016/coupon-item2016.css,/ui-page/ui-page.css">
-    <link type="text/css" rel="stylesheet" href="/common/css/coupon_style.css"/>
+
 	<!-- 引入jquery -->
 	<script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
 	<!-- 引入bootstrap的css、js -->
@@ -73,7 +73,7 @@
 	<dl class="fore1">
 		<dt id="_MYJD_order">订单中心</dt>
 		<dd class="fore1_1" id="_MYJD_ordercenter">
-			<a clstag="homepage|keycount|home2013|Homeoder" href="//order.jd.com/center/list.action" target="_self">我的订单</a>
+			<a clstag="homepage|keycount|home2013|Homeoder" href="javaScript:tomyorder()" target="_self">我的订单</a>
 		</dd>
 		<dd class="fore1_4" id="_MYJD_yushou">
 			<a clstag="homepage|keycount|home2013|Homeys" href="//yushou.jd.com/member/qualificationList.action" target="_self">我的活动</a>
@@ -573,9 +573,7 @@
 
     <script type="text/javascript" src="//misc.360buyimg.com/user/myjd-2015/js/page/coupon/usercoupon.js"></script>
     <script type="text/javascript" src="//wl.jd.com/wl.js"></script>
-    <script type="text/javascript" src="/common/js/quan.js"></script>
-    <script type="text/javascript" src="/common/js/usable.js"></script>
-    <script type="text/javascript" src="/common/js/ZeroClipboard.js"></script>
+
 
     <script type="text/javascript" src="//wl.jd.com/wl.js"></script>
 
@@ -584,7 +582,9 @@
 
 
 <script type="text/javascript">
-
+function tomyorder() {
+	location.href="/zhf/queryorderbyuid"
+}
 
 </script>
 

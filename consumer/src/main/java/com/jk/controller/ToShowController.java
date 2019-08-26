@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ToShowController {
 
 
-    //跳转前台登陆页面
+    //跳转前台登陆页面showye
     @RequestMapping("tofrontLogin")
     public String tofrontLogin(){
         return "ffqt/frontLogin";
@@ -68,6 +68,10 @@ public class ToShowController {
         return "kuaidi";
     }
 
+    /**
+     *  跳转到个人中心
+     * @return
+     */
 
 
 

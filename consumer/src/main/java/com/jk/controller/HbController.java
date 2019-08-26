@@ -150,7 +150,7 @@ public class HbController {
     //清空所有审核失败商品
     @RequestMapping("delAll")
     @ResponseBody
-    public Integer delAll(Integer [] ids){
+    public Integer delAll(String [] ids){
         hbService.delAll(ids);
         return 1;
     }
