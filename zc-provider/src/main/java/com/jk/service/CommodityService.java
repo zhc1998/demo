@@ -65,11 +65,17 @@ public class CommodityService implements ZcService {
             return drandModels;
     }
 
+    @Override
+    public CommodityModel loadOneModel(String id) {
+        return zcDao.loadOneModel(id);
+    }
+
+    /*
     //查询回显
     @Override
     public CommodityModel loadOneModel(Integer id) {
         return zcDao.loadOneModel(id);
-    }
+    }*/
 
     @Override
     public void updCommodity(CommodityModel commodityModel) {

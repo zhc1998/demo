@@ -34,7 +34,7 @@ public interface ZcDao {
     List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
-    CommodityModel loadOneModel(Integer id);
+    CommodityModel loadOneModel(String id);
 
     //修改
     void updCommodity(CommodityModel commodityModel);

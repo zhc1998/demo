@@ -280,6 +280,7 @@ public class ZchController {
     @ResponseBody
     public List<AccessoriesModel> queryAccessories(Integer typeId){
         List<AccessoriesModel> accessoriesModels = zcService.queryAccessories(typeId);
+
         return accessoriesModels;
     }
 

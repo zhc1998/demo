@@ -10,7 +10,6 @@
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<input type="text" id="userId" th:value="${session.members.getId()}">
 <input type="hidden" id="ids" th:value="${ids}">
 <div class="showall">
     <!--left -->
@@ -423,7 +422,7 @@
         $("#commodityPrice").html(price-pr);
     }
 
-    //加载颜色和内存大小
+    //加载颜色和内存大小  暂时没用
     function queryColor(){
         $.ajax({
             url:"../zch/queryColor",
@@ -442,6 +441,7 @@
         })
     }
 
+    //设置样式
     $(document).ready(function(){
         var showproduct = {
             "boxid":"showbox",
