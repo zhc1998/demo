@@ -12,6 +12,8 @@ import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
 import com.jk.util.HttpClientUtil;
 import com.jk.util.ParameUtil;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("zhf")
@@ -35,6 +34,7 @@ public class ZhfController {
     private ZhfService zhfService;
     @Autowired
     private AmqpTemplate amqpTemplate;
+
 
     @RequestMapping("familylogin")
     public String familylogin(){
@@ -143,4 +143,6 @@ public class ZhfController {
        // zhfService.addorder(orderone);
        // return "suc";
     }
+
+
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ToShowController {
 
 
-    //跳转前台登陆页面
+    //跳转前台登陆页面showye
     @RequestMapping("tofrontLogin")
     public String tofrontLogin(){
         return "ffqt/frontLogin";
