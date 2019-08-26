@@ -169,5 +169,11 @@ public class CommodityService implements ZcService {
         return zcDao.queryLickMemory();
     }
 
+    //根据Id查询商品总价格
+    @Override
+    public CommodityModel queryItemPrice(Integer ids) {
+        return zcDao.queryItemPrice(ids);
+    }
+
 
 }

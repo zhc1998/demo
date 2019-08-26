@@ -52,4 +52,6 @@ public interface ZcService {
     List<AccessoriesModel> queryAccessories(Integer typeId);
 
     List<LickMemoryModel> queryLickMemory();
+
+    CommodityModel queryItemPrice(Integer ids);
 }

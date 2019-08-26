@@ -92,4 +92,8 @@ public interface ZcDao {
     //查询内存
     @Select("select *  from  t_memory")
     List<LickMemoryModel> queryLickMemory();
+
+    //根据Id查询商品价格
+    @Select("select commodityPrice  from  t_item WHERE id = 15")
+    CommodityModel queryItemPrice(Integer ids);
 }

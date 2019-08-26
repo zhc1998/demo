@@ -217,4 +217,10 @@ public class ToShowController {
         model.addAttribute("ids",ids);
         return "index";
     }
+
+    //跳转到购物车
+    @RequestMapping("toShoppingTrolley")
+    public String toShoppingTrolley(){
+        return "gouwuche";
+    }
 }

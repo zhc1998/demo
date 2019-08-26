@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
+<input type="text" id="userId" th:value="${session.members.getId()}">
 <input type="hidden" id="ids" th:value="${ids}">
 <div class="showall">
     <!--left -->
@@ -46,10 +47,10 @@
             <ul class="glist" id="glist" data-monitor="goodsdetails_fenlei_click">
                 <li>
                     <span id="colorName">
-                        红色：<input type="radio" name="cName" value="1">
-                        黑色：<input type="radio" name="cName" value="2">
-                        白色：<input type="radio" name="cName" value="3">
-                        蓝色：<input type="radio" name="cName" value="4">
+                        红色：<input type="radio" name="cName" value="红色">
+                        黑色：<input type="radio" name="cName" value="黑色">
+                        白色：<input type="radio" name="cName" value="白色">
+                        蓝色：<input type="radio" name="cName" value="蓝色">
                     </span>
                 </li>
             </ul>
@@ -91,7 +92,7 @@
             <input type="hidden" id="inventory2">
         </div>
         <div class="nobdr-btns">
-            <button class="addcart hu"><img src="../images/shop.png" width="25" height="25"/>加入购物车</button>
+            <button class="addcart hu" onclick="shoppingTrolley()"><img src="../images/shop.png" width="25" height="25"/>加入购物车</button>
             <button class="addcart yh"><img src="../images/ht.png" width="25" height="25"/>立即购买</button>
         </div>
         <div class="guarantee">
@@ -149,7 +150,10 @@
         <div class="dq_ori">
             <a class="dq_ori_prd" href=""><img id="0" src="../images/hdy_07.png"/></a>
             <a class="ori_prd" href=""><span id="name0"></span></a>
-            <p class="ori_prd dp_wrap_pprice_ori"><input type="checkbox" name="partsPr"   onclick="accumulation(0)">￥<span id="pri0"></span></p>
+            <p class="ori_prd dp_wrap_pprice_ori">
+                <input type="checkbox" name="partsPr" id="par0"  onclick="accumulation(0)">
+                ￥<span id="pri0"></span>
+            </p>
         </div>
         <div class="scroll_wrap">
             <!-- 搭配2 -->
@@ -160,7 +164,7 @@
                     <a class="dp_wrap_pname" href="" target="_blank"><span id="name1"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" name="partsPr"  onclick="accumulation(1)">
+                            <input type="checkbox" name="partsPr" id="par1"  onclick="accumulation(1)">
                             ￥<span id="pri1"></span>
                         </label>
                     </p>
@@ -174,7 +178,7 @@
                     <a class="dp_wrap_pname" href="" target="_blank"><span id="name2"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" name="partsPr" onclick="accumulation(2)">
+                            <input type="checkbox" name="partsPr" id="par2" onclick="accumulation(2)">
                             ￥<span id="pri2"></span>
                         </label>
                     </p>
@@ -188,7 +192,7 @@
                     <a class="dp_wrap_pname" href="" target="_blank"><span id="name3"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" name="partsPr"  onclick="accumulation(3)" >
+                            <input type="checkbox" name="partsPr" id="par3" onclick="accumulation(3)" >
                             ￥<span id="pri3"></span>
                         </label>
                     </p>
@@ -343,6 +347,7 @@
     //别动
     var pr;
     var typeId;
+    var imgSrc;
     //查询一条详情信息
     function queryOneDetails(val) {
         var ids = $("#ids").val();
@@ -354,6 +359,7 @@
             success:function(data){
                 pr = data.commodityPrice;
                 typeId = data.typeId;
+                imgSrc = data.pictureUrl;
                 //商品名称
                 $("#commodityName").html("商品名称:"+data.commodityName);
                 $("#spName").html(data.commodityName);
@@ -377,8 +383,20 @@
                 var nu = data.inventory-toryNumber;
                 $("#inventory").html("库存"+nu);
                 $("#inventory2").val(nu);
-                //计算价格
-                $("#commodityPrice").html(data.commodityPrice*toryNumber);
+
+                //循环获取选中的内存价格
+                var memoryPrice = 0;
+                var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+                for(var i=0;i<memoryArr.length;i++){
+                    if(memoryArr[i].checked==true) {
+                        memoryPrice=memoryArr[i].value;
+                        break;
+                    }
+                }
+                var memo = parseInt(memoryPrice);
+                //内存价格加总价 然后乘于个数 计算总价格
+                var totalPrices = memo+data.commodityPrice;
+                $("#commodityPrice").html(toryNumber*totalPrices);
 
                 //调用查询配件 根据商品类型ID
                 queryAccessories();
@@ -453,6 +471,7 @@
             dataType:"json",
             success:function(data){
                 for(var i=0;i<data.length;i++){
+                    //alert(data[i].itemId);
                     if(i==i){
                         // 循环 i下表和 img 的Id保持一致
                         //图片
@@ -461,8 +480,11 @@
                         $("#name"+i).html(data[i].name);
                         //价格
                         $("#pri"+i).html(data[i].price);
+                        //给复选框赋值Id
+                        $("#par"+i).val(data[i].itemId);
                     }
                 }
+                //alert($("#par1").val());
             },
             error:function(){
                 alert("查询配件失败");
@@ -529,17 +551,112 @@
     
     //选择内存
     function internal(val) {
+        var ids = $("#ids").val();
+        $.ajax({
+            url:"../zch/queryItemPrice",
+            type:"post",
+            data:{ids:ids},
+            type:"json",
+            success:function (data) {
+                //alert(data.commodityPrice);
+                //每选择一项内存从新给总价格赋值
+                $("#commodityPrice").html(data.commodityPrice);
 
-        var pri = $("#commodityPrice").html();//获取当前商品总价格
-        var price = parseInt(pri);
+                //从新获取当前商品总价格
+                var pri = $("#commodityPrice").html();
+                var price = parseInt(pri);
 
-        var val = parseInt(val);
+                //获取每个内存价格
+                var vall = parseInt(val);
+                //计算价格
+                $("#commodityPrice").html(price+vall);
 
-        //计算价格
-        $("#commodityPrice").html(price+val);
+            },
+            error:function(){
+                alert("查询价格失败");
+            }
+        })
 
     }
     
 
+    //加入购物车
+    function shoppingTrolley() {
+        //商品名称
+        var spName = $("#spName").html();
+        //编号
+        var serial = $("#serial").html();
+        //品牌
+        var brandName  = $("#brandName").html();
+        //上架时间
+        var createDate = $("#createDate").html();
+        //重量
+        var weight = "20克";
+        //图片路径 imgSrc该变量为全局变量
+        var igc = imgSrc;
+        //商品总价
+        var commodityPrice = $("#commodityPrice").html();
+        //循环获取选中的颜色
+        var colorName = "";
+        var array=$("[name='cName']");//  selectvalue为radio中选中的值
+        for(var i=0;i<array.length;i++){
+            if(array[i].checked==true) {
+                colorName=array[i].value;
+                break;
+            }
+        }
+
+        //循环获取内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+
+        //获取购买数量
+        var purchaseQuantity = $("#text_box").val();
+
+        //循环获取选中的配件Id
+        var partsId = "";
+        var partsPrArr = $("[name='partsPr']");
+        for(var i=0;i<partsPrArr.length;i++){
+            if(partsPrArr[i].checked==true) {
+                partsId +="," + partsPrArr[i].value;
+                //break;
+            }
+        }
+        partsId = partsId.substring(1);
+
+        //获取商品Id
+        var proId = $("#ids").val();
+
+        $.ajax({
+            url:"../cart/add",
+            type:"post",
+            data:{
+                spName:spName,
+                serial:serial,
+                weight:weight,
+                igc:igc,
+                commodityPrices:commodityPrice,
+                colorName:colorName,
+                memoryPrice:memoryPrice,
+                purchaseQuantity:purchaseQuantity,
+                proId:proId
+            },
+            success:function(data){
+               alert("完成");
+            },
+            error:function () {
+                alert("加入购物车失败");
+            }
+        })
+
+
+
+    }
 </script>
 </html>

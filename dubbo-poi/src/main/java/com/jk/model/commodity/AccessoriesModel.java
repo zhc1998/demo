@@ -16,6 +16,8 @@ public class AccessoriesModel implements Serializable {
 
     private Integer price;//配件价格
 
+    private Integer itemId;//关联商品Id
+
     public Integer getId() {
         return id;
     }
@@ -64,6 +66,14 @@ public class AccessoriesModel implements Serializable {
         this.price = price;
     }
 
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
     @Override
     public String toString() {
         return "AccessoriesModel{" +
@@ -73,6 +83,7 @@ public class AccessoriesModel implements Serializable {
                 ", piId=" + piId +
                 ", imgSrc='" + imgSrc + '\'' +
                 ", price=" + price +
+                ", itemId=" + itemId +
                 '}';
     }
 }

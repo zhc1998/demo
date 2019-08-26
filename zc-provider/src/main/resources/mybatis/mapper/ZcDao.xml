@@ -98,6 +98,7 @@
         select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
         left join brand br on br.itemId = te.itemId
+        WHERE te.status = 1
     </select>
 
     <!--查询前台详情-->

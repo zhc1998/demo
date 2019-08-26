@@ -32,6 +32,7 @@ public class CommodityModel implements Serializable {
 
     private Integer sellquantity;//累计出售数量
 
+
     public Integer getId() {
         return id;
     }

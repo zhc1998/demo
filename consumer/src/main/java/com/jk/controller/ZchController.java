@@ -227,4 +227,12 @@ public class ZchController {
         return zcService.queryLickMemory();
     }
 
+    //根据Id商品总价格
+    @RequestMapping("queryItemPrice")
+    @ResponseBody
+    public CommodityModel queryItemPrice(Integer ids){
+        CommodityModel commodityModel = zcService.queryItemPrice(ids);
+        return commodityModel;
+    }
+
 }

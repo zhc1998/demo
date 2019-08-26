@@ -4,41 +4,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <!-- 引入jquery -->
-    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
-    <!-- 引入bootstrap的css、js -->
-    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
-    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
-    <!-- 引入tree的js、css -->
-    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
-    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-    <!-- 引入选项卡的js、css -->
-    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
-    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
-    <!-- 引入table的css、js -->
-    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
-    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
-    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-    <!-- 引入删除提示框 -->
-    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
-    <!-- 引入时间的css、js -->
-    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
-    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-    <!-- 引入文件上传的css、js -->
-    <link rel="stylesheet" href="/js3/bootstrap-fileinput/css/fileinput.css">
-    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/fileinput.js"></script>
-    <script type="text/javascript" src="/js3/bootstrap-fileinput/js/locales/zh.js"></script>
 </head>
 <body>
 <center>
-    <input type="hidden" id="itemId" th:value="${com.itemId}"/>
-    <button type="button"  class="btn btn-Warning btn-lg" onclick="ret()">返回</button>
-    <button type="button"  class="btn btn-Warning btn-lg" onclick="upd()">修改</button>
+    <input type="hidden" id="itemId2" th:value="${com.itemId}"/>
+    <input type="hidden" name="sellquantity" th:value="${com.sellquantity}"/>
+    <input type="hidden" name="colorId" th:value="${com.colorId}"/>
+    <input type="hidden" name="createDate" th:value="${com.createDate}"/>
     <form role="form" id="updForm">
-        <input type="hidden" name="id" id="ids" style="width: 300px;" th:value="${id}"  />
-        <input type="hidden" name="id" id="typeIds" style="width: 300px;" th:value="${com.typeId}"/>
-        <input type="hidden" id="pictureUrl" name="pictureUrl" style="width: 300px;"  />
+        <input type="hidden" name="id"  style="width: 300px;" th:value="${id}"  />
+        <input type="hidden" name="typeId"  style="width: 300px;" th:value="${com.typeId}"/>
         <div class="form-group">
             <label >商品名称</label>
             <input type="text" class="form-control" style="width: 300px;" th:value="${com.commodityName}"  name="commodityName"/>
@@ -53,7 +28,7 @@
         </div>
         <div class="form-group">
             <label >商品分类</label>
-            <select  style="width: 300px;"  class="form-control"  id="commodityType" name="typeId" onchange="queryAllDran(this.value)"></select>
+            <select  style="width: 300px;"  class="form-control"  id="commodityType1111" name="typeId" onchange="queryAllDran(this.value)"></select>
         </div>
         <div class="form-group">
             <label >商品品牌</label>
@@ -70,8 +45,8 @@
             <input type="text" class="form-control" style="width: 300px;" th:value="${com.commodityPrice}"  name="commodityPrice" />
             <br>
             <font color="red" size="3">商品或热销只能选择一项</font>
-            热销:<input type="radio" name="newProduct" value="2" th:checked="${com.newProduct==2}"/>
-            新品:<input type="radio" name="newProduct" value="1" th:checked="${com.newProduct==1}"/>
+            热销:<input type="radio" name="newProduct" value="2" th:field="*{com.newProduct}"/>
+            新品:<input type="radio" name="newProduct" value="1" th:field="*{com.newProduct}"/>
 
             <div class="form-group">
                 <div class="col-md-2">
@@ -79,7 +54,7 @@
                 </div>
                 <div class="col-md-10" >
                     <img id="aa" th:src="${com.pictureUrl}" height="50px">
-                    <input type="hidden" id="qqq" name="pictureUrl" />
+                    <input type="hidden" id="qqq" name="pictureUrl" th:value="${com.pictureUrl}"/>
                     <input type="file" style="width: 10px;"  name="imgg" id="headImg">
                 </div>
             </div>
@@ -93,7 +68,6 @@
     $(function(){
         uploadImg();
         loadCommodityType();
-        //queryAllDran();
     })
 
     function uploadImg(url){
@@ -129,48 +103,10 @@
             $('#aa').attr("src",imgval);
         });
     }
-    //返回
-    function ret(){
-        location.href="../toshow/toCommodity";
-    }
-
-    //跳转弹框
-    var res;
-    function createAddContent(url) {
-        alert(url);
-        $.ajax({
-            url: url,
-            async: false,
-            success: function (data) {
-                res = data;
-            }
-        });
-        return res;
-    }
-
-
-    //修改
-    function  upd() {
-        var uploadFile = $("#uploadFile").val();
-        $("#pictureUrl").val(uploadFile);
-        //alert(uploadFile);
-        $.ajax({
-            url:"../zch/updCommodity",
-            type:"post",
-            data:$("#updForm").serialize(),
-            dataType:"json",
-            success:function () {
-                alert("修改成功");
-            },
-            error:function () {
-                alert("修改失败");
-            }
-        })
-    }
 
     //回显类型
     function  loadCommodityType() {
-        var typeIds = $("#typeIds").val();
+        var typeIds = $("[name='typeId']").val();
         $.ajax({
             url:"../zch/queryCommodityType",
             type:"post",
@@ -184,10 +120,10 @@
                         ids = data[i].typeId;
                         queryAllDran(ids);
                     }else{
-                        html+="<option value='"+data[i].typeId+"' ${data[i].typeId==2? selected:''}  >"+data[i].typeName+"</option>";
+                        html+="<option value='"+data[i].typeId+"'>"+data[i].typeName+"</option>";
                     }
                 }
-                $("#commodityType").html(html);
+                $("#commodityType1111").html(html);
             },
             error:function(){
                 alert("查询商品类型失败");
@@ -197,7 +133,7 @@
 
     //回显平牌
     function  queryAllDran(ids) {
-        var itemId = $("#itemId").val();
+        var itt = $("#itemId2").val();
         $.ajax({
             url:"../zch/updAllDran",
             type:"post",
@@ -206,13 +142,12 @@
             success:function(data){
                 var html = "<option value=''>请先选择商品类型</option>";
                 for(var i=0;i<data.length;i++){
-                    if(itemId==data[i].itemId){
+                    if(itt==data[i].itemId){
                         html+="<option value='"+data[i].itemId+"' selected>"+data[i].name+"</option>";
                     }else{
-                        html+="<option value='"+data[i].itemId+"' ${data[i].itemId==2? selected:''}>"+data[i].name+"</option>";
+                        html+="<option value='"+data[i].itemId+"'>"+data[i].name+"</option>";
                     }
                 }
-
                 $("#dranEcho").html(html);
             },
             error:function(){
