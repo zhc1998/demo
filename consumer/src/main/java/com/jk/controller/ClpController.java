@@ -242,7 +242,7 @@ public class ClpController {
     //我的优惠券
     @RequestMapping("showClpYhq3")
     public String showClpYhq3(Model model, HttpServletRequest request){
-        User user=(User) request.getSession().getAttribute("members");
+      /* User user=(User) request.getSession().getAttribute("members");*/
         Yhq yhq=new Yhq();
         List<Yhq> list=clpService.queryClpYhq2(1);
         if(list.size()>0){

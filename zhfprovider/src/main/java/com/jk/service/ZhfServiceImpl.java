@@ -10,6 +10,7 @@ import com.jk.model.Orderone;
 import com.jk.util.ParameUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -25,6 +27,8 @@ public class ZhfServiceImpl implements ZhfService{
     private FamilyheadDao familyheadDao;
 @Autowired
     private OrderoneDao orderoneDao;
+@Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public Familyhead loginf(Familyhead familyhead) {
@@ -75,8 +79,11 @@ public class ZhfServiceImpl implements ZhfService{
     @RabbitListener(queues = "AddOrder")//添加RabbitListener注解 监听
     public void addorder(Orderone orderone) {
         String subjectno=getBillCode();
+        String key=subjectno;
         orderone.setOrdernumber(subjectno);
-        orderoneDao.insertSelective(orderone);
+        redisTemplate.opsForValue().set(key,orderone);
+        redisTemplate.expire(key, 30, TimeUnit.MINUTES);
+        //orderoneDao.insertSelective(orderone);
     }
 
     /**
