@@ -90,4 +90,9 @@ public class ClpServiceImpl implements ClpService{
         yhqMapper.updateYhqUse(id);
     }
 
+    @Override
+    public List<Yhq> queryClpYhqByName(String yhqname) {
+        return yhqMapper.queryClpYhqByName(yhqname);
+    }
+
 }

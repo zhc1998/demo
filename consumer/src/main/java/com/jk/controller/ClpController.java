@@ -50,7 +50,7 @@ public class ClpController {
     @ResponseBody
     public void addYhq(Yhq yhq){
 
-        String key="yhq";
+        String key="yhq"+yhq.getYhqname();
 
             if(yhq.getYhqcount()%100==0){
                 addyhq(yhq);
@@ -184,15 +184,13 @@ public class ClpController {
         List<Yhq> list=clpService.queryClpYhq();
         if(list.size()>0){
             Yhq yhq=list.get(0);
-            String key="yhq";
+            String key="yhq"+yhq.getYhqname();
             String yhqname="'"+yhq.getYhqname()+"'";
 
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date=new Date();
             Date date2=sdf.parse(yhq.getYhqdate());
             long time=(date2.getTime()-date.getTime())/1000/60;
-            System.out.println(time);
-            System.out.println(yhqname);
             if(redisTemplate.hasKey(key)){
                 redisTemplate.opsForValue().get(key);
                 model.addAttribute("list",list);
@@ -218,17 +216,24 @@ public class ClpController {
     //优惠券领取
     @RequestMapping("addYhq3")
     @ResponseBody
-    public void addYhq3(Integer id,HttpServletRequest request){
-        System.out.println(id);
+    public String addYhq3(Integer id,HttpServletRequest request){
         User user=(User) request.getSession().getAttribute("members");
         List<Yhq> list=clpService.queryClpYhq();
+        String a=null;
         if(list.size()>0){
             Yhq yhq=list.get(0);
-            String key="yhq"+1+id;
-            redisTemplate.opsForValue().set(key,yhq);
-            clpService.updateYhqUse(id);
+            List<Yhq> list2=clpService.queryClpYhqByName(yhq.getYhqname());
+            if(list2.size()>0){
+                //说明领取 同一个优惠券
+                return a="1";
+            }else{
+                String key="yhq"+1+id;
+                redisTemplate.opsForValue().set(key,yhq);
+                clpService.updateYhqUse(id);
+                return a="2";
+            }
         }
-
+        return a;
     }
 
 

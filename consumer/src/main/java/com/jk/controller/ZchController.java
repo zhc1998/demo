@@ -5,29 +5,42 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.commodity.*;
 import com.jk.service.ZcService;
 import com.jk.util.ResultPage;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.List;
-import java.util.Random;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 
 @Controller
 @RequestMapping("zch")
 public class ZchController {
     @Reference
     private ZcService zcService;
+    @Autowired
+    private SolrClient client;
+
+
 
     //查询商品列表
     @RequestMapping("queryCommodity")
     @ResponseBody
-    public ResultPage queryCommodity(@RequestBody ResultPage result){
-
-        ResultPage resultPage = zcService.queryCommodity(result);
-        return resultPage;
-    }
+    public Map queryCommodity(@RequestBody ResultPage result){
+        return zcService.queryCommodity(result);
+}
 
     //查询商品类型
     @RequestMapping("queryCommodityType")
@@ -71,24 +84,45 @@ public class ZchController {
 
     //查询回显
     @RequestMapping("loadOneModel")
-    public String loadOneModel(Integer id,Model model){
+    public String loadOneModel(String id,Model model){
         CommodityModel commodityModel = zcService.loadOneModel(id);
         model.addAttribute("com",commodityModel);
         model.addAttribute("id",id);
         return "houtai/updCommodity";
     }
 
-    //修改商品
+    //修改商品与solr索引
     @RequestMapping("updCommodity")
     @ResponseBody
-    public boolean updCommodity(CommodityModel commodityModel){
-        String str=commodityModel.getPictureUrl().substring(1);
+    public String updCommodity(CommodityModel commodityModel){
+        String str=commodityModel.getPictureUrl();
         commodityModel.setPictureUrl(str);
-        if(commodityModel.getId()!=null){
-            zcService.updCommodity(commodityModel);
-            return true;
+        System.out.println(commodityModel.getId());
+        zcService.updCommodity(commodityModel);
+        try {
+            SolrInputDocument doc = new SolrInputDocument();
+            doc.setField("id", commodityModel.getId());
+            doc.setField("commodityName",commodityModel.getCommodityName());
+            doc.setField("artNo", commodityModel.getArtNo());
+            doc.setField("commodityPrice", commodityModel.getCommodityPrice());
+            doc.setField("status", commodityModel.getStatus());
+            doc.setField("newProduct", commodityModel.getNewProduct());
+            doc.setField("inventory", commodityModel.getInventory());
+            doc.setField("typeId", commodityModel.getTypeId());
+            doc.setField("itemId",commodityModel.getItemId());
+            doc.setField("pictureUrl", commodityModel.getPictureUrl());
+            doc.setField("colorId", commodityModel.getColorId());
+            doc.setField("sellquantity", commodityModel.getSellquantity());
+            /* 如果spring.data.solr.host 里面配置到 core了, 那么这里就不需要传 collection1 这个参数
+             * 下面都是一样的
+             */
+            client.add(doc);
+            client.commit();
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
+        return "error";
     }
 
     //加载图片
@@ -101,10 +135,10 @@ public class ZchController {
         return resultPage;
     }
 
-    //新增
+    //新增商品与solr索引
     @RequestMapping("addCommodity")
     @ResponseBody
-    public boolean addCommodity(CommodityModel commodityModel){
+    public String addCommodity(CommodityModel commodityModel){
         String val = "";
         Random random = new Random();
         for ( int i = 0; i < 7; i++ )
@@ -121,13 +155,37 @@ public class ZchController {
                 val += String.valueOf( random.nextInt( 10 ) );
             }
         }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        commodityModel.setCreateDate(format.format(new Date()));
+        commodityModel.setStatus(2);
         commodityModel.setArtNo(val);
-
-        if(commodityModel.getId()==null){
-            zcService.addCommodity(commodityModel);
-            return true;
+        commodityModel.setSellquantity(0);
+        zcService.addCommodity(commodityModel);
+        CommodityModel com = zcService.queryCommodityByArtNo(commodityModel.getArtNo());
+        try {
+            SolrInputDocument doc = new SolrInputDocument();
+            doc.setField("id",com.getId());
+            doc.setField("commodityName",commodityModel.getCommodityName());
+            doc.setField("artNo", commodityModel.getArtNo());
+            doc.setField("commodityPrice", commodityModel.getCommodityPrice());
+            doc.setField("status", commodityModel.getStatus());
+            doc.setField("newProduct", commodityModel.getNewProduct());
+            doc.setField("inventory", commodityModel.getInventory());
+            doc.setField("typeId", commodityModel.getTypeId());
+            doc.setField("itemId",commodityModel.getItemId());
+            doc.setField("pictureUrl", commodityModel.getPictureUrl());
+            doc.setField("colorId", commodityModel.getColorId());
+            doc.setField("sellquantity", commodityModel.getSellquantity());
+            /* 如果spring.data.solr.host 里面配置到 core了, 那么这里就不需要传 collection1 这个参数
+              下面都是一样的
+             */
+            client.add(doc);
+            client.commit();
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
+        return "error";
     }
 
     //查询商品分类
@@ -165,7 +223,6 @@ public class ZchController {
     @ResponseBody
     public ParticularsModel loadParticulars(Integer ids){
         ParticularsModel particularsModel = zcService.loadParticulars(ids);
-        System.out.println(particularsModel);
         return particularsModel;
     }
 
@@ -180,14 +237,20 @@ public class ZchController {
     //删除商品
     @RequestMapping("delCommodity")
     @ResponseBody
-    public Integer delCommodity(Integer ids){
-            zcService.delCommodity(ids);
-            return 0;
-
+    public String delCommodity(Integer ids){
+        zcService.delCommodity(ids);
+        try {
+            client.deleteById(String.valueOf(ids));
+            client.commit();
+            return "123";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "error";
     }
 
 
-    //图片展示
+    //查询前台数据
     @RequestMapping("loadHuaWei")
     @ResponseBody
     public List<CommodityModel> loadHuaWei(){

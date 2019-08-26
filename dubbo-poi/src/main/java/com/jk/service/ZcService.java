@@ -5,10 +5,11 @@ import com.jk.model.commodity.*;
 import com.jk.util.ResultPage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ZcService {
 
-    ResultPage queryCommodity(ResultPage result);
+    Map queryCommodity(ResultPage result);
 
     List<CommodityTypeModel> queryCommodityType();
 
@@ -21,7 +22,7 @@ public interface ZcService {
     List<DrandModel> queryAllDran();
 
 
-    CommodityModel loadOneModel(Integer id);
+    CommodityModel loadOneModel(String id);
 
     void updCommodity(CommodityModel commodityModel);
 
@@ -54,4 +55,6 @@ public interface ZcService {
     List<LickMemoryModel> queryLickMemory();
 
     CommodityModel queryItemPrice(Integer ids);
+
+    CommodityModel queryCommodityByArtNo(String artNo);
 }

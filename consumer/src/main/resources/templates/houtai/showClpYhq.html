@@ -252,19 +252,20 @@
 						<div class="q-img">
 							<img data-lazy-img="done" width="100" height="100" alt="" class="err-product" th:src="${yhq.yhqimg}">
 						</div>
-						<div class="q-type" tabindex="0"><div class="q-price ">
+						<div class="q-type" tabindex="0">
+							<div class="q-price ">
 							<em>¥</em>
 							<strong><span th:text="${yhq.yhqprice}" th:value="${yhq.yhqprice}"/></span></strong>
-							<span class="q-limit" data-tips="">
-							<span th:if="${yhq.yhqmenkan} ==1"th:text="不限制" th:value="${yhq.yhqmenkan}"/></span>
-							<span th:if="${yhq.yhqmenkan} ==2"th:text="满100元使用" th:value="${yhq.yhqmenkan}"/></span>
-							<span th:if="${yhq.yhqmenkan} ==3"th:text="满200元使用" th:value="${yhq.yhqmenkan}"/></span>
-							<span th:if="${yhq.yhqmenkan} ==4"th:text="满500元使用" th:value="${yhq.yhqmenkan}"/></span>
-							<span th:if="${yhq.yhqmenkan} ==5"th:text="满1000元使用" th:value="${yhq.yhqmenkan}"/></span>
-							</span>
+
 						</div>
+							<div class="q-limit">
+							    <span th:if="${yhq.yhqmenkan} ==1"th:text="不限制" th:value="${yhq.yhqmenkan}"/></span>
+								<span th:if="${yhq.yhqmenkan} ==2"th:text="满100元使用" th:value="${yhq.yhqmenkan}"/></span>
+								<span th:if="${yhq.yhqmenkan} ==3"th:text="满200元使用" th:value="${yhq.yhqmenkan}"/></span>
+								<span th:if="${yhq.yhqmenkan} ==4"th:text="满500元使用" th:value="${yhq.yhqmenkan}"/></span>
+								<span th:if="${yhq.yhqmenkan} ==5"th:text="满1000元使用" th:value="${yhq.yhqmenkan}"/></span>
+							</div>
 							<div class="q-range">
-								<span class="superimposed" data-tips="可与店铺东券叠加使用">可叠加</span>
 								<span title='仅可购买<span th:text="${yhq.yhqname}" th:value="${yhq.yhqname}"></span>部分商品'>仅可购买<span th:text="${yhq.yhqname}" th:value="${yhq.yhqname}"></span>部分商品</span>
 							</div>
 							<div class="q-progress">
@@ -526,10 +527,14 @@
 	$.ajax({
 	url:"../clp/addYhq3",
 	data: {id:id},
-	success:function(){
-
-	}
-	})
+	success:function(data){
+     if(data=="1"){
+       alert("优惠券不可重复添加")
+	   }else{
+         alert("优惠券添加成功")
+	 }
+	   }
+	  })
 	}
 
 	</script>

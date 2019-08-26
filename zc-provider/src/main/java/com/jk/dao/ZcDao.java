@@ -13,7 +13,7 @@ public interface ZcDao {
     long queryCommodityCount(HashMap<String, Object> hashMap);
 
     //分页查询
-    List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
+    List queryCommodity(HashMap<String, Object> hashMap);
 
     //查询商品类型
     @Select(" select *  from  t_commoditytype ")
@@ -85,6 +85,9 @@ public interface ZcDao {
     //加载颜色
     @Select("select id,colorName  from  t_color")
     List<ColorModel> queryColor();
+
+    @Select("select *  from  t_item where artNo = #{artNo}")
+    CommodityModel queryCommodityByArtNo(String artNo);
 
     //查询配件
     List<AccessoriesModel> queryAccessories(Integer typeId);
