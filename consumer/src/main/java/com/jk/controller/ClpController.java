@@ -2,6 +2,7 @@ package com.jk.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.common.ConstanConf;
+import com.jk.model.Members;
 import com.jk.model.QueryYhq;
 import com.jk.model.User;
 import com.jk.model.commodity.CommodityModel;
@@ -51,7 +52,6 @@ public class ClpController {
     public void addYhq(Yhq yhq){
 
         String key="yhq"+yhq.getYhqname();
-
             if(yhq.getYhqcount()%100==0){
                 addyhq(yhq);
             }else {
@@ -216,23 +216,33 @@ public class ClpController {
     //优惠券领取
     @RequestMapping("addYhq3")
     @ResponseBody
-    public String addYhq3(Integer id,HttpServletRequest request){
-        User user=(User) request.getSession().getAttribute("members");
+    public String addYhq3(Integer id,HttpServletRequest request) throws ParseException {
+        Members members=(Members) request.getSession().getAttribute("members");
         List<Yhq> list=clpService.queryClpYhq();
+
         String a=null;
         if(list.size()>0){
             Yhq yhq=list.get(0);
-            List<Yhq> list2=clpService.queryClpYhqByName(yhq.getYhqname());
-            if(list2.size()>0){
-                //说明领取 同一个优惠券
-                return a="1";
+                    String key="yhq"+members.getId()+yhq.getYhqname();
+
+                     System.out.println(key);
+                     if(redisTemplate.hasKey(key)){
+                         return a="1";
+                     }
+                    redisTemplate.opsForValue().set(key,yhq);
+                    clpService.updateYhqUse(id,members.getId());
+
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date=new Date();
+            Date date2=sdf.parse(yhq.getYhqdate());
+            long time=(date2.getTime()-date.getTime())/1000/60;
+            if(time<=0){
+                redisTemplate.expire(key,0,TimeUnit.MINUTES);
             }else{
-                String key="yhq"+1+id;
-                redisTemplate.opsForValue().set(key,yhq);
-                clpService.updateYhqUse(id);
-                return a="2";
+                redisTemplate.expire(key,time,TimeUnit.MINUTES);
             }
-        }
+            return a="2";
+            }
         return a;
     }
 
@@ -241,17 +251,17 @@ public class ClpController {
 
     //我的优惠券
     @RequestMapping("showClpYhq3")
-    public String showClpYhq3(Model model, HttpServletRequest request){
-        User user=(User) request.getSession().getAttribute("members");
+    public String showClpYhq3(Model model, HttpServletRequest request) throws ParseException {
+        Members members=(Members) request.getSession().getAttribute("members");
         Yhq yhq=new Yhq();
-        List<Yhq> list=clpService.queryClpYhq2(1);
+        List<Yhq> list=clpService.queryClpYhq2(members.getId());
         if(list.size()>0){
              yhq=list.get(0);
-            String key="yhq"+1+yhq.getId();
-            if(redisTemplate.hasKey(key)){
-                redisTemplate.opsForValue().get(key);
-                model.addAttribute("list",list);
-            }
+            String key="yhq"+members.getId()+yhq.getYhqname();
+                if(redisTemplate.hasKey(key)){
+                    redisTemplate.opsForValue().get(key);
+                    model.addAttribute("list",list);
+                }
         }
         return "houtai/showClpYhq3";
     }
