@@ -295,7 +295,9 @@ public class ZchController {
     @RequestMapping("queryItemPrice")
     @ResponseBody
     public CommodityModel queryItemPrice(Integer ids){
+        System.out.println(ids+"========");
         CommodityModel commodityModel = zcService.queryItemPrice(ids);
+        System.out.println(commodityModel.getCommodityPrice());
         return commodityModel;
     }
 
