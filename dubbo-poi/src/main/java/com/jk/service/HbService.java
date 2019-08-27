@@ -1,9 +1,6 @@
 package com.jk.service;
 
-import com.jk.model.Audit;
-import com.jk.model.Comments;
-import com.jk.model.Tree;
-import com.jk.model.User;
+import com.jk.model.*;
 import com.jk.util.ResultPage;
 
 import java.util.List;
@@ -31,5 +28,7 @@ public interface HbService {
 
     ResultPage suditFailure(ResultPage result);
 
-    void delAll(String [] ids);
+    void delAll(Integer [] ids);
+
+    void addevaluation(String text, Integer ids, String username);
 }
