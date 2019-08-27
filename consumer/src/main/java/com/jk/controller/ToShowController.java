@@ -227,4 +227,10 @@ public class ToShowController {
     public String toShoppingTrolley(){
         return "gouwuche";
     }
+
+    //根据商品名称跳转页面
+    @RequestMapping("toList")
+    public String toList(){
+        return "hbqt/list";
+    }
 }

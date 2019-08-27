@@ -99,4 +99,6 @@ public interface ZcDao {
     //根据Id查询商品价格
     @Select("select commodityPrice  from  t_item WHERE id = #{value}")
     CommodityModel queryItemPrice(Integer ids);
+
+
 }
