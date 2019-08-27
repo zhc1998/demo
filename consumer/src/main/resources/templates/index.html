@@ -77,7 +77,7 @@
         <div class="gcIpt">
             <span class="guT">数量</span>
             <input id="min" name="" type="button" value="-" onclick="plus()"/>
-            <input id="text_box" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="text_box" name="tory"  type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
             <input id="add" name="" type="button" value="+" onclick="queryOneDetails()"/>
 
             <span class="Hgt" id="inventory"></span>
@@ -338,6 +338,7 @@
     $(function(){
         queryOneDetails();
         queryColor();
+        showprice();
         //subtractNumber();
     })
 
@@ -350,7 +351,7 @@
             data:{ids:ids},
             dataType:"json",
             success:function(data){
-                $("#commodityName").html("商品名称:"+data.commodityName);
+                $("#commodityName").html(/*"商品名称:"+*/data.commodityName);
                 $("#commodityPrice").html(data.commodityPrice)
                 $("#colorName").html(data.colorName);
                 $("#commodityPrice").html("$"+data.commodityPrice);
@@ -379,6 +380,13 @@
         $("#inventory2").val(nu);
     }
 
+    //加载价格
+    function showprice(){
+        count = $("[name='tory']").val();
+        var price= $("#commodityPrice").html();
+       alert( $("#commodityPrice").html());
+       // $("#commodityPrice").val(count*price);
+    }
     //加载颜色
     function queryColor(){
         $.ajax({
@@ -399,7 +407,10 @@
     }
     //购买
 function buy(){
-        alert("123");
+ // alert($("#commodityName").html());
+  //  alert($("[name='cName']:checked").val());
+    alert($("#text_box").val());
+
 }
     $(document).ready(function(){
         var showproduct = {

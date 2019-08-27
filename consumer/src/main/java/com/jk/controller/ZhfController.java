@@ -122,9 +122,10 @@ public class ZhfController {
     public void addorbder(HttpSession session){
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Members members =new Members();
+       /* Members members =new Members();
         members.setId(1);
-        members.setNickname("赵浩范");
+        members.setNickname("赵浩范");*/
+        Members members =(Members) session.getAttribute("members");
         String artno="HHZC123";
         Integer amount=3;
         double commodityPrice=20.0;
@@ -137,6 +138,7 @@ public class ZhfController {
         orderone.setTotalmoney(count);
         orderone.setBuyer(members.getNickname());
         orderone.setArtno(artno);
+        orderone.setUserid(members.getId());
         orderone.setOrdertime(sdf.format(new Date()));
 
         amqpTemplate.convertAndSend("AddOrder",orderone);
