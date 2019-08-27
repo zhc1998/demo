@@ -97,10 +97,10 @@
 							</ul>
 						</div>
 						<div class="search">
-							<input type="text" placeholder="Where prodect" />
+							<input type="text" id="pName" placeholder="搜索商品" />
 						</div>
 						<div class="btn-group">
-							<button type="button" id="btnSearch" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button type="button" id="btnSearch" class="btn btn-primary" onclick="conditionQuery()"><i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
 					</div>
 				</form>
@@ -279,7 +279,7 @@
 							<li><a href="grid.html">Grid</a></li>
 							<li><a href="shop-detail.html">Shop-detail</a></li>
 							<li><a href="contact.html">Contact</a></li>
-							<li><a href="shopping-cart.html">Shopping-cart</a></li>
+							<li><a href="../toshow/toShoppingTrolley">购物车</a></li>
 							<li><a href="checkout.html">Checkout</a></li>
 						</ul>
 						<!-- /.navbar-collapse -->
@@ -1426,6 +1426,8 @@
 						$("#aa"+i).val(data[i].id);
 						$("#span"+i).html(data[i].commodityName);
 						$("#price"+i).html("<font color='red'>$"+data[i].commodityPrice+"</font>");
+						ids = $("#aa"+i).val();
+
 					}
 				}
 
@@ -1463,6 +1465,26 @@
 		}
 	}
 
+
+	//条件查询
+	function conditionQuery(){
+		var pName = $("#pName").val();
+		alert("要查询的值"+pName);
+		$.ajax({
+			url:"../zch/conditionQuery",
+			type:"post",
+			data:{
+				pName:pName
+			},
+			dataType:"json",
+			success:function(data){
+				alert(11);
+			},
+			error:function(){
+				alert("查询失败");
+			}
+		})
+	}
 
 </script>
 

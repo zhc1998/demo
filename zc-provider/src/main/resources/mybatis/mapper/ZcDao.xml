@@ -95,13 +95,20 @@
         select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,te.pictureUrl  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
         left join brand br on br.itemId = te.itemId
+        WHERE te.status = 1
     </select>
 
     <!--查询前台详情-->
     <select id="loadDetails" parameterType="int" resultType="com.jk.model.commodity.DetailsModel">
-        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,br.introduction,te.sellquantity,te.pictureUrl  from t_item te
+        select te.id,te.commodityName,te.commodityPrice,te.newProduct,te.inventory,ty.typeName,br.name,br.introduction,te.sellquantity,te.pictureUrl,te.artNo,te.createDate,ty.typeId  from t_item te
         left join t_commoditytype ty on ty.typeId=te.TypeId
         left join brand br on br.itemId = te.itemId
 		WHERE te.id = #{value}
+    </select>
+
+    <!--查询配件-->
+    <select id="queryAccessories" parameterType="int" resultType="com.jk.model.commodity.AccessoriesModel">
+        select *  from  t_accessories ac,t_commoditytype ty WHERE ty.typeId=ac.typeId
+		and ac.typeId = #{value}
     </select>
 </mapper>

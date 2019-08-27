@@ -88,7 +88,7 @@ public class ZhfController {
        //Integer userid=1;
        Members members =(Members) session.getAttribute("members");
        Integer userid= members.getId();
-       System.err.println(userid);
+      // System.err.println(userid);
         HashMap<String, Object> list = zhfService.queryorderbyuid(userid);
         Object orderone = list.get("rows");
         model.addAttribute("order",orderone);

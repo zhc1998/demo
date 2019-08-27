@@ -5,12 +5,33 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>购物车</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
+    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
+    <!-- 引入tree的js、css -->
+    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入选项卡的js、css -->
+    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- 引入table的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
+    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- 引入删除提示框 -->
+    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
+    <!-- 引入时间的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
     <meta name="author" content="" />
     <meta name="copyright" content="" />
     <link href="/shop/css/animate.css" rel="stylesheet" type="text/css" />
     <link href="/shop/css/common.css" rel="stylesheet" type="text/css" />
     <link href="/shop/css/cart.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/shop/js/jquery.js"></script>
     <script type="text/javascript" src="/shop/js/common.js"></script>
     <script src="/shop/js/vue.js"></script>
     <script type="text/javascript">
@@ -368,7 +389,7 @@
         <div class="row">
             <div class="span3">
                 <a href="/shopxxb2b2c/">
-                    <img src="/shopxxb2b2c/upload/image/logo.png" alt="" />
+                    <img src="#" alt="" />
                 </a>
             </div>
             <div class="span6">
@@ -404,29 +425,8 @@
             <div class="span12">
                 <dl class="mainNav">
                     <dt>
-                        <a href="/shopxxb2b2c/product_category">所有商品分类</a>
+                        <a href="/shopxxb2b2c/product_category">购物车</a>
                     </dt>
-                    <dd>
-                        <a href="/shopxxb2b2c/">首页</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list/1">手机数码</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list/2">电脑办公</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list/3">家用电器</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list/4">服装鞋靴</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list/5">化妆护理</a>
-                    </dd>
-                    <dd>
-                        <a href="/shopxxb2b2c/product/list?type=exchange">积分商城</a>
-                    </dd>
                 </dl>
             </div>
         </div>
@@ -458,66 +458,10 @@
                     <li>订单完成</li>
                 </ul>
             </div>
-            <table class="cartTable" id="cartList">
-                <tr class="title" >
-                    <th>图片</th>
-                    <th>商品</th>
-                    <th>价格</th>
-                    <th>数量</th>
-                    <th>小计</th>
-                    <th>操作</th>
-                </tr>
-                <tbody class="cartDiv" v-for="cart in cartList">
-                <tr>
-                    <th class="cartNull">
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <th class="storeName" colspan="6">
-                        <a href="/shopxxb2b2c/store/1"></a>
-                    </th>
-                </tr>
-                <tr v-for="TbOrderPro in cart.productList">
-                    <td width="60">
-                        <input type="hidden"  v-bind:value="TbOrderPro.proid" />
-                        <img id="imgimg" v-bind:src="TbOrderPro.picPath" v-bind:alt="TbOrderPro.title" />
-                    </td>
-                    <td width="240">
-                        <a href="/shopxxb2b2c/product/detail/5" v-bind:title="TbOrderPro.title" target="_blank">{{TbOrderPro.title}}</a>
-                    </td>
-                    <td class="price" width="180">
-                        <span>￥TbOrderPro.price</span>
-                    </td>
-                    <td class="quantity" width="130">
-                        <span class="decrease" v-bind:onclick="'aaa(1,'+TbOrderPro.proid+')'" >-</span>
-                        <input type="text" name="quantity" v-bind:value="TbOrderPro.num" maxlength="4" onpaste="return false;" />
-                        <span class="increase" v-bind:onclick="'aaa(2,'+TbOrderPro.proid+')'" >+</span>
-                    </td>
-                    <td width="140">
-                        <span class="subtotal">￥{{TbOrderPro.sumPrice}}</span>
-                    </td>
-                    <td>
-                        <a v-bind:href="'javascript:deletePro('+TbOrderPro.proid+','+-TbOrderPro.num+')'" class="remove">删除</a>
-                    </td>
-                </tr>
-                <tr class="promotion-tr hidden">
-                    <td colspan="6">
-                        <dl class="promotion clearfix">
-                            <dt class="hidden">促销折扣:</dt>
-                        </dl>
-                    </td>
-                </tr>
-                <tr class="gift-tr hidden">
-                    <td colspan="6">
-                        <dl class="gift clearfix">
-                            <dt class="hidden">赠品:</dt>
-                        </dl>
-                    </td>
-                </tr>
-                </tbody>
 
-            </table>
+            <!--  表格 -->
+            <button type='button'  class='btn btn-success' onclick='empty()'>清空购物车</button>
+            <table id="dataGrid" ></table>
         </div>
     </div>
     <div class="row">
@@ -585,7 +529,7 @@
                 var totalValue={totalNum:0, totalMoney:0.00 };//合计实体
                 for(var i=0;i < data.length;i++){
                     var cart=data[i];
-                        alert(cart.id);
+                        //alert(cart.id);
                         var orderItem=cart;//购物车明细
                         totalValue.totalNum+=orderItem.num;
                         totalValue.totalMoney+= orderItem.sumPrice;
@@ -679,7 +623,7 @@
             </dd>
         </dl>
         <div class="qrCode">
-            <img src="/shopxxb2b2c/resources/shop/images/qr_code.jpg" alt="官方微信" />
+            <img src="#" alt="官方微信" />
             官方微信
         </div>
     </div>
@@ -763,5 +707,78 @@
             </ul>
         </div>
     </div>
-</div></body>
+</div>
+</body>
+<script>
+    $(function(){
+        initDataGrid();
+    })
+
+    //查询商品
+    function initDataGrid() {
+        //创建bootstrapTable
+        $("#dataGrid").bootstrapTable({
+            url: "../cart/findCartList",
+            method: 'post',
+            striped: true,  	         // 斑马线效果     默认false
+            singleSelect: false,        //只允许选中一行
+            clickToSelect: true,
+            showToggle: true,           //是否显示详细视图和列表视图的切换按钮
+            cardView: false,            //是否显示详细视图
+            uniqueId: "id",             //每一行的唯一标识，一般为主键列
+            showColumns: true,          //是否显示所有的列
+            showRefresh: true,          //是否显示刷新按钮
+            minimumCountColumns: 2,     //  最少留两列
+            detailView: false,          //是否显示父子表
+            toolbar: '#tabToolBar',     //  工具定义位置
+            sidePagination: 'server',
+            toolbar: '#toolbar',
+
+            columns: [
+                {field: 'ckAll', checkbox: true},  //开启复选框
+                {field:'id',title:'编号'},
+                {field:'commodityName',title:'商品名称'},
+                {field:'artNo',title:'货号'},
+                {field:'commodityPrice',title:'商品价格'},
+                {field:'pictureUrl',title:'图片',formatter:function(value,orw,index){
+                    return "<img src='"+value+"' width='50'>";
+                    }},
+                {field:'cz',title:'操作',formatter:function (value,row,index) {
+                        return "<button type='button'  class='btn btn-success' onclick='delShop("+row.id+")'>删除</button>";
+                    }}
+            ]
+        });
+    }
+
+    //删除指定数据
+    function delShop(id) {
+        $.ajax({
+            url:"../cart/delete",
+            type:"post",
+            data:{id:id},
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function () {
+                alert("删除失败");
+            }
+        })
+    }
+    
+    //清空购物车
+    function empty() {
+        $.ajax({
+            url:"../cart/deleteAll",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function(){
+                alert("清除失败");
+            }
+        })
+    }
+</script>
 </html>
