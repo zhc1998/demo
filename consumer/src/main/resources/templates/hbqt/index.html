@@ -87,20 +87,13 @@
 				<form>
 					<div class="well carousel-search hidden-phone">
 						<div class="btn-group">
-							<a class="btn dropdown-toggle btn-select" data-toggle="dropdown" href="#">All Categories <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Item I</a></li>
-								<li><a href="#">Item II</a></li>
-								<li><a href="#">Item III</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Other</a></li>
-							</ul>
+							<a class="btn dropdown-toggle btn-select"  href="#">请输入商品名称</a>
 						</div>
 						<div class="search">
 							<input type="text" placeholder="Where prodect" />
 						</div>
 						<div class="btn-group">
-							<button type="button" id="btnSearch" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button type="button" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
 					</div>
 				</form>
@@ -1437,30 +1430,8 @@
 	}
 
 	function particulars(val) {
-		if(val == 0){
-			var ids = $("#aa0").val();
+			var ids = $("#aa"+val+"").val();
 			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 1){
-			var ids = $("#aa1").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 2){
-			var ids = $("#aa2").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 3){
-			var ids = $("#aa3").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 4){
-			var ids = $("#aa4").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 5){
-			var ids = $("#aa5").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
 	}
 
 
