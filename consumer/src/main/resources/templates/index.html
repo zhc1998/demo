@@ -8,6 +8,25 @@
     <meta name="description" content="首页" />
     <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
 </head>
 <body>
 <input type="hidden" id="ids" th:value="${ids}">
@@ -245,13 +264,7 @@
                     <a href="#">规格参数</a>
                 </li>
                 <li>
-                    <a href="#">商品介绍</a>
-                </li>
-                <li>
                     <a href="#">商品评价</a>
-                </li>
-                <li>
-                    <a href="#">售后保障</a>
                 </li>
             </ul>
             <ul class="act_title_right">
@@ -280,17 +293,6 @@
                     <li><img src="../images/ko-1.jpg"/></li>
                 </ul>
             </div>
-            <!--商品规格-->
-            <div id="bit" class="bit">
-                <ul style="display:none;">
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-                    <li><img src="../images/ko.jpg"/></li>
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-
-                </ul>
-            </div>
 
             <!--商品评价-->
 
@@ -299,19 +301,9 @@
                     <div class="plmain">
                         <div class="plm clearfix">商品评价</div>
                         <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
-                        <div class="tool_submit tr"> <a class="dp_wrap_pname" href="evaluation()" target="_blank">评论</a></div>
+                        <a class="dp_wrap_pname" href="javascript:evaluation()" >评论</a>
+                        <div id="treeDiv"></div>
                     </div>
-                </ul>
-            </div>
-            <!--售后保障-->
-            <div id="uic" class="uic">
-                <ul style="display:none;">
-                    <p>商品名称：仙人指路道镜前后双录智能后视镜导航仪行车记录仪后视预警一体机</p>
-                    <p>商品编号：ECS001983</p>
-                    <p>品牌:威力马哈国产</p>
-                    <p>上架时间：2016-05-24</p>
-                    <span><img src="../images/ko-1.jpg"/></span>
-                    <span><img src="../images/ko-2.jpg"/></span>
                 </ul>
             </div>
         </div>
@@ -422,15 +414,40 @@
 
     //评论
     evaluation = function(){
-        var text =$("#TextArea1").val().serialize();
+        var text =$("#TextArea1").val();
         var ids =$("#ids").val();
-       $.ajax({
+        alert(text)
+        alert(ids)
+      $.ajax({
            url:"../hb/addevaluation",
            data:{text:text,ids:ids},
            success:function(data){
-            location.href=location;
+               window.location.reload()
            }
        })
+    }
+
+
+      $(function(){
+        showTree();
+    })
+    function showTree(){
+        var id = $("#ids").val();
+        $.ajax({
+            url:'../hb/comments?id='+id,
+            type : "post",
+            success:function(data){
+                $("#treeDiv").treeview({
+                    //data属性 树节点信息 json数组
+                    data: data,
+                    //tree默认展开的节点级别默认为2
+                    levels: 0,
+
+                })
+            },error : function (){
+                alert("查询失败");
+            }
+        })
     }
 </script>
 </html>

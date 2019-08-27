@@ -81,7 +81,7 @@
         )
     </delete>
 
-    <insert id="evaluation" parameterType="Integer">
-        insert into comments(text,pid,sid,uid) values (#{text},#{pid},#{sid},#{uid})
+    <insert id="addevaluation" parameterType="map">
+        insert into comments(text,pid,sid,uid) values (#{text},0,#{sid},#{uid})
     </insert>
 </mapper>

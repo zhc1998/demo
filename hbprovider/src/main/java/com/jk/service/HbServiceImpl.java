@@ -136,16 +136,17 @@ public class HbServiceImpl implements HbService {
 
     //删除所有审核失败商品
     @Override
-    public void delAll(String [] ids) {
+    public void delAll(Integer [] ids) {
         hbDao.delAll(ids);
     }
 
     @Override
-    public void evaluation(Integer id, Comments comments, Integer text, Integer ids) {
-        comments.setPid(0);
-        comments.setSid(ids);
-        comments.setUid(id);
-        hbDao.evaluation(text);
+    public void addevaluation(String text, Integer ids, String username) {
+        HashMap map = new HashMap();
+        map.put("text",text);
+        map.put("sid",ids);
+        map.put("uid",username);
+        hbDao.addevaluation(map);
     }
 
 

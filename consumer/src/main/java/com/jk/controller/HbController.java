@@ -150,16 +150,15 @@ public class HbController {
     //清空所有审核失败商品
     @RequestMapping("delAll")
     @ResponseBody
-    public Integer delAll(String [] ids){
+    public Integer delAll(Integer [] ids){
         hbService.delAll(ids);
         return 1;
     }
 
-    //评论
     @RequestMapping("addevaluation")
     @ResponseBody
-    public void evaluation(HttpServletRequest request,Comments comments,Integer text,Integer ids){
+    public void addevaluation(String text,Integer ids,HttpServletRequest request){
         Members members = (Members) request.getSession().getAttribute("members");
-        hbService.evaluation(members.getId(),comments,text,ids);
+        hbService.addevaluation(text,ids,members.getUsername());
     }
     }

@@ -30,5 +30,5 @@ public interface HbService {
 
     void delAll(Integer [] ids);
 
-    void evaluation(Integer id, Comments comments, Integer text, Integer ids);
+    void addevaluation(String text, Integer ids, String username);
 }

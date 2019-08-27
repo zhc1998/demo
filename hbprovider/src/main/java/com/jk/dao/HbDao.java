@@ -60,5 +60,5 @@ public interface HbDao {
 
     void delAll(Integer[] ids);
 
-    void evaluation(Integer text);
+    void addevaluation(HashMap map);
 }
