@@ -275,4 +275,113 @@ public class ZchController {
         return colorModels;
     }
 
+    //查询配件
+    @RequestMapping("queryAccessories")
+    @ResponseBody
+    public List<AccessoriesModel> queryAccessories(Integer typeId){
+        List<AccessoriesModel> accessoriesModels = zcService.queryAccessories(typeId);
+
+        return accessoriesModels;
+    }
+
+    //查询内存
+    @RequestMapping("queryLickMemory")
+    @ResponseBody
+    public List<LickMemoryModel> queryLickMemory(){
+        return zcService.queryLickMemory();
+    }
+
+    //根据Id商品总价格
+    @RequestMapping("queryItemPrice")
+    @ResponseBody
+    public CommodityModel queryItemPrice(Integer ids){
+        CommodityModel commodityModel = zcService.queryItemPrice(ids);
+        return commodityModel;
+    }
+
+
+    //solr查询
+    @RequestMapping("conditionQuery")
+    @ResponseBody
+    public Map conditionQuery(@RequestBody ResultPage result){
+        //返回的参数map
+        Map<String,Object> mSolr=new HashMap<String,Object>();
+        //查询的集合
+        List<CommodityModel> comlist=new ArrayList<>();
+        //查询参数的对象SolrQuery
+        SolrQuery params=new SolrQuery();
+        //判断关键词是否为空
+        if(!"".equals(result.getCommodityName())&&result.getCommodityName()!=null){
+            //不为空时，关键词为前台传递的参数
+            params.set("q",result.getCommodityName());
+        }else{
+            //为空时查询所有数据
+            params.set("q","status:1");
+        }
+        //默认查询的字段
+        params.set("df","commodityName");
+        //默认返回的字段
+        params.set("fl","id,commodityName,artNo,commodityPrice,status,newProduct,inventory,typeId,pictureUrl,itemId,colorId,sellquantity");
+        //设置高亮字段
+        params.addHighlightField("commodityName");
+        //分页
+        params.setStart((result.getPageNumber()-1)*result.getPageSize());
+        params.setRows(result.getPageSize());
+        //打开高亮
+        params.setHighlight(true);
+        //设置前缀
+        params.setHighlightSimplePre("<span style='color:red'>");
+        //设置后缀
+        params.setHighlightSimplePost("</span>");
+        try {
+            //solr查询返回的对象QueryResponse
+            QueryResponse queryResponse=client.query(params);
+            //查询返回的真正结果
+            SolrDocumentList results=queryResponse.getResults();
+            //查询总条数
+            long numFound=results.getNumFound();
+            //高亮显示的内容
+            Map<String,Map<String,List<String>>> higlight=queryResponse.getHighlighting();
+            //循环遍历结果，把查询内容放到list中
+            for (SolrDocument res:results){
+                CommodityModel com=new CommodityModel();
+                String highname="";
+                //获得的高亮内容
+                Map<String, List<String>> map=higlight.get(res.get("id"));
+                //获得高亮内容的list
+                List<String> list=map.get("commodityName");
+                if(list==null){
+                    //如果为空则没有高亮
+                    highname=(String)res.get("commodityName");
+                }else{
+                    //不为空则有高亮
+                    highname=list.get(0);
+                }
+                //把字段放入对象中
+                com.setId(Integer.parseInt(res.get("id").toString()));
+                com.setSellquantity((Integer) res.get("sellquantity"));
+                com.setArtNo((String) res.get("artNo"));
+                com.setPictureUrl((String) res.get("pictureUrl"));
+                com.setColorId((Integer) res.get("coloId"));
+                com.setCommodityName((String) res.get("commodityName"));
+                com.setCommodityPrice(Double.parseDouble(res.get("commodityPrice").toString()));
+                com.setInventory((Integer) res.get("inventory"));
+                com.setItemId((Integer) res.get("itemId"));
+                com.setNewProduct((Integer) res.get("newProduct"));
+                com.setStatus((Integer) res.get("status"));
+                com.setTypeId((Integer) res.get("typeId"));
+                comlist.add(com);
+            }
+            //把条数和查询结果放到上面的map中
+            mSolr.put("total",numFound);
+            mSolr.put("rows",comlist);
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //返回map
+        return mSolr;
+    }
+
 }

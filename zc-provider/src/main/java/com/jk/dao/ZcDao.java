@@ -88,4 +88,15 @@ public interface ZcDao {
 
     @Select("select *  from  t_item where artNo = #{artNo}")
     CommodityModel queryCommodityByArtNo(String artNo);
+
+    //查询配件
+    List<AccessoriesModel> queryAccessories(Integer typeId);
+
+    //查询内存
+    @Select("select *  from  t_memory")
+    List<LickMemoryModel> queryLickMemory();
+
+    //根据Id查询商品价格
+    @Select("select commodityPrice  from  t_item WHERE id = 15")
+    CommodityModel queryItemPrice(Integer ids);
 }

@@ -50,5 +50,11 @@ public interface ZcService {
 
     List<ColorModel> queryColor();
 
+    List<AccessoriesModel> queryAccessories(Integer typeId);
+
+    List<LickMemoryModel> queryLickMemory();
+
+    CommodityModel queryItemPrice(Integer ids);
+
     CommodityModel queryCommodityByArtNo(String artNo);
 }
