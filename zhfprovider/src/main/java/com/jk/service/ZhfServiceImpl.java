@@ -79,9 +79,9 @@ public class ZhfServiceImpl implements ZhfService{
     @RabbitListener(queues = "AddOrder")//添加RabbitListener注解 监听
     public void addorder(Orderone orderone) {
         String subjectno=getBillCode();
-        String key=subjectno;
+        String key=orderone.getUserid().toString();
         orderone.setOrdernumber(subjectno);
-        redisTemplate.opsForValue().set(key,orderone);
+        redisTemplate.opsForList().leftPush(key,orderone);
         redisTemplate.expire(key, 30, TimeUnit.MINUTES);
         //orderoneDao.insertSelective(orderone);
     }

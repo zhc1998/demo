@@ -117,25 +117,22 @@ public class ZhfController {
     }
 
     //新增订单
-    @RequestMapping("addorbder")
+    @RequestMapping("addorder")
     @ResponseBody
-    public void addorbder(HttpSession session){
+    public void addorbder(String artno,String address ,String consignee,String commodityName,Double totalmoney,Integer amout,Double amountpayable,HttpSession session){
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       /* Members members =new Members();
-        members.setId(1);
-        members.setNickname("赵浩范");*/
+
         Members members =(Members) session.getAttribute("members");
-        String artno="HHZC123";
-        Integer amount=3;
-        double commodityPrice=20.0;
+
+
         Orderone orderone=new Orderone();
-        orderone.setConsignee("花祈梦2");
+        orderone.setConsignee(consignee);
         orderone.setTel("12012541554");
-        orderone.setAddress("河南省洛阳市");
-        orderone.setAmount(amount);
-        Double count=amount*commodityPrice;
-        orderone.setTotalmoney(count);
+        orderone.setAddress(address);
+        orderone.setAmount(amout);
+       orderone.setAmountpayable(amountpayable);
+        orderone.setTotalmoney(totalmoney);
         orderone.setBuyer(members.getNickname());
         orderone.setArtno(artno);
         orderone.setUserid(members.getId());
@@ -145,6 +142,19 @@ public class ZhfController {
        // zhfService.addorder(orderone);
        // return "suc";
     }
+//购买页面
+    @RequestMapping("tobuypage")
+public String tobuypage(Double totalmoney,String artno,Integer amout,String color,String commodityName,Model model){
+       model.addAttribute("totalmoney",totalmoney);
+        model.addAttribute("artno",artno);
+        model.addAttribute("amout",amout);
+        model.addAttribute("color",color);
+        model.addAttribute("commodityName",commodityName);
+        return "test2";
+}
 
-
+@RequestMapping("test2")
+    public String test2(){
+       return "test2";
+}
 }

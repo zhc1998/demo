@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>首页</title>
-    <meta name="keywords" content="首页" />
-    <meta name="description" content="首页" />
-    <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
-    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
-</head>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>首页</title>
+        <meta name="keywords" content="首页" />
+        <meta name="description" content="首页" />
+        <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
+        <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    </head>
 <body>
 <input type="hidden" id="ids" th:value="${ids}">
 <div class="showall">
@@ -347,10 +347,15 @@
 
     $(function(){
         queryOneDetails();
-        queryColor();
-        //subtractNumber();
+        lickMemory();
+        //queryColor();
+        //queryAccessories();
     })
 
+    //别动
+    var pr;
+    var typeId;
+    var imgSrc;
     //查询一条详情信息
     function queryOneDetails(val) {
         var ids = $("#ids").val();
@@ -364,7 +369,7 @@
                 typeId = data.typeId;
                 imgSrc = data.pictureUrl;
                 //商品名称
-                $("#commodityName").html("商品名称:"+data.commodityName);
+                $("#commodityName").html(data.commodityName);
                 $("#spName").html(data.commodityName);
                 //编号
                 $("#serial").html(data.artNo);
@@ -410,7 +415,7 @@
             }
         })
     }
-    
+
     //数量减一
     function plus() {
 
@@ -446,13 +451,37 @@
     }
 
     //设置样式
-    //购买
-function buy(){
- // alert($("#commodityName").html());
-  //  alert($("[name='cName']:checked").val());
-    alert($("#text_box").val());
 
-}
+    //购买
+    function buy(){
+        // alert($("#commodityPrice").html());
+        // alert($("#serial").html());
+        // alert($("#text_box").val());
+        //alert($("[name='cName']:checked").val())
+      var totalmoney=$("#commodityPrice").html();
+      //alert(totalmoney);
+        var artno=$("#serial").html();
+        alert(artno);
+        var amout=$("#text_box").val();
+        var color=$("[name='cName']:checked").val();
+       var commodityName=$("#commodityName").html()
+        location.href="../zhf/tobuypage?totalmoney="+totalmoney+"&artno="+artno+"&amout="+amout+"&color="+color+"&commodityName="+commodityName;
+
+       /*$.ajax({
+            type:"post",
+           url:"../zhf/tobuypage",
+            data:{
+                totalmoney:$("#commodityPrice").html(),
+                artno:$("#serial").html(),
+                amout:$("#text_box").val(),
+                color:$("[name='cName']:checked").val(),
+              commodityName:$("#commodityName").html()
+            },
+            success:function(){
+
+            },
+        })*/
+    }
     $(document).ready(function(){
         var showproduct = {
             "boxid":"showbox",
@@ -468,13 +497,13 @@ function buy(){
             "lastid":"showlast",
             "nextid":"shownext"
         };//参数定义
-       // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
+        // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
     });
 
     var ii;
     //查询商品配件
     function queryAccessories() {
-       // alert(typeId);
+        // alert(typeId);
         $.ajax({
             url:"../zch/queryAccessories",
             type:"post",
@@ -506,26 +535,26 @@ function buy(){
     //累加配件价格
     function accumulation(val) {
         var ce = 0;
-            if(val==0){
-                var pri = $("#pri0").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==1){
-                var pri = $("#pri1").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==2){
-                var pri = $("#pri2").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==3){
-                var pri = $("#pri3").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
+        if(val==0){
+            var pri = $("#pri0").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==1){
+            var pri = $("#pri1").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==2){
+            var pri = $("#pri2").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==3){
+            var pri = $("#pri3").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
 
         //alert(ce);
         $("#pr").html(ce);
@@ -659,7 +688,7 @@ function buy(){
                 proId:proId
             },
             success:function(data){
-               alert("完成");
+                alert("完成");
             },
             error:function () {
                 alert("加入购物车失败");
@@ -669,5 +698,6 @@ function buy(){
 
 
     }
+
 </script>
 </html>
