@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>BUG商城</title>
 
 <!-- Latest Bootstrap min CSS -->
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css">
@@ -43,113 +43,74 @@
 <header>
 	<!--  top-header  -->
 	<div class="top-header">
-		<div class="container">
+				<div class="container" id="nologin" >
+					<div class="col-md-6">
+						<div class="top-header-left">
+						</div>
+					</div>
 
-			<div class="col-md-6">
-				<div class="top-header-left">
-					<ul>
-						<li>
-							<a href="../toshow/tofrontLogin">登录</a>
-							<a href="../toshow/toZhuCe">注册</a>
-						</li>
-					</ul>
+					<div class="col-md-6">
+					<div class="top-header-right">
+						<ul>
+							<li>
+								<a href="javascript:openLogin();">登录/注册</a>
+							</li>
+						</ul>
+					</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="top-header-right">
-					<ul>
-						<li><i class="icon-user icons" aria-hidden="true"></i><a href="javaScript:tousercenter()" style="color: aliceblue">个人中心</a></li>
-						<li>
-							<div class="dropdown">
-								<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-									<i class="icon-settings icons" aria-hidden="true"></i> Setting
-								</a>
-								<ul class="dropdown-menu">
-									<li><a href="zhuxiao()">注销并退出</a></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
+				<div class="container" id="login" style="display:none;">
+					<div class="col-md-6">
+						<div class="top-header-left">
+							<ul>
+								<li>
+									<span id="sessionvalue"></span>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="top-header-right">
+							<ul>
+								<li><i class="icon-user icons" aria-hidden="true"></i><a href="../clp/showClpYhq3" target="_blank" style="color: aliceblue">个人中心</a></li>
+								<li>
+									<div class="dropdown">
+										<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+											<i class="icon-settings icons" aria-hidden="true"></i> Setting
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="javaScript:zhuxiaodenglu()">注销并退出</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
 		<!--  /top-header  -->
 	</div>
 	<section class="top-md-menu">
 		<div class="container">
 			<div class="col-sm-3">
-				<div class="logo">
-					<h6><img src="../assets/images/logo.png" alt="logo" /></h6>
-				</div>
 			</div>
 			<div class="col-sm-6">
 				<!-- Search box Start -->
 				<form>
 					<div class="well carousel-search hidden-phone">
 						<div class="btn-group">
-							<a class="btn dropdown-toggle btn-select" data-toggle="dropdown" href="#">All Categories <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Item I</a></li>
-								<li><a href="#">Item II</a></li>
-								<li><a href="#">Item III</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Other</a></li>
-							</ul>
+							<a class="btn dropdown-toggle btn-select"  href="#">请输入商品名称</a>
 						</div>
 						<div class="search">
 							<input type="text" id="pName" placeholder="搜索商品" />
 						</div>
 						<div class="btn-group">
-							<button type="button" id="btnSearch" class="btn btn-primary" onclick="conditionQuery()"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button type="button" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
 					</div>
 				</form>
 				<!-- Search box End -->
 			</div>
-			<div class="col-sm-3">
-				<!-- cart-menu -->
-				<div class="cart-menu">
-					<ul>
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown" data-hover="dropdown"><i class="icon-basket-loaded icons" aria-hidden="true"></i></a><span class="subno">2</span><strong>Your Cart</strong>
-							<div class="dropdown-menu  cart-outer">
-								<div class="cart-content">
-									<div class="col-sm-4 col-md-4"><img src="../assets/images/elec-img4.jpg" alt="13"></div>
-									<div class="col-sm-8 col-md-8">
-										<div class="pro-text">
-											<a href="#">Apple Macbook Retina 23’’ </a>
-											<div class="close">x</div>
-											<strong>1 × $290.00</strong>
-										</div>
-									</div>
-								</div>
-								<div class="cart-content">
-									<div class="col-sm-4 col-md-4"><img src="../assets/images/elec-img3.jpg" alt="13"></div>
-									<div class="col-sm-8 col-md-8">
-										<div class="pro-text">
-											<a href="#">Apple Macbook Retina 23’’ </a>
-											<div class="close">x</div>
-											<strong>1 × $290.00</strong>
-										</div>
-									</div>
-								</div>
-								<div class="total">
-									<div class="col-md-6 text-left">
-										<span>Shipping :</span>
-										<strong>Total :</strong>
-									</div>
-									<div class="col-md-6 text-right">
-										<strong>$0.00</strong>
-										<strong>$160.00</strong>
-									</div>
-								</div>
-								<a href="shopping-cart.html" class="cart-btn">VIEW CART </a> <a href="checkout.html" class="cart-btn">CHECKOUT</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<!-- cart-menu End -->
-			</div>
+
 			<div class="main-menu">
 				<!--  nav  -->
 				<nav class="navbar navbar-inverse navbar-default">
@@ -272,7 +233,7 @@
 							<li><a href="grid.html">Grid</a></li>
 							<li><a href="shop-detail.html">Shop-detail</a></li>
 							<li><a href="contact.html">Contact</a></li>
-							<li><a href="../toshow/toShoppingTrolley">购物车</a></li>
+							<li><a  href="javaScript:togouwuche()">购物车</a></li>
 							<li><a href="checkout.html">Checkout</a></li>
 						</ul>
 						<!-- /.navbar-collapse -->
@@ -383,7 +344,7 @@
 			<div class="col-sm-4">
 				<div class="deal-week">
 					<div class="title">
-						<h2>商品队列</h2>
+						<h2>抢购商品</h2>
 					</div>
 					<div class="owl-demo-outer">
 						<!-- #owl-demo -->
@@ -430,69 +391,6 @@
 									<!-- /.pro-text -->
 								</div>
 							</div>
-							<div class="item">
-								<div class="col-md-12">
-									<!-- .pro-text -->
-									<div class="pro-text text-center">
-										<!-- .pro-img -->
-										<div class="pro-img">
-											<img src="../assets/images/wk-deal-img.jpg" alt="2" />
-										</div>
-										<!-- /.pro-img -->
-										<div class="text-text">
-											<span>Macbook, Laptop</span>
-											<h4> Apple Macbook Retina 23’’ </h4>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
-											<p class="wk-price">$290.00 <span>$290.00</span> </p>
-											<p class="availalbe">Availalbe: <span>In Stock</span></p>
-											<a href="#" class="add-btn">添加到购物车2</a>
-										</div>
-									</div>
-									<!-- /.pro-text -->
-								</div>
-							</div>
-							<div class="item">
-								<div class="col-md-12">
-									<!-- .pro-text -->
-									<div class="pro-text text-center">
-										<!-- .pro-img -->
-										<div class="pro-img">
-											<img src="../assets/images/wk-deal-img.jpg" alt="2" />
-										</div>
-										<!-- /.pro-img -->
-										<div class="text-text">
-											<span>Macbook, Laptop</span>
-											<h4> Apple Macbook Retina 23’’ </h4>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
-											<p class="wk-price">$290.00 <span>$290.00</span> </p>
-											<p class="availalbe">Availalbe: <span>In Stock</span></p>
-											<a href="#" class="add-btn">添加到购物车2</a>
-										</div>
-									</div>
-									<!-- /.pro-text -->
-								</div>
-							</div>
-							<div class="item">
-								<div class="col-md-12">
-									<!-- .pro-text -->
-									<div class="pro-text text-center">
-										<!-- .pro-img -->
-										<div class="pro-img">
-											<img src="../assets/images/wk-deal-img.jpg" alt="2" />
-										</div>
-										<!-- /.pro-img -->
-										<div class="text-text">
-											<span>Macbook, Laptop</span>
-											<h4> Apple Macbook Retina 23’’ </h4>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
-											<p class="wk-price">$290.00 <span>$290.00</span> </p>
-											<p class="availalbe">Availalbe: <span>In Stock</span></p>
-											<a href="#" class="add-btn"></a>
-										</div>
-									</div>
-									<!-- /.pro-text -->
-								</div>
-							</div>
 							<!-- /#owl-demo -->
 						</div>
 					</div>
@@ -514,15 +412,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img id="0" src="" alt="2" height="150px" onclick="particulars(0)"/>
+												<div class="pro-img" style="height:250px">
+													<img id="0" src="" alt="2" height="200px" width="180px" onclick="particulars(0)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> <span id="span0"></span> </h4>
-													</a>
+													<h4> <span id="span0"></span> </h4>
 													<br>
 													<h4> <span id="price0"></span> </h4>
 													<a  id="aa0" class="add-btn">添加到购物车1</a>
@@ -534,15 +429,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img id="1" src="" alt="2" height="150px" onclick="particulars(1)"/>
+												<div class="pro-img" style="height:250px">
+													<img id="1" src="" alt="2" height="200px" width="180px" onclick="particulars(1)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> <span id="span1"></span> </h4>
-													</a>
+													<h4> <span id="span1"></span> </h4>
 													<br>
 													<h4> <span id="price1"></span> </h4>
 													<a id="aa1" class="add-btn">添加到购物车2</a>
@@ -554,15 +446,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img id="2" src="" alt="2" height="180px" onclick="particulars(2)"/>
+												<div class="pro-img" style="height:250px">
+													<img id="2" src="" alt="2" height="200px" width="180px" onclick="particulars(2)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> <span id="span2"></span> </h4>
-													</a>
+													<h4> <span id="span2"></span> </h4>
 													<br>
 													<h4> <span id="price2"></span> </h4>
 													<a id="aa2" class="add-btn">添加到购物车</a>
@@ -574,15 +463,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center" >
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img id="3" src="" alt="2" height="180px" onclick="particulars(3)"/>
+												<div class="pro-img" style="height:250px">
+													<img id="3" src="" alt="2" height="200px" width="180px" onclick="particulars(3)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> <span id="span3"></span> </h4>
-													</a>
+													<h4> <span id="span3"></span> </h4>
 													<br>
 													<h4> <span id="price3"></span> </h4>
 													<a id="aa3" class="add-btn">添加到购物车</a>
@@ -594,15 +480,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center" >
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img id="4" src="" alt="2" height="180px" onclick="particulars(4)"/>
+												<div class="pro-img" style="height:250px">
+													<img id="4" src="" alt="2" height="200px" width="180px" onclick="particulars(4)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
 													<h4> <span id="span4"></span> </h4>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
 													<br>
 													<h4> <span id="price4"></span> </h4>
 													<a id="aa4" class="add-btn">添加到购物车</a>
@@ -614,15 +497,12 @@
 											<!-- .pro-text -->
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
-												<div class="pro-img" style="height:200px">
-													<img  id="5" src="" alt="2" height="200px" onclick="particulars(5)"/>
+												<div class="pro-img" style="height:250px">
+													<img  id="5" src="" alt="2" height="200px" width="180px" onclick="particulars(5)"/>
 												</div>
 												<!-- /.pro-img -->
 												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> <span id="span5"></span> </h4>
-													</a>
+													<h4> <span id="span5"></span> </h4>
 													<br>
 													<h4> <span id="price5"></span> </h4>
 													<a id="aa5" class="add-btn">添加到购物车</a>
@@ -630,125 +510,8 @@
 											</div>
 											<!-- /.pro-text -->
 										</div>
-
 									</div>
-									<div class="item">
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img2.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img3.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img4.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img5.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img6.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
 
-									</div>
 
 
 									<!-- /#owl-demo -->
@@ -779,45 +542,7 @@
 											</div>
 											<!-- /.pro-text -->
 										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img2.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
-											<!-- .pro-text -->
-											<div class="pro-text text-center">
-												<!-- .pro-img -->
-												<div class="pro-img">
-													<img src="../assets/images/new-arrivals-img3.jpg" alt="2" />
-												</div>
-												<!-- /.pro-img -->
-												<div class="pro-text-outer">
-													<span>Macbook, Laptop</span>
-													<a href="shop-detail.html">
-														<h4> Apple Macbook Retina 23’ </h4>
-													</a>
-													<p class="wk-price">$290.00 </p>
-													<a href="#" class="add-btn">添加到购物车</a>
-												</div>
-											</div>
-											<!-- /.pro-text -->
-										</div>
-										<div class="col-xs-12 col-sm-6 col-md-4">
+										 <div class="col-xs-12 col-sm-6 col-md-4">
 											<!-- .pro-text -->
 											<div class="pro-text text-center">
 												<!-- .pro-img -->
@@ -1272,109 +997,9 @@
 	</div>
 </section>
 <!-- /newsletter -->
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-4 col-md-4">
-				<!-- f-weghit -->
-				<div class="f-weghit">
-					<img src="../assets/images/logo.png" alt="logo" />
-					<p><strong>Complex</strong> is a premium Templates theme with advanced admin module. It’s extremely customizable, easy to use and fully responsive and retina ready.</p>
-					<ul>
-						<li><i class="icon-location-pin icons" aria-hidden="true"></i> <strong>Add:</strong> 1234 Heaven Stress, Beverly Hill, Melbourne, USA.</li>
-						<li><i class="icon-envelope-letter icons"></i> <strong>Email:</strong> Contact@erentheme.com</li>
-						<li><i class="icon-call-in icons"></i> <strong>Phone Number:</strong> (800) 123 456 789</li>
-					</ul>
-				</div>
-				<!-- /f-weghit -->
-			</div>
-			<div class="col-xs-12 col-sm-4 col-md-4">
-				<!-- f-weghit2 -->
-				<div class="f-weghit2">
-					<h4>INFORMATION</h4>
-					<ul>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Contact Us</a></li>
-						<li><a href="#">All Collection</a></li>
-						<li><a href="#">Privacy policy</a></li>
-						<li><a href="#">Terms & conditio</a></li>
-					</ul>
-				</div>
-				<!-- /f-weghit2 -->
-				<!-- f-weghit2 -->
-				<div class="f-weghit2">
-					<h4>CATEGORIES</h4>
-					<ul>
-						<li><a href="#">Fashion</a></li>
-						<li><a href="#">Electronics</a></li>
-						<li><a href="#">Furnitured & Decor</a></li>
-						<li><a href="#">Jewelry & Watches</a></li>
-						<li><a href="#">Health & Beauty</a></li>
-					</ul>
-				</div>
-				<!-- /f-weghit2 -->
-			</div>
-			<div class="col-xs-12 col-sm-4 col-md-4">
-				<!-- f-weghit -->
-				<div class="f-weghit">
-					<h4>On-Sale Products</h4>
-					<!-- e-product -->
-					<div class="e-product">
-						<div class="pro-img">
-							<img src="../assets/images/on-seal-img1.jpg" alt="2">
-						</div>
-						<div class="pro-text-outer">
-							<span>Macbook, Laptop</span>
-							<a href="#">
-								<h4> Apple Macbook Retina 23’ </h4>
-							</a>
-							<p class="wk-price">$290.00 </p>
-						</div>
-					</div>
-					<!-- e-product -->
-					<!-- e-product -->
-					<div class="e-product">
-						<div class="pro-img">
-							<img src="../assets/images/on-seal-img2.jpg" alt="2">
-						</div>
-						<div class="pro-text-outer">
-							<span>Macbook, Laptop</span>
-							<a href="#">
-								<h4> Apple Macbook Retina 23’ </h4>
-							</a>
-							<p class="wk-price">$290.00 </p>
-						</div>
-					</div>
-					<!-- e-product -->
-				</div>
-				<!-- /f-weghit -->
-			</div>
-			<!-- copayright -->
-			<div class="copayright">
-				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6">
-						Copyright &copy; 2017.Company name All rights reserved.
-					</div>
-					<div class="text-right col-xs-12 col-sm-6 col-md-6">
-						<img src="../assets/images/payment-img.jpg" alt="payment-img" />
-					</div>
-				</div>
-			</div>
-			<!-- /copayright -->
 
-		</div>
-	</div>
-</footer>
 <!-- sticky-socia -->
-<aside id="sticky-social">
-	<ul>
-		<li><a href="#" class="fa fa-facebook" target="_blank"><span><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</span></a></li>
-		<li><a href="#" class="fa fa-twitter" target="_blank"><span><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</span></a></li>
-		<li><a href="#" class="fa fa-rss" target="_blank"><span><i class="fa fa-rss" aria-hidden="true"></i> RSS</span></a></li>
-		<li><a href="#" class="fa fa-pinterest-p" target="_blank"><span><i class="fa fa-pinterest-p" aria-hidden="true"></i> Pinterest</span></a></li>
-		<li><a href="#" class="fa fa-share-alt" target="_blank"><span><i class="fa fa-share-alt" aria-hidden="true"></i> Flickr</span></a></li>
-	</ul>
-</aside>
+
 <!-- /sticky-socia -->
 
 <!-- /Get Our Email Letter popup -->
@@ -1392,18 +1017,59 @@
 <script src="../assets/owl-carousel/owl.carousel.js"></script>
 <!--  Custom Theme JavaScript  -->
 <script src="../assets/js/custom.js"></script>
+
+
+<div id=win style="display:none; POSITION:fixed; left:50%; top:50%; width:600px; height:400px; margin-left:-300px; margin-top:-230px;  z-index:5; border:1px solid #888; background-color:#edf; text-align:center">
+	<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用户登录</font></font></h1><br/>
+	<form method="post" id="formId">
+		<input type="text" name="username" placeholder="用户名" /><br/><br/>
+		<input type="password" name="password" placeholder="密码" /><br/><br/>
+		<button type="button" onclick="login()" class="submit_button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">登录</font></font></button>
+		<div >
+			&emsp;&emsp;&emsp;&emsp;&emsp;
+			<a href="javascript:updatePassword()" class="dropdown">忘记密码</a>
+			&emsp;&emsp;
+			<a href="javascript:zhuCe()" class="dropdown">立即注册</a>
+		</div>
+	</form>
+	<br>
+	<center><a href="javascript:closeLogin();">我不登录了</a></center>
+</div>
+<input type="hidden" id="hiddenId">
 </body>
 <script>
     //去个人中心
     function tousercenter(){
-        location.href = "../clp/showClpYhq3";
+        window.open("../clp/showClpYhq3");
     }
 
 	$(function(){
+        getsession();
 		loadHuaWei();
 		queryBranList();
 	})
-
+	function getsession() {
+        $.ajax({
+            type : "get",
+            url : "../zhc/getLoginName",
+            dataType : "text",
+            success : function(result) {
+                $("#hiddenId").val(result);
+                iflogin();
+            },
+            error : function() {
+                alert("請求失敗");
+            }
+        });
+    }
+	function iflogin() {
+		var sessionname=$("#hiddenId").val();
+		if(sessionname!=null && sessionname!=""){
+            document.getElementById("nologin").style.display="none";
+            document.getElementById("login").style.display="";
+            $("#sessionvalue").html(sessionname);
+		}
+    }
 	var ii;
 	//查询所有商品
 	function loadHuaWei() {
@@ -1431,39 +1097,49 @@
 			}
 		})
 	}
-	
+
 	//根据商品名称跳转页面
 	function toList() {
 		window.open("../toshow/toList")
 	}
 
+	function togouwuche() {
+        window.open("../toshow/toShoppingTrolley");
+    }
 	function particulars(val) {
-		if(val == 0){
-			var ids = $("#aa0").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 1){
-			var ids = $("#aa1").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 2){
-			var ids = $("#aa2").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 3){
-			var ids = $("#aa3").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 4){
-			var ids = $("#aa4").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
-		if(val == 5){
-			var ids = $("#aa5").val();
-			location.href = "../toshow/toParticulars?ids="+ids;
-		}
+		var ids = $("#aa"+val+"").val();
+		window.open("../toshow/toParticulars?ids="+ids)
 	}
+    function openLogin(){
+        document.getElementById("win").style.display="";
+    }
+    function closeLogin(){
+        document.getElementById("win").style.display="none";
+    }
 
+    function zhuCe() {
+        window.open("../toshow/toZhuCe");
+    }
+    function login() {
+        $.ajax({
+            url:"../xxf/frontLogin",
+            data:$("#formId").serialize(),
+            success:function(data){
+                if(data=="1"){
+                    alert("用户名错误")
+                }
+                if(data=="2"){
+                    alert("密码错误")
+                }
+                if(data=="3"){
+                    alert("该IP已被冻结，请五分钟后再试")
+                }
+                if(data=="0"){
+                    location.href="../toshow/index";
+                }
+            }
+        })
+    }
 
 	//查询手机品牌
 	function queryBranList(){
@@ -1489,6 +1165,16 @@
 		window.open("../toshow/toListShow?ids="+ids)
 	}
 
+    function updatePassword() {
+        window.open("../toshow/toUpdatePassword");
+    }
+    function zhuxiaodenglu() {
+        location.href="../toshow/zhuxiaodenglu";
+    }
+    //去个人中心
+    function tousercenter(){
+        window.open("../clp/showClpYhq3");
+    }
 </script>
 
 </html>

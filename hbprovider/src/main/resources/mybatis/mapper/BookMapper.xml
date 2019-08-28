@@ -81,4 +81,7 @@
         )
     </delete>
 
+    <insert id="addevaluation" parameterType="map">
+        insert into comments(text,pid,sid,uid) values (#{text},0,#{sid},#{uid})
+    </insert>
 </mapper>

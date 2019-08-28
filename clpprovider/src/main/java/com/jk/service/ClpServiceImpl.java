@@ -76,8 +76,8 @@ public class ClpServiceImpl implements ClpService{
     }
 
     @Override
-    public List<Yhq> queryClpYhq() {
-        return yhqMapper.queryClpYhq();
+    public List<Yhq> queryClpYhq(Integer id) {
+        return yhqMapper.queryClpYhq(id);
     }
 
     @Override
@@ -90,6 +90,10 @@ public class ClpServiceImpl implements ClpService{
         yhqMapper.updateYhqUse(id,mid);
     }
 
+    @Override
+    public List<Yhq> queryClpYhqs() {
+        return yhqMapper.queryClpYhqs();
+    }
 
 
 }

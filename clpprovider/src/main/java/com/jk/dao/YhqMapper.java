@@ -29,10 +29,11 @@ public interface YhqMapper {
 
     void deleteYhqByName(@Param("names")String names);
 
-    List<Yhq> queryClpYhq();
+    List<Yhq> queryClpYhq(@Param("id")Integer id);
 
     List<Yhq> queryClpYhq2(@Param("mid")Integer mid);
 
     void updateYhqUse(@Param("id")Integer id,@Param("mid")Integer mid);
 
+    List<Yhq> queryClpYhqs();
 }

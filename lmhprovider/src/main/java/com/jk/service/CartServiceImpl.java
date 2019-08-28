@@ -39,7 +39,6 @@ public class CartServiceImpl implements  CartService {
 
     @Override
     public List<CommodityModel> findCartListFromRedis(String username) {
-        System.out.println("从redis中提取购物车数据....."+username);
         List<CommodityModel> cartList = (List<CommodityModel>)redisTemplate.boundHashOps("cartList").get(username);
         if (cartList==null){
             cartList=new ArrayList<>();
@@ -49,7 +48,6 @@ public class CartServiceImpl implements  CartService {
 
     @Override
     public void saveCartListToRedis(String username, List<CommodityModel> cartList) {
-        System.out.println("向redis存入购物车数据....."+username);
         redisTemplate.boundHashOps("cartList").put(username,cartList);
     }
 
