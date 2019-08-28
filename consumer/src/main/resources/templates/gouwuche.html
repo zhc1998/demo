@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
@@ -528,10 +529,10 @@
                 var totalValue={totalNum:0, totalMoney:0.00 };//合计实体
                 for(var i=0;i < data.length;i++){
                     var cart=data[i];
-                    //alert(cart.id);
-                    var orderItem=cart;//购物车明细
-                    totalValue.totalNum+=orderItem.num;
-                    totalValue.totalMoney+= orderItem.sumPrice;
+                        //alert(cart.id);
+                        var orderItem=cart;//购物车明细
+                        totalValue.totalNum+=orderItem.num;
+                        totalValue.totalMoney+= orderItem.sumPrice;
 
                 }
                 $("#effectiveRewardPoint").html(totalValue.totalNum+"件");
@@ -741,7 +742,7 @@
                 {field:'artNo',title:'货号'},
                 {field:'commodityPrice',title:'商品价格'},
                 {field:'pictureUrl',title:'图片',formatter:function(value,orw,index){
-                        return "<img src='"+value+"' width='50'>";
+                    return "<img src='"+value+"' width='50'>";
                     }},
                 {field:'cz',title:'操作',formatter:function (value,row,index) {
                         return "<button type='button'  class='btn btn-success' onclick='delShop("+row.id+")'>删除</button>";
@@ -749,7 +750,7 @@
                 {field:'commodityPrices',title:'总价格',formatter:function(value,row,index){
                         price+=value;
                         jiaGe(price);
-                        return value;
+                       return value;
                     }},
             ]
         });
