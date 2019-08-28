@@ -1,8 +1,4 @@
 package com.jk.model;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,8 +17,8 @@ public class Seckill implements Serializable {
     private BigDecimal price; //商品原价格
     private BigDecimal costprice; //商品秒杀价格
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createtime; //创建时间
 
     private String starttime; //秒杀开始时间
