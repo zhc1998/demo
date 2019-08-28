@@ -19,10 +19,11 @@ public interface ClpService {
 
     void deleteYhqByName(String names);
 
-    List<Yhq> queryClpYhq();
+    List<Yhq> queryClpYhq(Integer id);
 
     List<Yhq> queryClpYhq2(Integer mid);
 
     void updateYhqUse(Integer id,Integer mid);
 
+    List<Yhq> queryClpYhqs();
 }
