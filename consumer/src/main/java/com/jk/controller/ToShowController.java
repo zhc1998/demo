@@ -21,8 +21,19 @@ public class ToShowController {
     }
     //跳转前台修改密码手机验证
     @RequestMapping("toYz")
-    public String toYz(){
+    public String toYz(Model mdoel,String username){
+        mdoel.addAttribute("username",username);
         return "yz";
+    }
+    //跳转秒杀新增
+    @RequestMapping("addSeckill")
+    public String addSeckill(){
+        return "addSeckill";
+    }
+    //跳转秒杀查询
+    @RequestMapping("querySeckill")
+    public String querySeckill(){
+        return "querySeckill";
     }
 
 
@@ -227,6 +238,12 @@ public class ToShowController {
     @RequestMapping("toShoppingTrolley")
     public String toShoppingTrolley(){
         return "gouwuche";
+    }
+
+    //根据商品名称跳转页面
+    @RequestMapping("toList")
+    public String toList(){
+        return "hbqt/list";
     }
 
 

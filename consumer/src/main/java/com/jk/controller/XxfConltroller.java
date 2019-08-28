@@ -5,22 +5,24 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.model.Highcharts;
 import com.jk.model.Members;
+import com.jk.model.Seckill;
 import com.jk.model.User;
+import com.jk.model.commodity.CommodityModel;
 import com.jk.service.XxfService;
-import com.jk.util.CheckImgUtil;
-import com.jk.util.CheckSumBuilder;
-import com.jk.util.FileUtil;
-import com.jk.util.HttpClientUtil;
+import com.jk.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import javax.servlet.http.HttpSession;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -315,4 +317,37 @@ public class XxfConltroller {
 
 
 
+    @RequestMapping("querySeckill")
+    @ResponseBody
+    public ResultPage querySeckill(@RequestBody ResultPage result){
+
+        ResultPage resultPage = xxfService.querySeckill(result);
+        return resultPage;
+    }
+
+
+    @RequestMapping("deleteSeckill")
+    @ResponseBody
+    public void deleteSeckill(Integer ids){
+            xxfService.deleteSeckill(ids);
+    }
+
+    @RequestMapping("updateSeckill")
+    public String updateSeckill(Integer id, Model model){
+        Seckill seckill = xxfService.querySeckillById(id);
+        model.addAttribute("com",seckill);
+        return "updateSeckill";
+    }
+
+
+    @RequestMapping("updateSeckill2")
+    @ResponseBody
+    public void updateSeckill2(Seckill seckill){
+        seckill.setCreatetime(new Date());
+        if(seckill.getSeckillid()==null){
+            xxfService.addSeckill2(seckill);
+        }else{
+            xxfService.updateSeckill2(seckill);
+        }
+    }
 }

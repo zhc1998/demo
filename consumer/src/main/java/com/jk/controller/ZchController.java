@@ -4,6 +4,7 @@ package com.jk.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jk.model.commodity.*;
 import com.jk.service.ZcService;
+import com.jk.util.ParameUtil;
 import com.jk.util.ResultPage;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -295,7 +296,9 @@ public class ZchController {
     @RequestMapping("queryItemPrice")
     @ResponseBody
     public CommodityModel queryItemPrice(Integer ids){
+        System.out.println(ids+"========");
         CommodityModel commodityModel = zcService.queryItemPrice(ids);
+        System.out.println(commodityModel.getCommodityPrice());
         return commodityModel;
     }
 
@@ -383,5 +386,7 @@ public class ZchController {
         //返回map
         return mSolr;
     }
+
+
 
 }

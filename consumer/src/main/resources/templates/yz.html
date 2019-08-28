@@ -1,35 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入fileinput的css -->
+    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
+    <!-- 引入my97 -->
+    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
+    <!-- 引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
+    <!--  引入fileinput的js -->
+    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
+
+
+    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
+    <style type="text/css">
+        body{
+            background-image: url("../js/img/th.jpg");
+            background-size:100% 100%;
+            background-attachment:fixed;
+        }
+        #login_box{
+            padding: 35px;
+            border-radius:15px;
+            background: #56666B;
+            color: #fff;
+        }
+        #login_title{
+            color: #000000;
+        }
+    </style>
 
 </head>
 <body>
+<div >
 <form role="form" id="formId2">
-    <div class="form-group">
-        <label >密保手机</label>
-        <input type="text" class="form-control"  id="phone" name="phone" placeholder="密保手机" onblur="yzPhone()"/>
-        <span id="msg3"></span>
-        <br>
-        <a href="javascript:huo()" class="easyui-linkbutton">获取验证码</a>   <span id="date"></span>
-    </div>
-    <div class="form-group">
-        <label >验证码</label>
-        <input  name="code" type="text" class="easyui-textbox"></input>
-        <span id="msg4"></span>
-    </div>
-    <div class="form-group">
-        <label >新密码</label>
-        <input  name="newpassword" type="text"  class="easyui-textbox" onblur="yzPassword()"></input>
-        <span id="msg6"></span>
-    </div>
-    <div class="form-group">
-        <label >再输入一遍新密码</label>
-        <input  name="newpassword2" type="text" class="easyui-textbox" onblur="yzNewpassword()"></input>
-        <span id="msg2"></span>
-    </div>
+    <input type="hidden" id="username"  th:value="${username}"/>
+    <table style="margin: 200px auto;solid:#F00" border=3 >
+        <tr>
+            <td>密保手机</td>
+            <td width="500px"><input type="text"   id="phone" name="phone" placeholder="密保手机" onblur="yzPhone()"/>
+                <span id="msg3" ></span>
+                <br>
+                <a href="javascript:huo()" class="easyui-linkbutton">获取验证码</a>   <span id="date"></span>
+            </td>
 
+        </tr>
+
+        <tr>
+            <td>验证码</td>
+            <td><input  name="code" type="text" class="easyui-textbox"></input>
+                <span id="msg4"></span>
+            </td>
+        </tr>
+        <td>新密码</td>
+        <td><input  name="newpassword" type="text"  class="easyui-textbox" onblur="yzPassword()"></input>
+            <span id="msg6"></span>
+        </td>
+        <tr>
+
+        </tr>
+
+        <tr>
+            <td>再输入一遍新密码</td>
+            <td><input  name="newpassword2" type="text" class="easyui-textbox" onblur="yzNewpassword()"></input>
+                <span id="msg2"></span>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" class="btn btn-success" onclick="yz()">修改</button></td>
+
+        </tr>
+    </table>
 </form>
+</div>
 </body>
+<script>
+    function yzPassword(){
+        var newpassword=$("input[name='newpassword']").val();
+        var reg=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        if(reg.test(newpassword)){
+            $("#msg6").html("")
+            return true;
+        }
+        $("#msg6").html("密码至少包含 数字和英文，长度6-20")
+        return false;
+    }
+    function yzPhone() {
+        var phoneNumReg = /^1[3|4|5|7|8]\d{9}$/
+        var phone=$("#phone").val()
+        if(!phoneNumReg.test(phone)) {
+            $("#msg3").html("手机号码有误，请重填，手机号码11位数字，目前支持前两位13、14、15、16、17、18手机号码")
+            return false;
+        }
+        $("#msg3").html("")
+        return true;
+    }
+    function yzNewpassword(){
+        var newpassword=$("input[name='newpassword']").val();
+        var newpassword2=$("input[name='newpassword2']").val();
+        if(newpassword==newpassword2){
+            $("#msg2").html("")
+            return true;
+        }
+        $("#msg2").html("请与密码保持一致")
+        return false;
+    }
+    function huo(){
+        num=$("input[name='phone']").val();
+        username=$("#username").val();
+        $.ajax({
+            url:"../xxf/huoCode?username="+username,
+            data:$("#formId2").serialize(),
+            type:"post",
+            success:function(data){
+                if(data=="0"){
+                    setInterval('countDown()',1000);
+                    $("#msg4").html("短信已发送,请注意查看")
+                }if(data=="1"){
+                    $("#msg4").html("请输入正确验证码")
+                }
+            }
+        })
+    }
+    function yz() {
+        if(yzPassword()&yzPhone()&yzNewpassword()){
+            $.ajax({
+                url: '../xxf/queryCodeByPhone',
+                type: 'post',
+                cache: false,
+                data: $("#formId2").serialize(),
+                success: function (data) {
+                    if (data == "2") {
+                        alert("验证码错误")
+                    }
+                    if (data == "0") {
+                        alert("密码修改成功")
+                        location.href = "../toshow/tofrontLogin"
+                    }
+                }
+            });
+        }
+
+    }
+    var time=60;
+    function countDown(){
+        if(time>0){
+            $("#date").html(time--)
+        }else{
+            $("#date").css('display','none');
+        }
+    }
+
+    function xia(){
+        $.ajax({
+            url:"../xxf/queryMembers",
+            data:$("#formId").serialize(),
+            success:function(data){
+                if(data=="1"){alert("手机验证码错误")}
+            }
+        })
+    }
+</script>
 </html>

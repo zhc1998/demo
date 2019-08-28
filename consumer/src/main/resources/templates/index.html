@@ -8,9 +8,28 @@
     <meta name="description" content="首页" />
     <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
 </head>
 <body>
-<input type="hidden" id="ids" th:value="${ids}">
+<input type="text" id="ids" th:value="${ids}">
 <div class="showall">
     <!--left -->
     <div class="showbot">
@@ -35,7 +54,7 @@
             <h3><span id = "commodityName"></span></h3>
         </div>
         <div class="txt">
-            <span class="nowprice">￥<span id="commodityPrice"></span></span>
+            <span class="nowprice">￥<a href="">599.00</a></span>
             <div class="cumulative">
                 <span class="number ty1">累计售出<br /><em id="add_sell_num_363"><span id="sellquantity"></span></em></span>
                 <span class="number tyu">累计评价<br /><em id="add_sell_num_363">25</em></span>
@@ -61,33 +80,13 @@
                         <span id="m2"></span>:<input type="radio" id="me2" name="ab" value="" onclick="internal(this.value)">
                         <span id="m3"></span>:<input type="radio" id="me3" name="ab" value="" onclick="internal(this.value)">
         </span>
-        <script>
-            $(document).ready(function(){
-                var t = $("#text_box");
-                $('#min').attr('disabled',true);
-                $("#add").click(function(){
-                    t.val(parseInt(t.val())+1)
-                    if (parseInt(t.val())!=1){
-                        $('#min').attr('disabled',false);
-                    }
-
-                })
-                $("#min").click(function(){
-                    t.val(parseInt(t.val())-1);
-                    if (parseInt(t.val())==1){
-                        $('#min').attr('disabled',true);
-                    }
-
-                })
-            });
-        </script>
         <div class="gcIpt">
             <span class="guT">数量</span>
-            <input id="min" name="" type="button" value="-" onclick="plus()"/>
-            <input id="text_box" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
-            <input id="add" name="" type="button" value="+" onclick="queryOneDetails()"/>
+            <input id="min"  type="button" value="-" onclick="plus()"/>
+            <input id="text_box"  name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="add"  type="button" value="+" onclick="jiaYi()"/>
 
-            <span class="Hgt" id="inventory"></span>
+            库存：<span class="Hgt" id="inventory"></span>
             <input type="hidden" id="inventory2">
         </div>
         <div class="nobdr-btns">
@@ -255,13 +254,7 @@
                     <a href="#">规格参数</a>
                 </li>
                 <li>
-                    <a href="#">商品介绍</a>
-                </li>
-                <li>
                     <a href="#">商品评价</a>
-                </li>
-                <li>
-                    <a href="#">售后保障</a>
                 </li>
             </ul>
             <ul class="act_title_right">
@@ -290,34 +283,17 @@
                     <li><img src="../images/ko-1.jpg"/></li>
                 </ul>
             </div>
-            <!--商品规格-->
-            <div id="bit" class="bit">
-                <ul style="display:none;">
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-                    <li><img src="../images/ko.jpg"/></li>
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-
-                </ul>
-            </div>
 
             <!--商品评价-->
 
             <div id="ui-c" class="ui-c">
                 <ul style="display:none;">
-
-                </ul>
-            </div>
-            <!--售后保障-->
-            <div id="uic" class="uic">
-                <ul style="display:none;">
-                    <p>商品名称：仙人指路道镜前后双录智能后视镜导航仪行车记录仪后视预警一体机</p>
-                    <p>商品编号：ECS001983</p>
-                    <p>品牌:威力马哈国产</p>
-                    <p>上架时间：2016-05-24</p>
-                    <span><img src="../images/ko-1.jpg"/></span>
-                    <span><img src="../images/ko-2.jpg"/></span>
+                    <div class="plmain">
+                        <div class="plm clearfix">商品评价</div>
+                        <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
+                        <a class="dp_wrap_pname" href="javascript:evaluation()" >评论</a>
+                        <div id="treeDiv"></div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -356,6 +332,8 @@
     var pr;
     var typeId;
     var imgSrc;
+    var inventoryCount;
+    var totalPrices;
     //查询一条详情信息
     function queryOneDetails(val) {
         var ids = $("#ids").val();
@@ -368,6 +346,7 @@
                 pr = data.commodityPrice;
                 typeId = data.typeId;
                 imgSrc = data.pictureUrl;
+                inventoryCount = data.inventory;
                 //商品名称
                 $("#commodityName").html("商品名称:"+data.commodityName);
                 $("#spName").html(data.commodityName);
@@ -389,8 +368,7 @@
                 //数量加一
                 toryNumber = $("[name='tory']").val();
                 var nu = data.inventory-toryNumber;
-                $("#inventory").html("库存"+nu);
-                $("#inventory2").val(nu);
+                $("#inventory").html(nu);
 
                 //循环获取选中的内存价格
                 var memoryPrice = 0;
@@ -403,7 +381,7 @@
                 }
                 var memo = parseInt(memoryPrice);
                 //内存价格加总价 然后乘于个数 计算总价格
-                var totalPrices = memo+data.commodityPrice;
+                totalPrices = memo+data.commodityPrice;
                 $("#commodityPrice").html(toryNumber*totalPrices);
 
                 //调用查询配件 根据商品类型ID
@@ -415,21 +393,75 @@
             }
         })
     }
+
+    function jiaYi(){
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi+1);
+
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
+
+
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount-1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
+
+
+    }
     
     //数量减一
     function plus() {
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi-1);
 
-        var inventory = $("#inventory2").val();
-        var nu = parseInt(inventory);
-        nu++;
-        $("#inventory").html("库存"+nu);
-        $("#inventory2").val(nu);
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
 
-        //计算价格
-        var pri = $("#commodityPrice").html();//获取当前价格
-        var price = parseInt(pri);
-        $("#commodityPrice").html(price-pr);
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount+1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
     }
+
 
     //加载颜色
     function queryColor(){
@@ -538,7 +570,7 @@ function buy(){
 
     }
 
-    //可选择内存
+    //内存价格加载
     function lickMemory() {
 
         $.ajax({
@@ -553,7 +585,6 @@ function buy(){
                         $("#me"+i).val(data[i].price);
                     }
                 }
-                //alert($("#me0").val());
             },
             error:function(){
                 alert("查询内存失败");
@@ -562,33 +593,32 @@ function buy(){
 
     }
 
-    //选择内存
+    //选择内存计算总价
     function internal(val) {
-        var ids = $("#ids").val();
-        $.ajax({
-            url:"../zch/queryItemPrice",
-            type:"post",
-            data:{ids:ids},
-            type:"json",
-            success:function (data) {
-                //alert(data.commodityPrice);
-                //每选择一项内存从新给总价格赋值
-                $("#commodityPrice").html(data.commodityPrice);
-
-                //从新获取当前商品总价格
-                var pri = $("#commodityPrice").html();
-                var price = parseInt(pri);
-
-                //获取每个内存价格
-                var vall = parseInt(val);
-                //计算价格
-                $("#commodityPrice").html(price+vall);
-
-            },
-            error:function(){
-                alert("查询价格失败");
+        //循环获取内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
             }
-        })
+        }
+
+        //当前内存价格
+        var price = parseInt(memoryPrice);
+
+        //获取当前总价格
+        //var pri = $("#commodityPrice").html();
+        var prices = parseInt(pr);
+
+        //计算内存加总价
+        var aa = prices+price;
+        //获取当前商品数量
+        var bb = $("[name='tory']").val();
+        var cc = parseInt(bb);
+        $("#commodityPrice").html(aa*cc);
+
 
     }
 
@@ -670,6 +700,44 @@ function buy(){
 
 
 
+    }
+
+    //评论
+    evaluation = function(){
+        var text =$("#TextArea1").val();
+        var ids =$("#ids").val();
+        alert(text)
+        alert(ids)
+      $.ajax({
+           url:"../hb/addevaluation",
+           data:{text:text,ids:ids},
+           success:function(data){
+               window.location.reload()
+           }
+       })
+    }
+
+
+      $(function(){
+        showTree();
+    })
+    function showTree(){
+        var id = $("#ids").val();
+        $.ajax({
+            url:'../hb/comments?id='+id,
+            type : "post",
+            success:function(data){
+                $("#treeDiv").treeview({
+                    //data属性 树节点信息 json数组
+                    data: data,
+                    //tree默认展开的节点级别默认为2
+                    levels: 0,
+
+                })
+            },error : function (){
+                alert("查询失败");
+            }
+        })
     }
 </script>
 </html>

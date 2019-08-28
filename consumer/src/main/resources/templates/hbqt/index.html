@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
-	<!-- Latest Bootstrap min CSS -->
+<title>BUG商城</title>
+
+<!-- Latest Bootstrap min CSS -->
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css">
 <!-- Dropdownhover CSS -->
 <link rel="stylesheet" href="../assets/css/bootstrap-dropdownhover.min.css" type="text/css">
@@ -31,12 +32,9 @@
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-
-
 </head>
 
 <body>
-
 <!--  Preloader  -->
 <div id="preloader">
 	<div id="loading">
@@ -112,7 +110,7 @@
 				</form>
 				<!-- Search box End -->
 			</div>
-			
+
 			<div class="main-menu">
 				<!--  nav  -->
 				<nav class="navbar navbar-inverse navbar-default">
@@ -141,7 +139,7 @@
 									<li class="dropdown">
 										<a href="#"><img src="../assets/images/menu-icon2.png" alt="menu-icon2" />手机 & 品牌<i class="fa fa-angle-right" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu right">
-											<li><a onclick="huaWei()">华为</a></li>
+											<li><a onclick="toList()">华为</a></li>
 											<li><a href="list.html">联想</a></li>
 											<li><a href="grid.html">荣耀</a></li>
 											<li><a href="list.html">vivo</a></li>
@@ -1070,7 +1068,6 @@
             }
         });
     }
-
 	function iflogin() {
 		var sessionname=$("#hiddenId").val();
 		if(sessionname!=null && sessionname!=""){
@@ -1080,7 +1077,7 @@
 		}
     }
 	var ii;
-	//查询华为
+	//查询所有商品
 	function loadHuaWei() {
 		$.ajax({
 			url:"../zch/loadHuaWei",
@@ -1105,6 +1102,11 @@
 				alert("查询失败");
 			}
 		})
+	}
+
+	//根据商品名称跳转页面
+	function toList() {
+		window.open("../toshow/toList")
 	}
 
 	function togouwuche() {
