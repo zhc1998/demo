@@ -161,7 +161,7 @@ public class Orderone implements Serializable {
         this.paydate = paydate;
     }
 
-    public Integer getUserid() {
+    public Integer getUserid(Integer id) {
         return userid;
     }
 

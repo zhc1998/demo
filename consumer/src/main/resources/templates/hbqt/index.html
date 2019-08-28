@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BUG商城</title>
-
+	<script src="../assets/js/jquery.js"></script>
+<script>$("#seckill").load('../seckill')</script>
 <!-- Latest Bootstrap min CSS -->
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css">
 <!-- Dropdownhover CSS -->
@@ -73,6 +74,7 @@
 						<div class="top-header-right">
 							<ul>
 								<li><i class="icon-user icons" aria-hidden="true"></i><a href="../clp/showClpYhq3" target="_blank" style="color: aliceblue">个人中心</a></li>
+								<li><a href="../seckill" target="_blank" style="color: aliceblue">抢购中心</a></li>
 								<li>
 									<div class="dropdown">
 										<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
@@ -400,6 +402,7 @@
 
 
 			<div class="col-sm-8">
+
 				<!-- new-arrivals -->
 				<div class="new-arrivals">
 					<div class="tab-content">
@@ -724,7 +727,7 @@
 								</div>
 							</div>
 						</div>
-						<div id="menu2" class="tab-pane fade">								
+						<div id="menu2" class="tab-pane fade">
 							<div class="owl-demo-outer">
 								<!-- #owl-demo -->
 								<div id="owl-demo6" class="deals-wk2">
@@ -1006,7 +1009,7 @@
 <p id="back-top">
 	<a href="#top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
 </p>
-<script src="../assets/js/jquery.js"></script>
+
 <!-- Bootstrap Core JavaScript -->
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/bootstrap-dropdownhover.min.js"></script>
@@ -1175,22 +1178,11 @@
     function tousercenter(){
         window.open("../clp/showClpYhq3");
     }
-    
+
 	//条件查询
 	function search() {
 		var pName = $("#pName").val();
-		$.ajax({
-			url:"../zch/querysolr",
-			type:"post",
-			data:{pName:pName},
-			dataType:"json",
-			success:function(data){
-                alert(data);
-			},
-			error:function(){
-				alert("条件查询失败");
-			}
-		})
+		window.open("../toshow/toshowlist?pName="+pName)
 	}
 </script>
 

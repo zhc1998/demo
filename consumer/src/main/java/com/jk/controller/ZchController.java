@@ -305,7 +305,8 @@ public class ZchController {
 
     //条件查询
     @RequestMapping("querysolr")
-    public String querysolr(String pName, Integer page, Model model){
+    @ResponseBody
+    public List<CommodityModel> querysolr(String pName, Integer page, Model model){
         //查询的集合
         List<CommodityModel> comlist=new ArrayList<>();
         //查询参数的对象SolrQuery
@@ -380,8 +381,8 @@ public class ZchController {
             e.printStackTrace();
         }
         //返回map
-        model.addAttribute("mSolr",comlist);
-        return "hbqt/showlist";
+        //model.addAttribute("mSolr",comlist);
+        return comlist;
     }
 
 

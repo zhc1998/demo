@@ -1,10 +1,13 @@
 package com.jk.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import com.jk.dao.XxfDao;
 import com.jk.dto.Exposer;
 import com.jk.dto.SeckillExecution;
+import com.jk.model.Members;
+import com.jk.model.Orderone;
 import com.jk.model.Seckill;
 import com.jk.model.SeckillOrder;
 import com.jk.enums.SeckillStatEnum;
@@ -12,15 +15,20 @@ import com.jk.exception.RepeatKillException;
 import com.jk.exception.SeckillCloseException;
 import com.jk.exception.SeckillException;
 import com.jk.service.SeckillService;
+import com.jk.service.ZhfService;
+import com.jk.utillllll.Ordernumber;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 import java.text.ParseException;
@@ -44,12 +52,12 @@ public class SeckillServiceImpl implements SeckillService {
     //设置秒杀redis缓存的key
     private final String key = "seckill";
 
-
     @Autowired
     private XxfDao xxfDao;
-
-
-
+    @Reference
+    private ZhfService zhfService;
+    @Autowired
+    private HttpServletRequest request;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -129,6 +137,8 @@ public class SeckillServiceImpl implements SeckillService {
     /*@RabbitListener(queues = "seckill")//添加RabbitListener注解 监听*/
     public synchronized SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5)
             throws SeckillException, RepeatKillException, SeckillCloseException {
+        Members members = (Members) request.getSession().getAttribute("members");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
             throw new SeckillException("seckill data rewrite");
         }
@@ -156,6 +166,18 @@ public class SeckillServiceImpl implements SeckillService {
                     Seckill seckill = (Seckill) redisTemplate.boundHashOps(key).get(seckillId);
                     seckill.setStockcount(seckill.getSeckillid() - 1);
                     redisTemplate.boundHashOps(key).put(seckillId, seckill);
+                    Orderone orderone = new Orderone();
+                    orderone.setOrdernumber(Ordernumber.getBillCode());
+                    orderone.setConsignee(members.getUsername());
+                    orderone.setTel(members.getPhone());
+                    orderone.setAmountpayable(Double.parseDouble(money.toString()));
+                    orderone.setState(1);
+                    orderone.setBuyer(members.getUsername());
+                    orderone.setOrdertime(format.format(new Date()));
+                    orderone.setAmount(1);
+                    orderone.setPaydate(money.toString());
+                    orderone.getUserid(members.getId());
+                    zhfService.addorder(orderone);
 
                     return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, seckillOrder);
                 }

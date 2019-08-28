@@ -226,7 +226,9 @@
                         type:"post",
                         dataType:"json",
                         success:function(data){
-                            location.href="../toshow/toShoppingTrolley"
+                            lo
+
+                            cation.href="../toshow/toShoppingTrolley"
                         },
                         error:function(){
                             alert("清除失败");
@@ -467,13 +469,10 @@
     <div class="row">
         <div class="span12">
             <div class="bottom">
-						<span class="total">
-								<em>登录后确认是否享有优惠</em>
-							赠送积分: <em id="effectiveRewardPoint">23886</em>
-							商品金额: ￥:<span id="spPrice"></span>元
-						</span>
+
+                <input type="button" name="yhq" class="btn btn-Warning btn-lg" onclick="useYhq()"></input>
                 <span>
-							<a  id="clear" class="clear">清空</a>
+                    总价格<a  id="spPrice"></a>
 							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
 						</span>
             </div>
@@ -481,6 +480,80 @@
     </div>
 </div>
 <script>
+
+
+                $(function(){
+                    $.ajax({
+                    url:"../clp/showClpYhq4",
+                    type:"post",
+                    success:function(data){
+                        for (var i = 0; i < data.length; i++) {
+
+                            if(data[i].yhqmenkan==1){
+                                a="不限制";
+                            }
+                            if(data[i].yhqmenkan==2){
+                                a="满100元";
+                            }
+                            if(data[i].yhqmenkan==3){
+                                a="满200元";
+                            }
+                            if(data[i].yhqmenkan==4){
+                                a="满500元";
+                            }
+                            if(data[i].yhqmenkan==5){
+                                a="满1000元";
+                            }
+                            $("[name='yhq']").val("使用"+a+"减"+data[i].yhqprice);
+                        }
+
+                    },
+                })
+                })
+
+    function useYhq(){
+                    var b=0;
+                    var d=0;
+        $.ajax({
+            url:"../clp/showClpYhq4",
+            type:"post",
+            success:function(data){
+                for (var i = 0; i < data.length; i++) {
+                    b= data[i].yhqprice;
+                    if(data[i].yhqmenkan==1){
+                        d=50;
+                    }
+                    if(data[i].yhqmenkan==2){
+                        d=100;
+                    }
+                    if(data[i].yhqmenkan==3){
+                        d=200;
+                    }
+                    if(data[i].yhqmenkan==4){
+                        d=500;
+                    }
+                    if(data[i].yhqmenkan==5){
+                        d=1000;
+                    }
+                }
+
+                var c=$("#spPrice").val();
+                if(c>=d){
+                    c=c-b;
+                    $("#spPrice").html("<font color='red'>"+c+"</font>");
+                }else{
+                    alert("不满"+d+"元");
+                    return ;
+                }
+
+            },
+        })
+    }
+
+
+
+
+
 
     function deletePro(proid,num) {
         $.ajax({
@@ -758,6 +831,7 @@
     //计算商品总价
     function jiaGe(prices){
         $("#spPrice").html("<font color='red'>"+prices+"</font>");
+        $("#spPrice").val(prices);
     }
 
 
