@@ -240,6 +240,11 @@ public class ToShowController {
         return "gouwuche";
     }
 
+    @RequestMapping("comments2")
+    public String comments2(){
+        return "comments2";
+    }
+
     //根据商品名称跳转页面
     @RequestMapping("toList")
     public String toList(){

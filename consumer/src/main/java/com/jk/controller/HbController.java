@@ -161,4 +161,18 @@ public class HbController {
         Members members = (Members) request.getSession().getAttribute("members");
         hbService.addevaluation(text,ids,members.getUsername());
     }
+
+    @RequestMapping("qurtycom")
+    @ResponseBody
+    public  List<Comments> qurtycom(){
+        List<Comments> com =hbService.qurtycom();
+        return com;
+    }
+
+    @RequestMapping("reply")
+    @ResponseBody
+    public  List<Comments> reply(Integer obj){
+        List<Comments> com =hbService.reply(obj);
+        return com;
+    }
     }
