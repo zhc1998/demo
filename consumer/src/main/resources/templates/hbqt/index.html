@@ -1181,18 +1181,7 @@
 	//条件查询
 	function search() {
 		var pName = $("#pName").val();
-		$.ajax({
-			url:"../zch/querysolr",
-			type:"post",
-			data:{pName:pName},
-			dataType:"json",
-			success:function(data){
-                alert(data);
-			},
-			error:function(){
-				alert("条件查询失败");
-			}
-		})
+		window.open("../toshow/toshowlist?pName="+pName)
 	}
 </script>
 

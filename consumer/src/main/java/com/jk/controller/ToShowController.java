@@ -262,4 +262,9 @@ public class ToShowController {
         model.addAttribute("branId",ids);
         return "hbqt/list";
     }
+    @RequestMapping("toshowlist")
+    public String toshowlist(String pName,Model model){
+        model.addAttribute("pName",pName);
+        return "hbqt/showlist";
+    }
 }
