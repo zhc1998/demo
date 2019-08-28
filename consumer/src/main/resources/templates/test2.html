@@ -1976,23 +1976,11 @@
            var totalmoney=$("#totalmoney").html();
             var amout=$("#amout").html();
            var amountpayable=$("#amountpayable").html();
-           // alert(amountpayable);
-            $.ajax({
-                type:"post",
-                url:"../zhf/addorder",
-                data:{
-                    artno:artno,
-                    address:address,
-                    consignee:consignee,
-                    commodityName:commodityName,
-                    totalmoney:totalmoney,
-                    amout:amout,
-                    amountpayable:amountpayable
-                },
-                success:function () {
+           //alert(totalmoney)
+          // alert(amout);
+          // alert(amountpayable);
+            location.href="../goAlipay?artno="+artno+"&address="+address+"&consignee="+consignee+"&commodityName="+commodityName+"&totalmoney="+totalmoney+"&amout="+amout+"&amountpayable="+amountpayable;
 
-                }
-            })
         }
 
 

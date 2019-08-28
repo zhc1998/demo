@@ -1,30 +1,63 @@
 package com.jk.common;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.jk.controller.ZhfController;
+import com.jk.model.Members;
+import com.jk.model.Orderone;
+import com.jk.util.OrderNumber;
+import com.jk.service.ZhfService;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class AlipayDemoController {
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    @Reference
+    private ZhfService zhfService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @RequestMapping(value = "/goAlipay", produces = "text/html; charset=UTF-8")
     @ResponseBody
-    public String goAlipay(HttpServletRequest request, HttpServletRequest response,String price) throws Exception {
+    public String goAlipay(HttpServletRequest request, HttpServletRequest response, String price,String artno,String address,String consignee,String commodityName,Double totalmoney,Integer amout,Double amountpayable,Orderone orderone) throws Exception {
 
-
+        if(orderone != null){
+            Members members=(Members) request.getSession().getAttribute("members");
+            orderone.setArtno(artno);
+            orderone.setAddress(address);
+            orderone.setConsignee(consignee);
+            orderone.setOrdernumber(OrderNumber.getBillCode());
+            orderone.setUserid(members.getId());
+            orderone.setBuyer(members.getNickname());
+            orderone.setTel("123456789");
+            orderone.setAmount(amout);
+            orderone.setTotalmoney(totalmoney);
+            orderone.setAmountpayable(amountpayable);
+            orderone.setOrdertime(sdf.format(new Date()));
+        }
+        request.getSession().setAttribute("order1",orderone);
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -38,14 +71,14 @@ public class AlipayDemoController {
         //商户订单号，商户网站订单系统中唯一订单号，必填
         String out_trade_no = UUID.randomUUID().toString();
         //付款金额，必填
-        String total_amount = price;
+        String total_amount = orderone.getAmountpayable().toString();
         //订单名称，必填
         String subject = "2016100100642565";
         //商品描述，可空
         String body = "这是一个商品";
 
         // 该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。
-        String timeout_express = "5m";
+        String timeout_express = "1m";
 
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                 + "\"total_amount\":\""+ total_amount +"\","
@@ -61,9 +94,9 @@ public class AlipayDemoController {
     }
 
     @RequestMapping("/returnUrl")
-    public String returnUrl(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, AlipayApiException {
+    public String returnUrl(HttpServletRequest request, HttpServletResponse response) throws IOException, AlipayApiException, ServletException {
         response.setContentType("text/html;charset=utf-8");
-
+        Orderone order1=(Orderone)  request.getSession().getAttribute("order1");
         boolean verifyResult = rsaCheckV1(request);
         if(verifyResult){
             //验证成功
@@ -79,9 +112,12 @@ public class AlipayDemoController {
 
                 }
             }
-            return "redirect:view";
-
+            order1.setState(2);
+            order1.setPaydate(sdf.format(new Date()));
+            amqpTemplate.convertAndSend("AddOrder",order1);
+            return "redirect:/toshow/index";
         }else{
+
             return "redirect:error";
 
         }

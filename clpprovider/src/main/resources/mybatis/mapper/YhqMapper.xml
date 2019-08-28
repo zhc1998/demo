@@ -54,7 +54,7 @@
      yhqUse, yhqDes,
     yhqLevel, yhqStartDate, yhqImg,yhqStatus) VALUES
     <foreach collection="list" item="l" separator=","  >
-      (#{l.yhqname},#{l.yhqprice},#{l.yhqdate},#{l.yhqmenkan},0,#{l.yhqdes},#{l.yhqlevel},#{l.yhqstartdate},#{l.yhqimg},1)
+      (#{l.yhqname},#{l.yhqprice},#{l.yhqdate},#{l.yhqmenkan},0,#{l.yhqdes},1,#{l.yhqstartdate},#{l.yhqimg},1)
 
     </foreach>
 
@@ -68,7 +68,7 @@
 
 
     <update id="updateYhqUse">
-      update clp_yhq set yhqStatus=2,yhqUserId=#{mid} where id=#{id}
+      update clp_yhq set yhqStatus=2,yhqUserId=#{mid},yhquse=yhquse+1 where id=#{id}
     </update>
 
 
@@ -214,9 +214,7 @@
         yhqPrice = #{yhqprice,jdbcType=DOUBLE},
         yhqDate = #{yhqdate,jdbcType=VARCHAR},
         yhqMenkan = #{yhqmenkan,jdbcType=VARCHAR},
-        yhqUse = #{yhquse,jdbcType=INTEGER},
         yhqDes = #{yhqdes,jdbcType=VARCHAR},
-        yhqLevel = #{yhqlevel,jdbcType=INTEGER},
         yhqStartDate = #{yhqstartdate,jdbcType=VARCHAR},
         yhqImg = #{yhqimg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

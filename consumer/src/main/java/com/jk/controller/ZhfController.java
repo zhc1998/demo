@@ -16,6 +16,7 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,8 @@ public class ZhfController {
     private ZhfService zhfService;
     @Autowired
     private AmqpTemplate amqpTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     @RequestMapping("familylogin")
@@ -116,32 +119,7 @@ public class ZhfController {
         return map;
     }
 
-    //新增订单
-    @RequestMapping("addorder")
-    @ResponseBody
-    public void addorbder(String artno,String address ,String consignee,String commodityName,Double totalmoney,Integer amout,Double amountpayable,HttpSession session){
 
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        Members members =(Members) session.getAttribute("members");
-
-
-        Orderone orderone=new Orderone();
-        orderone.setConsignee(consignee);
-        orderone.setTel("12012541554");
-        orderone.setAddress(address);
-        orderone.setAmount(amout);
-       orderone.setAmountpayable(amountpayable);
-        orderone.setTotalmoney(totalmoney);
-        orderone.setBuyer(members.getNickname());
-        orderone.setArtno(artno);
-        orderone.setUserid(members.getId());
-        orderone.setOrdertime(sdf.format(new Date()));
-
-        amqpTemplate.convertAndSend("AddOrder",orderone);
-       // zhfService.addorder(orderone);
-       // return "suc";
-    }
 //购买页面
     @RequestMapping("tobuypage")
 public String tobuypage(Double totalmoney,String artno,Integer amout,String color,String commodityName,Model model){
@@ -157,4 +135,24 @@ public String tobuypage(Double totalmoney,String artno,Integer amout,String colo
     public String test2(){
        return "test2";
 }
+
+@RequestMapping("queryneworder")
+@ResponseBody
+    public String queryneworder(HttpSession session){
+Members members=(Members) session.getAttribute("members");
+  String ss=  members.getId().toString();
+String key= ss+'*';
+Set<String>keys=redisTemplate.keys(key);
+for(String str :keys){
+    List<Orderone> olist =(List<Orderone>) redisTemplate.opsForValue().get(str);
+    for (int i=1;i<olist.size();i++){
+        System.err.println(olist.get(i).getAddress());
+    }
+}
+
+
+
+    return null;
+}
+
 }
