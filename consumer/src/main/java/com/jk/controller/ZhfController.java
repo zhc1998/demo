@@ -12,6 +12,8 @@ import com.jk.model.Orderone;
 import com.jk.service.ZhfService;
 import com.jk.util.HttpClientUtil;
 import com.jk.util.ParameUtil;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("zhf")
@@ -35,6 +34,7 @@ public class ZhfController {
     private ZhfService zhfService;
     @Autowired
     private AmqpTemplate amqpTemplate;
+
 
     @RequestMapping("familylogin")
     public String familylogin(){
@@ -84,11 +84,17 @@ public class ZhfController {
 
     //查询(自己)登录人的订单列表
     @RequestMapping("queryorderbyuid")
-    @ResponseBody
-    public HashMap<String, Object> queryorderbyuid(@RequestBody ParameUtil parame) {
-       Integer userid=1;
-        return zhfService.queryorderbyuid(userid,parame);
+    public String queryorderbyuid(Model model,HttpSession session) {
+       //Integer userid=1;
+       Members members =(Members) session.getAttribute("members");
+       Integer userid= members.getId();
+      // System.err.println(userid);
+        HashMap<String, Object> list = zhfService.queryorderbyuid(userid);
+        Object orderone = list.get("rows");
+        model.addAttribute("order",orderone);
+        return "myorder";
     }
+
     //快递单号查询
     @RequestMapping("querytnumber")
     @ResponseBody
@@ -109,11 +115,12 @@ public class ZhfController {
         map.put("rows",list);
         return map;
     }
+
     //新增订单
     @RequestMapping("addorbder")
     @ResponseBody
-
     public void addorbder(HttpSession session){
+
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Members members =new Members();
         members.setId(1);
@@ -132,9 +139,10 @@ public class ZhfController {
         orderone.setArtno(artno);
         orderone.setOrdertime(sdf.format(new Date()));
 
-
         amqpTemplate.convertAndSend("AddOrder",orderone);
        // zhfService.addorder(orderone);
        // return "suc";
     }
+
+
 }

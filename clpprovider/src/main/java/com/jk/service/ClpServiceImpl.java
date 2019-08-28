@@ -81,13 +81,15 @@ public class ClpServiceImpl implements ClpService{
     }
 
     @Override
-    public List<Yhq> queryClpYhq2(int i) {
-        return yhqMapper.queryClpYhq2(i);
+    public List<Yhq> queryClpYhq2(Integer mid) {
+        return yhqMapper.queryClpYhq2(mid);
     }
 
     @Override
-    public void updateYhqUse(Integer id) {
-        yhqMapper.updateYhqUse(id);
+    public void updateYhqUse(Integer id,Integer mid) {
+        yhqMapper.updateYhqUse(id,mid);
     }
+
+
 
 }

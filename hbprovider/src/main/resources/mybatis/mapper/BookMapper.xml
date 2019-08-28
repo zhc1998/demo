@@ -48,11 +48,11 @@
     <!--分页查询-->
     <select id="queryCommodity" parameterType="hashMap" resultType="com.jk.model.commodity.CommodityModel">
         select te.id,te.commodityName,te.artNo,te.commodityPrice,te.status,te.newProduct,te.inventory,ty.typeName   from t_item te
-        left join t_commoditytype ty on ty.typeId=te.TypeId
+        left join t_commoditytype ty on ty.typeId=te.TypeId WHERE te.status = 2
         LIMIT #{start},#{end}
     </select>
 
-    <select id="comments" parameterType="Integer" resultType="Comments">
+    <select id="comments"  resultType="Comments">
         select * from comments where sid=#{id}
     </select>
 
@@ -73,12 +73,15 @@
     </select>
 
     <!--删除-->
-    <delete id="delAll" parameterType="int">
-        DELETE from  t_item WHERE id in(
+    <delete id="delAll" >
+        DELETE from  t_delAllitem WHERE id in(
            <foreach collection="array" index="index" separator="," item="item">
                #{item}
            </foreach>
         )
     </delete>
 
+    <insert id="addevaluation" parameterType="map">
+        insert into comments(text,pid,sid,uid) values (#{text},0,#{sid},#{uid})
+    </insert>
 </mapper>

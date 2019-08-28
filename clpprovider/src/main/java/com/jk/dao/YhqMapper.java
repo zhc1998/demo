@@ -31,7 +31,8 @@ public interface YhqMapper {
 
     List<Yhq> queryClpYhq();
 
-    List<Yhq> queryClpYhq2(@Param("i")int i);
+    List<Yhq> queryClpYhq2(@Param("mid")Integer mid);
 
-    void updateYhqUse(@Param("id")Integer id);
+    void updateYhqUse(@Param("id")Integer id,@Param("mid")Integer mid);
+
 }

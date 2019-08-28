@@ -3,37 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <!-- 引入jquery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- 引入bootstrap的css -->
-    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-treeview的css -->
-    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-addTabs的css -->
-    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
-    <!-- 引入bootstrap-table的css -->
-    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
-    <!-- 引入fileinput的css -->
-    <link type="text/css" rel="stylesheet" href="../js/fileinput/css/fileinput.min.css" />
-
-    <!-- 引入my97 -->
-    <script type="text/javascript" src="../js/my97/WdatePicker.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
-    <!-- 引入bootstrap-table的js-->
-    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
-    <!-- 引入bootbox.js -->
-    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
-    <!-- 引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/fileinput.min.js"></script>
-    <!--  引入fileinput的js -->
-    <script type="text/javascript" src="../js/fileinput/js/locales/zh.js"></script>
-    <script type="text/javascript" src="../js/fileinput/themes/fa/theme.js"></script>
 </head>
 
 <body>
@@ -43,45 +12,20 @@
 <script>
     $(function(){
         showTree();
+        alert(123)
     })
     function showTree(){
-         var id = $("#ids").val();
+        var id = $("#ids").val();
         $.ajax({
             url:'../hb/comments?id='+id,
             type : "post",
-            dataType:"json",
             success:function(data){
                 $("#treeDiv").treeview({
                     //data属性 树节点信息 json数组
                     data: data,
                     //tree默认展开的节点级别默认为2
                     levels: 0,
-                    //含有子节点的图标
-                    //collapseIcon:'glyphicon glyphicon-star-empty',
-                    //没有子节点的图标
-                    //emptyIcon:'glyphicon glyphicon-usd',
-                    //背景颜色
-                    //backColor: 'green'
-                    //是否显示复选框
-                    showCheckbox:false,
-                    //是否允许选中多个节点
-                    //multiSelect:true,
-                    //启用节点的超链接功能默认为false,节点需指定href属性
-                    enableLinks:true,
-                    //事件当节点选中时
-                    onNodeSelected:function(event,node){
-                        $.addtabs({iframeHeight:600});
-                        console.log(node);
-                        //动态向 nav-tabs 导航标签添加tab选项卡
-                        //addTabs方法  add() 添加tab  close()关闭tab  closeAll() 关闭全部tab
-                        if(null !=  node.url){
-                            $.addtabs.add({
-                                id:node.id,
-                                title:node.text,
-                                url:"../"+node.url
-                            })
-                        }
-                    }
+
                 })
             },error : function (){
                 alert("查询失败");

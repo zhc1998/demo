@@ -59,4 +59,6 @@ public interface HbDao {
     List<CommodityModel> suditFailureList(HashMap<String, Object> hashMap);
 
     void delAll(Integer[] ids);
+
+    void addevaluation(HashMap map);
 }

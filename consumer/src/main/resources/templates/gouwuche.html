@@ -1,0 +1,784 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>购物车</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="/js3/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap3/css/bootstrap.css">
+    <script type="text/javascript" src="/js3/bootstrap3/js/bootstrap.js"></script>
+    <!-- 引入tree的js、css -->
+    <link rel="stylesheet" href="/js3/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="/js3/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入选项卡的js、css -->
+    <link rel="stylesheet" href="/js3/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script type="text/javascript" src="/js3/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- 引入table的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-table/bootstrap-table.css">
+    <script type="text/javascript" src="/js3/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/js3/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- 引入删除提示框 -->
+    <script type="text/javascript" src="/js3/bootbox/bootbox.min.js"></script>
+    <!-- 引入时间的css、js -->
+    <link rel="stylesheet" href="/js3/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <script  src="/js3/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script  src="/js3/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <meta name="author" content="" />
+    <meta name="copyright" content="" />
+    <link href="/shop/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="/shop/css/common.css" rel="stylesheet" type="text/css" />
+    <link href="/shop/css/cart.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/shop/js/common.js"></script>
+    <script src="/shop/js/vue.js"></script>
+    <script type="text/javascript">
+        $().ready(function() {
+
+            var $promotionTr = $(".cartTable tr.promotion-tr");
+            var $giftTr = $(".cartTable .gift-tr");
+            var $quantity = $(".cartTable input[name='quantity']");
+            var $increase = $(".cartTable span.increase");
+            var $decrease = $(".cartTable span.decrease");
+            var $remove = $(".cartTable a.remove");
+            var $promotionDiscount = $("#promotionDiscount");
+            var $effectiveRewardPoint = $("#effectiveRewardPoint");
+            var $effectivePrice = $("#effectivePrice");
+            var $clear = $("#clear");
+            var $submit = $("#submit");
+            var timeouts = {};
+
+
+            // 初始数量
+            $quantity.each(function() {
+                var $this = $(this);
+                $this.data("value", $this.val());
+            });
+
+            // 数量
+            $quantity.keypress(function(event) {
+                return (event.which >= 48 && event.which <= 57) || event.which == 8;
+
+            });
+
+            // 增加数量
+            $increase.click(function() {
+                var $quantity = $(this).siblings("input");
+                var quantity = $quantity.val();
+                if (/^\d*[1-9]\d*$/.test(quantity)) {
+                    $quantity.val(parseInt(quantity) + 1);
+                } else {
+                    $quantity.val(1);
+                }
+                modify($quantity);
+            });
+
+            // 减少数量
+            $decrease.click(function() {
+                var $quantity = $(this).siblings("input");
+                var quantity = $quantity.val();
+                if (/^\d*[1-9]\d*$/.test(quantity) && parseInt(quantity) > 1) {
+                    $quantity.val(parseInt(quantity) - 1);
+                } else {
+                    $quantity.val(1);
+                }
+                modify($quantity);
+            });
+
+            // 修改数量
+            $quantity.on("input propertychange change", function(event) {
+                if (event.type != "propertychange" || event.originalEvent.propertyName == "value") {
+                    modify($(this));
+                }
+            });
+
+            // 修改数量
+            function modify($quantity) {
+                var quantity = $quantity.val();
+                var $gift = $quantity.closest("tbody").find("dl.gift");
+                var $promotion = $quantity.closest("tbody").find("dl.promotion");
+                if (/^\d*[1-9]\d*$/.test(quantity)) {
+                    var $tr = $quantity.closest("tr");
+                    var skuId = $tr.find("input[name='id']").val();
+                    clearTimeout(timeouts[skuId]);
+                    timeouts[skuId] = setTimeout(function() {
+                        $.ajax({
+                            url: "modify",
+                            type: "POST",
+                            data: {skuId: skuId, quantity: quantity},
+                            dataType: "json",
+                            cache: false,
+                            beforeSend: function() {
+                                $submit.prop("disabled", true);
+                            },
+                            success: function(data) {
+                                $quantity.data("value", quantity);
+                                $tr.find("span.subtotal").text(currency(data.subtotal, true));
+                                if (data.giftNames != null && data.giftNames.length > 0) {
+                                    $giftTr.show();
+                                    $gift.html('&lt;dt>赠品:&lt;\/dt>');
+                                    $.each(data.giftNames, function(i, giftName) {
+                                        $gift.append('<dd title="' + escapeHtml(giftName) + '">' + escapeHtml(abbreviate(giftName, 50)) + ' &times; 1<\/dd>');
+                                    });
+                                    "opacity" in document.documentElement.style ? $gift.fadeIn() : $gift.show();
+                                } else {
+                                    "opacity" in document.documentElement.style ? $gift.fadeOut() : $gift.hide();
+                                }
+                                if (data.promotionNames != null && data.promotionNames.length > 0) {
+                                    $promotionTr.show();
+                                    $promotion.html('<dt>促销折扣:<\/dt>');
+                                    $.each(data.promotionNames, function(i, promotionName) {
+                                        $promotion.append('<dd title="' + escapeHtml(promotionName) + '">' + escapeHtml(abbreviate(promotionName, 50)) + '<\/dd>');
+                                    });
+                                    "opacity" in document.documentElement.style ? $promotion.fadeIn() : $promotion.show();
+                                } else {
+                                    "opacity" in document.documentElement.style ? $promotion.fadeOut() : $promotion.hide();
+                                }
+                                if (!data.isLowStock) {
+                                    $tr.find("span.lowStock").remove();
+                                }
+                                $effectiveRewardPoint.text(data.effectiveRewardPoint);
+                                $effectivePrice.text(currency(data.effectivePrice, true, true));
+                                $promotionDiscount.text(currency(data.promotionDiscount, true, true));
+                            },
+                            warn: function() {
+                                $quantity.val($quantity.data("value"));
+                            },
+                            error: function() {
+                                $quantity.val($quantity.data("value"));
+                                setTimeout(function() {
+                                    location.reload(true);
+                                }, 3000);
+                            },
+                            complete: function() {
+                                $submit.prop("disabled", false);
+                            }
+                        });
+                    }, 500);
+                } else {
+                    $quantity.val($quantity.data("value"));
+                }
+            }
+
+            // 移除
+            $remove.click(function() {
+                if (confirm("您确定要删除吗？")) {
+                    var $this = $(this);
+                    var $tr = $this.closest("tr");
+                    var skuId = $tr.find("input[name='id']").val();
+                    var $gift = $quantity.closest("tbody").find("dl.gift");
+                    var $promotion = $quantity.closest("tbody").find("dl.promotion");
+                    $.ajax({
+                        url: "remove",
+                        type: "POST",
+                        data: {skuId: skuId},
+                        dataType: "json",
+                        cache: false,
+                        beforeSend: function() {
+                            $submit.prop("disabled", true);
+                        },
+                        success: function(data) {
+                            if (data.quantity > 0) {
+                                $tr.remove();
+                                if (data.giftNames != null && data.giftNames.length > 0) {
+                                    $gift.html('<dt>赠品:<\/dt>');
+                                    $.each(data.giftNames, function(i, giftName) {
+                                        $gift.append('<dd title="' + escapeHtml(giftName) + '">' + escapeHtml(abbreviate(giftName, 50)) + ' &times; 1<\/dd>');
+                                    });
+                                    "opacity" in document.documentElement.style ? $gift.fadeIn() : $gift.show();
+                                } else {
+                                    "opacity" in document.documentElement.style ? $gift.fadeOut() : $gift.hide();
+                                }
+                                if (data.promotionNames != null && data.promotionNames.length > 0) {
+                                    $promotion.html('<dt>促销折扣:<\/dt>');
+                                    $.each(data.promotionNames, function(i, promotionName) {
+                                        $promotion.append('<dd title="' + escapeHtml(promotionName) + '">' + escapeHtml(abbreviate(promotionName, 50)) + '<\/dd>');
+                                    });
+                                    "opacity" in document.documentElement.style ? $promotion.fadeIn() : $promotion.show();
+                                } else {
+                                    "opacity" in document.documentElement.style ? $promotion.fadeOut() : $promotion.hide();
+                                }
+                                $effectiveRewardPoint.text(data.effectiveRewardPoint);
+                                $effectivePrice.text(currency(data.effectivePrice, true, true));
+                                $promotionDiscount.text(currency(data.promotionDiscount, true, true));
+                            } else {
+                                location.reload(true);
+                            }
+                        },
+                        complete: function() {
+                            $submit.prop("disabled", false);
+                        }
+                    });
+                }
+                return false;
+            });
+
+            // 清空
+            $clear.click(function() {
+                if (confirm("您确定要清空吗？")) {
+                    $.each(timeouts, function(i, timeout) {
+                        clearTimeout(timeout);
+                    });
+                    $.ajax({
+                        url: "clear",
+                        type: "POST",
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            location.reload(true);
+                        }
+                    });
+                }
+                return false;
+            });
+
+            // 提交
+            $submit.click(function() {
+                if (!$.checkLogin()) {
+                    $.redirectLogin("/shopxxb2b2c/cart/list", "必须登录后才能提交订单");
+                    return false;
+                }
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+<script type="text/javascript">
+    $().ready(function() {
+
+        var $window = $(window);
+        var $headerName = $("#headerName");
+        var $headerLogin = $("#headerLogin");
+        var $headerRegister = $("#headerRegister");
+        var $headerLogout = $("#headerLogout");
+        var $productSearchForm = $("#productSearchForm");
+        var $productSearchKeyword = $("#productSearchForm [name='keyword']");
+        var $headerCart = $("#headerCart");
+        var $headerCartQuantity = $("#headerCart a.cartButton em");
+        var $headerCartDetail = $("#headerCart div.detail");
+
+        var $headerCartSummary = $("#headerCart div.summary");
+        var $broadsideNav = $("#broadsideNav");
+        var currentMemberUsername = getCookie("");
+        var defaultProductSearchKeyword = "搜索 商品/店铺";
+
+        if ($.trim(currentMemberUsername) != "") {
+            $headerName.text(currentMemberUsername).show();
+            $headerLogout.show();
+        } else {
+            $headerLogin.show();
+            $headerRegister.show();
+        }
+
+        $productSearchKeyword.focus(function() {
+            if ($.trim($productSearchKeyword.val()) == defaultProductSearchKeyword) {
+                $productSearchKeyword.val("");
+            }
+        });
+
+        $productSearchKeyword.blur(function() {
+            if ($.trim($productSearchKeyword.val()) == "") {
+                $productSearchKeyword.val(defaultProductSearchKeyword);
+            }
+        });
+
+        $productSearchForm.submit(function() {
+            if ($.trim($productSearchKeyword.val()) == "" || $productSearchKeyword.val() == defaultProductSearchKeyword) {
+                return false;
+            }
+        });
+
+        // 购物车信息
+        $window.on("cartInfoLoad", function(event, cartInfo) {
+            var skuQuantity = cartInfo != null && cartInfo.skuQuantity != null ? cartInfo.skuQuantity : 0;
+            var effectivePrice = cartInfo != null && cartInfo.effectivePrice != null ? cartInfo.effectivePrice : 0;
+            if ($headerCartQuantity.text() != skuQuantity && "opacity" in document.documentElement.style) {
+                $headerCartQuantity.fadeOut(function() {
+                    $headerCartQuantity.text(skuQuantity).fadeIn();
+                });
+            } else {
+                $headerCartQuantity.text(skuQuantity);
+            }
+            var cartItems = cartInfo.items;
+            if(cartItems == null || cartItems.length <= 0){
+                $headerCartItems.html(
+                    '<table> <tr> <td>购物车是空的，请去挑选您的商品！<\/td> <\/tr> <\/table>'			);
+            } else {
+                var $headerCartTable = $headerCartItems.html('<table id="cartTable"><\/table>');
+                $.each(cartItems, function(i, cartItem) {
+                    $('#cartTable').append(
+                        '<tr> <td> <a href="/shopxxb2b2c' + cartItem.skuPath + '"> <img src="' + cartItem.skuThumbnail + '" \/> <\/a> <\/td> <td> <a href="/shopxxb2b2c' + cartItem.skuPath + '">' + escapeHtml(abbreviate(cartItem.skuName, 20, "...")) + '<\/a> <\/td> <td> <span>' + currency(cartItem.price, true, false) + '<\/span>&nbsp; &nbsp;<em>x' + cartItem.quantity + '<\/em> <\/td> <\/tr>'				);
+                });
+            }
+            $headerCartSummary.html(message('共<em>{0}<\/em>件商品', skuQuantity) + '&nbsp;&nbsp;&nbsp;&nbsp;共计: <em>' + currency(effectivePrice, true, true) + '<\/em><a href="/shopxxb2b2c/cart/list">商品结算<\/a>');
+        });
+
+        // 购物车详情
+        $headerCart.hover(
+            function() {
+                if ($headerCartDetail.is(":hidden")) {
+                    $headerCart.addClass("active");
+                    $headerCartDetail.slideDown("fast");
+                }
+            },
+            function() {
+                if ($headerCartDetail.is(":visible")) {
+                    $headerCart.removeClass("active");
+                    $headerCartDetail.slideUp("fast");
+                }
+            }
+        );
+
+        $broadsideNav.find("li").hover(
+            function() {
+                $(this).find("em").show();
+            },function(){
+                $(this).find("em").hide();
+            }
+        );
+
+    });
+</script>
+
+<script th:inline="javascript">
+    $(function () {
+        var user=[[${admin}]];
+        if (eval(user)!=null){
+            $("#headerName").html(user.username+'<a href="/logout">[退出]</a>');
+        }else{
+            $("#headerName").html("<a href='find?url=member/login'>登录</a>");
+        }
+    });
+
+</script>
+<div class="header">
+    <div class="top">
+        <div class="topNav">
+            <ul class="left">
+                <!--  <li id="headerLogin" class="headerLogin">
+                      <a href="/shopxxb2b2c/member/login">登录</a>|
+                  </li>
+                  <li id="headerRegister" class="headerRegister">
+                      <a href="/shopxxb2b2c/member/register">注册</a>
+                  </li>
+                  <li id="headerLogout" class="headerLogout">
+                      <a href="/shopxxb2b2c/member/logout">[退出]</a>
+                  </li>-->
+            </ul>
+            <ul class="right">
+                <li>
+                    <a href="/shopxxb2b2c/member/index">会员中心</a>
+                    |
+                </li>
+                <li>
+                    <a href="/shopxxb2b2c/business/index">商家中心</a>
+                    |
+                </li>
+                <li>
+                    <a href="/shopxxb2b2c/article/list/3">帮助中心</a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                <a href="/shopxxb2b2c/">
+                    <img src="#" alt="" />
+                </a>
+            </div>
+            <div class="span6">
+                <div class="search">
+                    <form id="productSearchForm" action="/shopxxb2b2c/product/search" method="get">
+                        <input name="keyword" class="keyword" value="搜索 商品/店铺" autocomplete="off" x-webkit-speech="x-webkit-speech" x-webkit-grammar="builtin:search" maxlength="30" />
+                        <button type="submit">&nbsp;</button>
+                    </form>
+                </div>
+                <div class="hotSearch">
+                    热门搜索:
+                    <a href="/shopxxb2b2c/product/search?keyword=%E8%8B%B9%E6%9E%9C">苹果</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E4%B8%89%E6%98%9F">三星</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E7%B4%A2%E5%B0%BC">索尼</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E5%8D%8E%E4%B8%BA">华为</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E9%AD%85%E6%97%8F">魅族</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E4%BD%B3%E8%83%BD">佳能</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E5%8D%8E%E7%A1%95">华硕</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E7%BE%8E%E7%9A%84">美的</a>
+                    <a href="/shopxxb2b2c/product/search?keyword=%E6%A0%BC%E5%8A%9B">格力</a>
+                </div>
+            </div>
+            <div id="headerCart" class="headerCart">
+                <a class="cartButton" href="/shopxxb2b2c/cart/list"><span>购物车(<em></em>)</span></a>
+                <div class="detail">
+                    <div class="title">购物车商品</div>
+                    <div class="items"></div>
+                    <div class="summary"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <dl class="mainNav">
+                    <dt>
+                        <a href="/shopxxb2b2c/product_category">购物车</a>
+                    </dt>
+                </dl>
+            </div>
+        </div>
+        <div id="broadsideNav" class="broadsideNav">
+            <ul>
+                <li class="shoppingCart">
+                    <a href="/shopxxb2b2c/cart/list"><em>购物车</em></a>
+                </li>
+                <li class="memberCenter">
+                    <a href="/shopxxb2b2c/member/index"><em>会员中心</em></a>
+                </li>
+                <li class="myCoupons">
+                    <a href="/shopxxb2b2c/member/coupon_code/exchange"><em>我的优惠券</em></a>
+                </li>
+                <li class="collectCenter">
+                    <a href="/shopxxb2b2c/member/product_favorite/list"><em>我的收藏</em></a>
+                </li>
+            </ul>
+            <div id="goTop" class="goTop"></div>
+        </div>
+    </div>
+</div>	<div class="container cart">
+    <div class="row">
+        <div class="span12">
+            <div class="step">
+                <ul>
+                    <li class="current">查看购物车</li>
+                    <li>订单结算</li>
+                    <li>订单完成</li>
+                </ul>
+            </div>
+
+            <!--  表格 -->
+            <button type='button'  class='btn btn-success' onclick='empty()'>清空购物车</button>
+            <table id="dataGrid" ></table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="bottom">
+						<span class="total">
+								<em>登录后确认是否享有优惠</em>
+							赠送积分: <em id="effectiveRewardPoint">23886</em>
+							商品金额: <strong id="effectivePrice">￥23886.00元</strong>
+						</span>
+                <span>
+							<a href="javascript:;" id="clear" class="clear">清空</a>
+							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
+						</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function deletePro(proid,num) {
+        $.ajax({
+            url:"add",
+            type:"post",
+            data:{
+                proid:proid,
+                num:num
+            },success:function () {
+                findCartList();
+            }
+        });
+    }
+    function aaa(flag,proid) {
+        var num;
+        if (flag==1){
+            num=-1;
+        }else{
+            num=1;
+        }
+        $.ajax({
+            url:"add",
+            type:"post",
+            data:{
+                proid:proid,
+                num:num
+            },success:function () {
+                findCartList();
+            }
+        });
+    }
+    var vm=new Vue({
+        el: '#cartList',
+        data:{
+            cartList: null
+        }
+    });
+
+
+    function  findCartList(){
+        $.ajax({
+            url:"../cart/findCartList",
+            type:"post",
+            success:function (data) {
+                vm.cartList=data;
+                var totalValue={totalNum:0, totalMoney:0.00 };//合计实体
+                for(var i=0;i < data.length;i++){
+                    var cart=data[i];
+                        //alert(cart.id);
+                        var orderItem=cart;//购物车明细
+                        totalValue.totalNum+=orderItem.num;
+                        totalValue.totalMoney+= orderItem.sumPrice;
+
+                }
+                $("#effectiveRewardPoint").html(totalValue.totalNum+"件");
+                $("#effectivePrice").html("￥"+totalValue.totalMoney+"元");
+            },error:function () {
+
+            }
+        });
+    }
+
+    $(function () {
+        findCartList();
+    });
+
+</script>
+<div class="footer">
+    <div class="service clearfix">
+        <dl>
+            <dt class="icon1">新手指南</dt>
+            <dd>
+                <a href="#">购物流程</a>
+            </dd>
+            <dd>
+                <a href="#">会员注册</a>
+            </dd>
+            <dd>
+                <a href="#">购买宝贝</a>
+            </dd>
+            <dd>
+                <a href="#">支付货款</a>
+            </dd>
+            <dd>
+                <a href="#">用户协议</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="icon2">特色服务</dt>
+            <dd>
+                <a href="#">购物流程</a>
+            </dd>
+            <dd>
+                <a href="#">会员注册</a>
+            </dd>
+            <dd>
+                <a href="#">购买宝贝</a>
+            </dd>
+            <dd>
+                <a href="#">支付货款</a>
+            </dd>
+            <dd>
+                <a href="#">用户协议</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="icon3">支付方式</dt>
+            <dd>
+                <a href="#">购物流程</a>
+            </dd>
+            <dd>
+                <a href="#">会员注册</a>
+            </dd>
+            <dd>
+                <a href="#">购买宝贝</a>
+            </dd>
+            <dd>
+                <a href="#">支付货款</a>
+            </dd>
+            <dd>
+                <a href="#">用户协议</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="icon4">配送方式</dt>
+            <dd>
+                <a href="#">购物流程</a>
+            </dd>
+            <dd>
+                <a href="#">会员注册</a>
+            </dd>
+            <dd>
+                <a href="#">购买宝贝</a>
+            </dd>
+            <dd>
+                <a href="#">支付货款</a>
+            </dd>
+            <dd>
+                <a href="#">用户协议</a>
+            </dd>
+        </dl>
+        <div class="qrCode">
+            <img src="#" alt="官方微信" />
+            官方微信
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="bottomNav">
+            <ul>
+                <li>
+                    <a href="#">关于我们</a>
+                    |
+                </li>
+                <li>
+                    <a href="#">联系我们</a>
+                    |
+                </li>
+                <li>
+                    <a href="#">诚聘英才</a>
+                    |
+                </li>
+                <li>
+                    <a href="#">隐私政策</a>
+                    |
+                </li>
+                <li>
+                    <a href="#">法律声明</a>
+                    |
+                </li>
+                <li>
+                    <a href="#">客户服务</a>
+                    |
+                </li>
+                <li>
+                    <a href="/shopxxb2b2c/friend_link">友情链接</a>
+
+                </li>
+            </ul>
+        </div>
+        <div class="info">
+            <p>湘ICP备10000000号</p>
+            <p>Copyright © 2005-2017 SHOP++商城 版权所有</p>
+            <ul>
+                <li>
+                    <a href="http://www.shopxx.net" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/1c675feb-e488-4fd5-a186-b28bb6de445a.gif" alt="SHOP++" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.alipay.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/ae13eddc-25ac-427a-875d-d1799d751076.gif" alt="支付宝" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.tenpay.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/adaa9ac5-9994-4aa3-a336-b65613c85d50.gif" alt="财付通" />
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.95516.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/41c18c8d-f69a-49fe-ace3-f16c2eb07983.gif" alt="中国银联" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.kuaidi100.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/ea46ca0a-e8f0-4e2c-938a-5cb19a07cb9a.gif" alt="快递100" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnzz.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/e12f226b-07f9-4895-bcc2-78dbe551964b.gif" alt="站长统计" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://down.admin5.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/fd9d6268-e4e2-41f6-856d-4cb8a49eadd1.gif" alt="A5下载" />
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.ccb.com" target="_blank">
+                        <img src="http://image.demo.shopxx.net/b2b2c/5.0/201601/6c57f398-0498-4044-80d8-20f6c40d5cef.gif" alt="中国建设银行" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(function(){
+        initDataGrid();
+    })
+
+    //查询商品
+    function initDataGrid() {
+        //创建bootstrapTable
+        $("#dataGrid").bootstrapTable({
+            url: "../cart/findCartList",
+            method: 'post',
+            striped: true,  	         // 斑马线效果     默认false
+            singleSelect: false,        //只允许选中一行
+            clickToSelect: true,
+            showToggle: true,           //是否显示详细视图和列表视图的切换按钮
+            cardView: false,            //是否显示详细视图
+            uniqueId: "id",             //每一行的唯一标识，一般为主键列
+            showColumns: true,          //是否显示所有的列
+            showRefresh: true,          //是否显示刷新按钮
+            minimumCountColumns: 2,     //  最少留两列
+            detailView: false,          //是否显示父子表
+            toolbar: '#tabToolBar',     //  工具定义位置
+            sidePagination: 'server',
+            toolbar: '#toolbar',
+
+            columns: [
+                {field: 'ckAll', checkbox: true},  //开启复选框
+                {field:'id',title:'编号'},
+                {field:'commodityName',title:'商品名称'},
+                {field:'artNo',title:'货号'},
+                {field:'commodityPrice',title:'商品价格'},
+                {field:'pictureUrl',title:'图片',formatter:function(value,orw,index){
+                    return "<img src='"+value+"' width='50'>";
+                    }},
+                {field:'cz',title:'操作',formatter:function (value,row,index) {
+                        return "<button type='button'  class='btn btn-success' onclick='delShop("+row.id+")'>删除</button>";
+                    }}
+            ]
+        });
+    }
+
+    //删除指定数据
+    function delShop(id) {
+        $.ajax({
+            url:"../cart/delete",
+            type:"post",
+            data:{id:id},
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function () {
+                alert("删除失败");
+            }
+        })
+    }
+    
+    //清空购物车
+    function empty() {
+        $.ajax({
+            url:"../cart/deleteAll",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                location.href="../toshow/toShoppingTrolley"
+            },
+            error:function(){
+                alert("清除失败");
+            }
+        })
+    }
+</script>
+</html>

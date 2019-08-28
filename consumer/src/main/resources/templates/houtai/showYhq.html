@@ -99,23 +99,7 @@
                             return value+"元";
                     }
                 },
-                {field: 'yhqlimit', title: '领取限制',width: 300,
-                    formatter: function (value,row,index){
-                        if(value==0){
-                            return "不限张";
-                        }
-                        if(value==1){
-                            return "1张";
-                        }
-                        if(value==2){
-                            return "2张";
-                        }
-                        if(value==3){
-                            return "3张";
-                        }
 
-                    }
-                },
                 {field: 'yhqstartdate', title: '生效时间',width: 300,
                 },
                 {field: 'yhqdate', title: '到期时间',width: 300,
@@ -133,29 +117,23 @@
                         if(value==2){
                             return "满100元使用";
                         }
+                        if(value==3){
+                            return "满200元使用";
+                        }
+                        if(value==4){
+                            return "满500元使用";
+                        }
+                        if(value==5){
+                            return "满1000元使用";
+                        }
                     }
-                },
-                {field: 'yhqcount', title: '优惠券总数',width: 300,
                 },
                 {field: 'yhquse', title: '优惠券已使用数量',width: 300,
                 },
                 {field: 'yhqdes', title: '优惠券使用说明',width: 300,
                 },
-                /*{field: 'stuimg', title: '头像',width: 300,
-                    formatter: function(value,row,index){
-                        return "<img width='20' src='${pageContext.request.contextPath}/"+value+"'>"
-                    }
-                },*/
-                {field: 'yhqlevel', title: '会员等级', width: 300,
-                    formatter: function (value,row,index){
-                        if(value==1){
-                            return "所有会员";
-                        }
-                        if(value==2){
-                            return "超级会员";
-                        }
-                    }
-                },
+
+
                 {field: 'cz', title: '操作', width: 300,
                     formatter: function (value,row,index){
                         var content = "<a href='javascript:update("+row.id+")'>修改</a>";

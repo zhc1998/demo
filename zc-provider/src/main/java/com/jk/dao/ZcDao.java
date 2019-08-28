@@ -13,7 +13,7 @@ public interface ZcDao {
     long queryCommodityCount(HashMap<String, Object> hashMap);
 
     //分页查询
-    List<CommodityModel> queryCommodity(HashMap<String, Object> hashMap);
+    List queryCommodity(HashMap<String, Object> hashMap);
 
     //查询商品类型
     @Select(" select *  from  t_commoditytype ")
@@ -34,7 +34,7 @@ public interface ZcDao {
     List<DrandModel> queryAllDran(Integer ids);
 
     //查询回显
-    CommodityModel loadOneModel(Integer id);
+    CommodityModel loadOneModel(String id);
 
     //修改
     void updCommodity(CommodityModel commodityModel);
@@ -85,4 +85,20 @@ public interface ZcDao {
     //加载颜色
     @Select("select id,colorName  from  t_color")
     List<ColorModel> queryColor();
+
+    @Select("select *  from  t_item where artNo = #{artNo}")
+    CommodityModel queryCommodityByArtNo(String artNo);
+
+    //查询配件
+    List<AccessoriesModel> queryAccessories(Integer typeId);
+
+    //查询内存
+    @Select("select *  from  t_memory")
+    List<LickMemoryModel> queryLickMemory();
+
+    //根据Id查询商品价格
+    @Select("select commodityPrice  from  t_item WHERE id = #{value}")
+    CommodityModel queryItemPrice(Integer ids);
+
+
 }

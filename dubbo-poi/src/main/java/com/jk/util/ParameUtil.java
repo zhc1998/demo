@@ -22,10 +22,17 @@ public class ParameUtil implements Serializable {
 
    private String type;
    private String postid;
+   private String brName;
 
+    public String getBrName() {
+        return brName;
+    }
 
+    public void setBrName(String brName) {
+        this.brName = brName;
+    }
 
-	public String getDrugName() {
+    public String getDrugName() {
 		return drugName;
 	}
 

@@ -46,7 +46,7 @@ public class XxfServiceImpl implements XxfService{
 
     @Override
     public Members frontLogin(String username) {
-        return xxfDao.frontLogin(username);
+         return xxfDao.frontLogin(username);
     }
 
 

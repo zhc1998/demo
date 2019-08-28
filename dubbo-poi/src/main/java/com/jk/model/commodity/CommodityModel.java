@@ -24,13 +24,56 @@ public class CommodityModel implements Serializable {
 
     private String pictureUrl;//图片路径
 
-    private String typeName;//类型
+    private Integer colorId;
 
-    private String name;//品牌
+    private Integer sellquantity;
 
-    private Integer issue;
+    private String createDate;
 
-    private Integer sellquantity;//累计出售数量
+    private String typeName;
+
+    private String name;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Integer colorId) {
+        this.colorId = colorId;
+    }
+
+    public Integer getSellquantity() {
+        return sellquantity;
+    }
+
+    public void setSellquantity(Integer sellquantity) {
+        this.sellquantity = sellquantity;
+    }
+
 
     public Integer getId() {
         return id;
@@ -112,38 +155,6 @@ public class CommodityModel implements Serializable {
         this.pictureUrl = pictureUrl;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getIssue() {
-        return issue;
-    }
-
-    public void setIssue(Integer issue) {
-        this.issue = issue;
-    }
-
-    public Integer getSellquantity() {
-        return sellquantity;
-    }
-
-    public void setSellquantity(Integer sellquantity) {
-        this.sellquantity = sellquantity;
-    }
-
     @Override
     public String toString() {
         return "CommodityModel{" +
@@ -157,10 +168,11 @@ public class CommodityModel implements Serializable {
                 ", typeId=" + typeId +
                 ", itemId=" + itemId +
                 ", pictureUrl='" + pictureUrl + '\'' +
+                ", colorId=" + colorId +
+                ", sellquantity=" + sellquantity +
+                ", createDate='" + createDate + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", name='" + name + '\'' +
-                ", issue=" + issue +
-                ", sellquantity=" + sellquantity +
                 '}';
     }
 }

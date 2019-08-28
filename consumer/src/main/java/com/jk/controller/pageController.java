@@ -17,4 +17,15 @@ public class pageController {
     public String toaddimg(){
         return "addimg";
     }
+
+
+    @RequestMapping("/tojqshouye")
+    public  String tojqshouye(){
+        return "tojqshouye";
+    }
+
+    @RequestMapping("/togouwuche")
+    public  String togouwuche(){
+        return "gouwuche";
+    }
 }

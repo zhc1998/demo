@@ -3,10 +3,7 @@ package com.jk.service;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import com.jk.dao.HbDao;
-import com.jk.model.Audit;
-import com.jk.model.Comments;
-import com.jk.model.Tree;
-import com.jk.model.User;
+import com.jk.model.*;
 import com.jk.model.commodity.CommodityModel;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,5 +139,15 @@ public class HbServiceImpl implements HbService {
     public void delAll(Integer [] ids) {
         hbDao.delAll(ids);
     }
+
+    @Override
+    public void addevaluation(String text, Integer ids, String username) {
+        HashMap map = new HashMap();
+        map.put("text",text);
+        map.put("sid",ids);
+        map.put("uid",username);
+        hbDao.addevaluation(map);
+    }
+
 
 }

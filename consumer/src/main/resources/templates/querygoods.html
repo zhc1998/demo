@@ -120,20 +120,12 @@
 
                 {field:'inventory',title:'库存'},
                 {field:'pictureUrl',title:'图片',formatter:function (value,row,index) {
-                        //return "<img alt='"+value+"' height='50' width='50'>"//return "<img src='../"+value+"' height='50' width='50'>";
-
-                        return "<div class=\"container-fluid\">\n" +
-                            "                            <div class=\"row-fluid\">\n" +
-                            "                            <div class=\"span12\">\n" +
-                            "                            <img alt=\"140x140\" src='../"+value+"' />\n" +
-                            "                            </div>\n" +
-                            "                            </div>\n" +
-                            "                            </div>";
+                        return "<img width='100' src='"+value+"'height='50' width='50'>";
                     }},
                 {field:'typeName',title:'类型'},
                 {field:'zc',title:'操作',formatter:function(value,row,index){
                         var content = "";
-                        content+="<a href='javascript:updateaudit1("+row.id+")'>审核通过</a>";
+                        content+="<a href='javascript:updateaudit1("+row.id+")'>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;";
                         content+="<a href='javascript:updateaudit2("+row.id+")'>审核失败</a>";
                         return content;
                     }},

@@ -8,9 +8,28 @@
     <meta name="description" content="首页" />
     <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <!-- 引入bootstrap的css -->
+    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-treeview的css -->
+    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap-addTabs的css -->
+    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
+    <!-- 引入bootstrap-table的css -->
+    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
+    <!-- 引入bootstrap的js-->
+    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
+    <!-- 引入bootstrap-table的js-->
+    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 引入bootbox.js -->
+    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
 </head>
 <body>
-<input type="hidden" id="ids" th:value="${ids}">
+<input type="text" id="ids" th:value="${ids}">
 <div class="showall">
     <!--left -->
     <div class="showbot">
@@ -46,46 +65,33 @@
             <ul class="glist" id="glist" data-monitor="goodsdetails_fenlei_click">
                 <li>
                     <span id="colorName">
-                        红色：<input type="radio" name="cName" value="1">
-                        黑色：<input type="radio" name="cName" value="2">
-                        白色：<input type="radio" name="cName" value="3">
-                        蓝色：<input type="radio" name="cName" value="4">
+                        红色：<input type="radio" name="cName" value="红色">
+                        黑色：<input type="radio" name="cName" value="黑色">
+                        白色：<input type="radio" name="cName" value="白色">
+                        蓝色：<input type="radio" name="cName" value="蓝色">
                     </span>
                 </li>
             </ul>
         </div>
-        <script>
-            $(document).ready(function(){
-                var t = $("#text_box");
-                $('#min').attr('disabled',true);
-                $("#add").click(function(){
-                    t.val(parseInt(t.val())+1)
-                    if (parseInt(t.val())!=1){
-                        $('#min').attr('disabled',false);
-                    }
-
-                })
-                $("#min").click(function(){
-                    t.val(parseInt(t.val())-1);
-                    if (parseInt(t.val())==1){
-                        $('#min').attr('disabled',true);
-                    }
-
-                })
-            });
-        </script>
+        可选择内存 &nbsp;&nbsp;
+        <span id="memory">
+                        <span id="m0"></span>:<input type="radio" id="me0" name="ab" value="" onclick="internal(this.value)">
+                        <span id="m1"></span>:<input type="radio" id="me1" name="ab" value="" onclick="internal(this.value)">
+                        <span id="m2"></span>:<input type="radio" id="me2" name="ab" value="" onclick="internal(this.value)">
+                        <span id="m3"></span>:<input type="radio" id="me3" name="ab" value="" onclick="internal(this.value)">
+        </span>
         <div class="gcIpt">
             <span class="guT">数量</span>
-            <input id="min" name="" type="button" value="-" onclick="plus()"/>
-            <input id="text_box" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
-            <input id="add" name="" type="button" value="+" onclick="queryOneDetails()"/>
+            <input id="min"  type="button" value="-" onclick="plus()"/>
+            <input id="text_box"  name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="add"  type="button" value="+" onclick="jiaYi()"/>
 
-            <span class="Hgt" id="inventory"></span>
+            库存：<span class="Hgt" id="inventory"></span>
             <input type="hidden" id="inventory2">
         </div>
         <div class="nobdr-btns">
-            <button class="addcart hu"><img src="../images/shop.png" width="25" height="25"/>加入购物车</button>
-            <button class="addcart yh"><img src="../images/ht.png" width="25" height="25"/>立即购买</button>
+            <button class="addcart hu" onclick="shoppingTrolley()"><img src="../images/shop.png" width="25" height="25"/>加入购物车</button>
+            <button class="addcart yh" onclick="buy()"><img src="../images/ht.png" width="25" height="25"/>立即购买</button>
         </div>
         <div class="guarantee">
             <span>邮费：包邮&nbsp;&nbsp;支持货到付款 <a href=""><img src="../images/me.png"/></a></span>
@@ -149,21 +155,24 @@
         </div>
         <!-- 搭配1 -->
         <div class="dq_ori">
-            <a class="dq_ori_prd" href=""><img src="../images/hdy_07.png"/></a>
-            <a class="ori_prd" href="">行车记录仪二代·美猴王版（黑灰色）</a>
-            <p class="ori_prd dp_wrap_pprice_ori"><span id="commodityPrice"></span><input type="text" id="price"></p>
+            <a class="dq_ori_prd" href=""><img id="0" src="../images/hdy_07.png"/></a>
+            <a class="ori_prd" href=""><span id="name0"></span></a>
+            <p class="ori_prd dp_wrap_pprice_ori">
+                <input type="checkbox" name="partsPr" id="par0"  onclick="accumulation(0)">
+                ￥<span id="pri0"></span>
+            </p>
         </div>
         <div class="scroll_wrap">
             <!-- 搭配2 -->
             <div class="dp_prd">
                 <div class="icon_plus">+</div>
                 <div class="dp_p_wrap">
-                    <a class="dp_wrap_pimg" href="" target="_blank"><img src="../images/list_10.jpg"/></a>
-                    <a class="dp_wrap_pname" href="" target="_blank">亿连方控-智能安全驾驶控制器 时尚版</a>
+                    <a class="dp_wrap_pimg" href="" target="_blank"><img id="1" src="../images/list_10.jpg"/></a>
+                    <a class="dp_wrap_pname" href="" target="_blank"><span id="name1"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" data-price="199" data-item="570b1b2f5efb114c378b4575">
-                            ￥199
+                            <input type="checkbox" name="partsPr" id="par1"  onclick="accumulation(1)">
+                            ￥<span id="pri1"></span>
                         </label>
                     </p>
                 </div>
@@ -172,12 +181,12 @@
             <div class="dp_prd">
                 <div class="icon_plus">+</div>
                 <div class="dp_p_wrap">
-                    <a class="dp_wrap_pimg" href="" target="_blank"><img src="../images/hdy_09.png"/></a>
-                    <a class="dp_wrap_pname" href="" target="_blank">亿连方控-智能安全驾驶控制器 时尚版</a>
+                    <a class="dp_wrap_pimg" href="" target="_blank"><img id="2" src="../images/hdy_09.png"/></a>
+                    <a class="dp_wrap_pname" href="" target="_blank"><span id="name2"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" data-price="199" data-item="570b1b2f5efb114c378b4575">
-                            ￥199
+                            <input type="checkbox" name="partsPr" id="par2" onclick="accumulation(2)">
+                            ￥<span id="pri2"></span>
                         </label>
                     </p>
                 </div>
@@ -186,12 +195,12 @@
             <div class="dp_prd">
                 <div class="icon_plus">+</div>
                 <div class="dp_p_wrap">
-                    <a class="dp_wrap_pimg" href="" target="_blank"><img src="../images/list_03.jpg"/></a>
-                    <a class="dp_wrap_pname" href="" target="_blank">O2+车载空气净化器DM2</a>
+                    <a class="dp_wrap_pimg" href="" target="_blank"><img id="3" src="../images/list_03.jpg"/></a>
+                    <a class="dp_wrap_pname" href="" target="_blank"><span id="name3"></span></a>
                     <p class="dp_wrap_pprice">
                         <label>
-                            <input type="checkbox" data-price="199" data-item="570b1b2f5efb114c378b4575">
-                            ￥365
+                            <input type="checkbox" name="partsPr" id="par3" onclick="accumulation(3)" >
+                            ￥<span id="pri3"></span>
                         </label>
                     </p>
                 </div>
@@ -245,13 +254,7 @@
                     <a href="#">规格参数</a>
                 </li>
                 <li>
-                    <a href="#">商品介绍</a>
-                </li>
-                <li>
                     <a href="#">商品评价</a>
-                </li>
-                <li>
-                    <a href="#">售后保障</a>
                 </li>
             </ul>
             <ul class="act_title_right">
@@ -268,27 +271,16 @@
             <!--0-->
             <div id="ui-a" class="ui-a">
                 <ul style="display:block;">
-                    <li>商品名称：仙人指路道镜前后双录智能后视镜导航仪行车记录仪后视预警一体机</li>
-                    <li>商品编号：ECS001983</li>
-                    <li>品牌</li>
-                    <li>上架时间：2016-05-24</li>
-                    <li>商品毛重：0克</li>
-                    <li>库存： 999 </li>
+                    <li>商品名称：<span id="spName"></span></li>
+                    <li>商品编号：<span id="serial"></span></li>
+                    <li>品牌：<span id="brandName"></span></li>
+                    <li>上架时间：<span id="createDate"></span></li>
+                    <li>商品毛重：20克</li>
+                    <li>库存： <span id="inventoryCount"></span> </li>
                     <li><img src="../images/ko-1.jpg"/></li>
                     <li><img src="../images/ko-2.jpg"/></li>
                     <li><img src="../images/ko.jpg"/></li>
                     <li><img src="../images/ko-1.jpg"/></li>
-                </ul>
-            </div>
-            <!--商品规格-->
-            <div id="bit" class="bit">
-                <ul style="display:none;">
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-                    <li><img src="../images/ko.jpg"/></li>
-                    <li><img src="../images/ko-1.jpg"/></li>
-                    <li><img src="../images/ko-2.jpg"/></li>
-
                 </ul>
             </div>
 
@@ -296,18 +288,12 @@
 
             <div id="ui-c" class="ui-c">
                 <ul style="display:none;">
-
-                </ul>
-            </div>
-            <!--售后保障-->
-            <div id="uic" class="uic">
-                <ul style="display:none;">
-                    <p>商品名称：仙人指路道镜前后双录智能后视镜导航仪行车记录仪后视预警一体机</p>
-                    <p>商品编号：ECS001983</p>
-                    <p>品牌:威力马哈国产</p>
-                    <p>上架时间：2016-05-24</p>
-                    <span><img src="../images/ko-1.jpg"/></span>
-                    <span><img src="../images/ko-2.jpg"/></span>
+                    <div class="plmain">
+                        <div class="plm clearfix">商品评价</div>
+                        <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
+                        <a class="dp_wrap_pname" href="javascript:evaluation()" >评论</a>
+                        <div id="treeDiv"></div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -337,10 +323,17 @@
 
     $(function(){
         queryOneDetails();
-        queryColor();
-        //subtractNumber();
+        lickMemory();
+        //queryColor();
+        //queryAccessories();
     })
 
+    //别动
+    var pr;
+    var typeId;
+    var imgSrc;
+    var inventoryCount;
+    var totalPrices;
     //查询一条详情信息
     function queryOneDetails(val) {
         var ids = $("#ids").val();
@@ -350,34 +343,125 @@
             data:{ids:ids},
             dataType:"json",
             success:function(data){
+                pr = data.commodityPrice;
+                typeId = data.typeId;
+                imgSrc = data.pictureUrl;
+                inventoryCount = data.inventory;
+                //商品名称
                 $("#commodityName").html("商品名称:"+data.commodityName);
-                $("#commodityPrice").html(data.commodityPrice)
+                $("#spName").html(data.commodityName);
+                //编号
+                $("#serial").html(data.artNo);
+                //品牌
+                $("#brandName").html(data.name)
+                //时间
+                $("#createDate").html(data.createDate);
+                //库存
+                $("#inventoryCount").html(data.inventory);
+                //商品颜色
                 $("#colorName").html(data.colorName);
-                $("#commodityPrice").html("$"+data.commodityPrice);
+                //出售数量
                 $("#sellquantity").html(data.sellquantity);
+                //图片路径
                 $("#pictureUrl").attr("src",data.pictureUrl);
 
-                //数量减一
+                //数量加一
                 toryNumber = $("[name='tory']").val();
                 var nu = data.inventory-toryNumber;
-                $("#inventory").html("库存"+nu);
-                $("#inventory2").val(nu);
-                //
+                $("#inventory").html(nu);
+
+                //循环获取选中的内存价格
+                var memoryPrice = 0;
+                var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+                for(var i=0;i<memoryArr.length;i++){
+                    if(memoryArr[i].checked==true) {
+                        memoryPrice=memoryArr[i].value;
+                        break;
+                    }
+                }
+                var memo = parseInt(memoryPrice);
+                //内存价格加总价 然后乘于个数 计算总价格
+                totalPrices = memo+data.commodityPrice;
+                $("#commodityPrice").html(toryNumber*totalPrices);
+
+                //调用查询配件 根据商品类型ID
+                queryAccessories();
+
             },
             error:function(){
                 alert("查询失败");
             }
         })
     }
-    
-    //数量加一
-    function plus() {
-        var inventory = $("#inventory2").val();
-        var nu = parseInt(inventory);
-        nu++;
-        $("#inventory").html("库存"+nu);
-        $("#inventory2").val(nu);
+
+    function jiaYi(){
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi+1);
+
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
+
+
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount-1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
+
+
     }
+    
+    //数量减一
+    function plus() {
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi-1);
+
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
+
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount+1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
+    }
+
 
     //加载颜色
     function queryColor(){
@@ -398,6 +482,11 @@
         })
     }
 
+    //设置样式
+    //购买
+function buy(){
+        alert("123");
+}
     $(document).ready(function(){
         var showproduct = {
             "boxid":"showbox",
@@ -415,5 +504,240 @@
         };//参数定义
        // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
     });
+
+    var ii;
+    //查询商品配件
+    function queryAccessories() {
+       // alert(typeId);
+        $.ajax({
+            url:"../zch/queryAccessories",
+            type:"post",
+            data:{typeId:typeId},
+            dataType:"json",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    //alert(data[i].itemId);
+                    if(i==i){
+                        // 循环 i下表和 img 的Id保持一致
+                        //图片
+                        $("#"+i).attr("src",data[i].imgSrc);
+                        //配件
+                        $("#name"+i).html(data[i].name);
+                        //价格
+                        $("#pri"+i).html(data[i].price);
+                        //给复选框赋值Id
+                        $("#par"+i).val(data[i].itemId);
+                    }
+                }
+                //alert($("#par1").val());
+            },
+            error:function(){
+                alert("查询配件失败");
+            }
+        })
+    }
+
+    //累加配件价格
+    function accumulation(val) {
+        var ce = 0;
+            if(val==0){
+                var pri = $("#pri0").html();
+                priNumber = parseInt(pri);
+                ce+=priNumber;
+            }
+            if(val==1){
+                var pri = $("#pri1").html();
+                priNumber = parseInt(pri);
+                ce+=priNumber;
+            }
+            if(val==2){
+                var pri = $("#pri2").html();
+                priNumber = parseInt(pri);
+                ce+=priNumber;
+            }
+            if(val==3){
+                var pri = $("#pri3").html();
+                priNumber = parseInt(pri);
+                ce+=priNumber;
+            }
+
+        //alert(ce);
+        $("#pr").html(ce);
+        //获取计算总价格
+        var pri = $("#commodityPrice").html();//获取当前价格
+        var price = parseInt(pri);
+        $("#commodityPrice").html(ce+price);
+
+    }
+
+    //内存价格加载
+    function lickMemory() {
+
+        $.ajax({
+            url:"../zch/queryLickMemory",
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    //alert(data[i].memoryName);
+                    if(i==i){
+                        $("#m"+i).html(data[i].memoryName);
+                        $("#me"+i).val(data[i].price);
+                    }
+                }
+            },
+            error:function(){
+                alert("查询内存失败");
+            }
+        })
+
+    }
+
+    //选择内存计算总价
+    function internal(val) {
+        //循环获取内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+
+        //当前内存价格
+        var price = parseInt(memoryPrice);
+
+        //获取当前总价格
+        //var pri = $("#commodityPrice").html();
+        var prices = parseInt(pr);
+
+        //计算内存加总价
+        var aa = prices+price;
+        //获取当前商品数量
+        var bb = $("[name='tory']").val();
+        var cc = parseInt(bb);
+        $("#commodityPrice").html(aa*cc);
+
+
+    }
+
+
+    //加入购物车
+    function shoppingTrolley() {
+        //商品名称
+        var spName = $("#spName").html();
+        //编号
+        var serial = $("#serial").html();
+        //品牌
+        var brandName  = $("#brandName").html();
+        //上架时间
+        var createDate = $("#createDate").html();
+        //重量
+        var weight = "20克";
+        //图片路径 imgSrc该变量为全局变量
+        var igc = imgSrc;
+        //商品总价
+        var commodityPrice = $("#commodityPrice").html();
+        //循环获取选中的颜色
+        var colorName = "";
+        var array=$("[name='cName']");//  selectvalue为radio中选中的值
+        for(var i=0;i<array.length;i++){
+            if(array[i].checked==true) {
+                colorName=array[i].value;
+                break;
+            }
+        }
+
+        //循环获取内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+
+        //获取购买数量
+        var purchaseQuantity = $("#text_box").val();
+
+        //循环获取选中的配件Id
+        var partsId = "";
+        var partsPrArr = $("[name='partsPr']");
+        for(var i=0;i<partsPrArr.length;i++){
+            if(partsPrArr[i].checked==true) {
+                partsId +="," + partsPrArr[i].value;
+                //break;
+            }
+        }
+        partsId = partsId.substring(1);
+
+        //获取商品Id
+        var proId = $("#ids").val();
+
+        $.ajax({
+            url:"../cart/add",
+            type:"post",
+            data:{
+                spName:spName,
+                serial:serial,
+                weight:weight,
+                igc:igc,
+                commodityPrices:commodityPrice,
+                colorName:colorName,
+                memoryPrice:memoryPrice,
+                purchaseQuantity:purchaseQuantity,
+                proId:proId
+            },
+            success:function(data){
+               alert("完成");
+            },
+            error:function () {
+                alert("加入购物车失败");
+            }
+        })
+
+
+
+    }
+
+    //评论
+    evaluation = function(){
+        var text =$("#TextArea1").val();
+        var ids =$("#ids").val();
+        alert(text)
+        alert(ids)
+      $.ajax({
+           url:"../hb/addevaluation",
+           data:{text:text,ids:ids},
+           success:function(data){
+               window.location.reload()
+           }
+       })
+    }
+
+
+      $(function(){
+        showTree();
+    })
+    function showTree(){
+        var id = $("#ids").val();
+        $.ajax({
+            url:'../hb/comments?id='+id,
+            type : "post",
+            success:function(data){
+                $("#treeDiv").treeview({
+                    //data属性 树节点信息 json数组
+                    data: data,
+                    //tree默认展开的节点级别默认为2
+                    levels: 0,
+
+                })
+            },error : function (){
+                alert("查询失败");
+            }
+        })
+    }
 </script>
 </html>

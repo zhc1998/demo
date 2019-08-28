@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ToShowController {
 
 
-    //跳转前台登陆页面
+    //跳转前台登陆页面showye
     @RequestMapping("tofrontLogin")
     public String tofrontLogin(){
         return "ffqt/frontLogin";
@@ -79,6 +79,10 @@ public class ToShowController {
         return "kuaidi";
     }
 
+    /**
+     *  跳转到个人中心
+     * @return
+     */
 
 
 
@@ -227,5 +231,17 @@ public class ToShowController {
 
         model.addAttribute("ids",ids);
         return "index";
+    }
+
+    //跳转到购物车
+    @RequestMapping("toShoppingTrolley")
+    public String toShoppingTrolley(){
+        return "gouwuche";
+    }
+
+    //根据商品名称跳转页面
+    @RequestMapping("toList")
+    public String toList(){
+        return "hbqt/list";
     }
 }

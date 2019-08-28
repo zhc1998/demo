@@ -59,6 +59,13 @@
     <li class="list-group-item"><b>下单时间:</b><span th:text="${orderone.ordertime}"></span></li>
     <li class="list-group-item"><b>下单人:</b><span th:text="${orderone.buyer}"></span></li>
     <li class="list-group-item"><b>付款时间:<span th:text="${orderone.paydate}"></span></b></li>
+     <li class="list-group-item"><b>状态:</b><span th:if="${orderone.state}==1" th:text="代付款"></span>
+         <span th:if="${orderone.state}==2" th:text="代发货"></span>
+         <span th:if="${orderone.state}==3" th:text="待收货"></span>
+         <span th:if="${orderone.state}==4" th:text="已关闭"></span>
+         <span th:if="${orderone.state}==5" th:text="已完成"></span>
+     </li>
+
     </ul>
     </div>
 <!-- 收货人信息 -->
