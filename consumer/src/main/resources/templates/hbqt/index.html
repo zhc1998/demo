@@ -104,7 +104,7 @@
 							<input type="text" id="pName" placeholder="搜索商品" />
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button type="button" class="btn btn-primary" onclick="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
 					</div>
 				</form>
@@ -1175,6 +1175,23 @@
     function tousercenter(){
         window.open("../clp/showClpYhq3");
     }
+    
+	//条件查询
+	function search() {
+		var pName = $("#pName").val();
+		$.ajax({
+			url:"../zch/querysolr",
+			type:"post",
+			data:{pName:pName},
+			dataType:"json",
+			success:function(data){
+                alert(data);
+			},
+			error:function(){
+				alert("条件查询失败");
+			}
+		})
+	}
 </script>
 
 </html>

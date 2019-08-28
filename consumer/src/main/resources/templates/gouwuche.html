@@ -222,14 +222,16 @@
                         clearTimeout(timeout);
                     });
                     $.ajax({
-                        url: "clear",
-                        type: "POST",
-                        dataType: "json",
-                        cache: false,
-                        success: function(data) {
-                            location.reload(true);
+                        url:"../cart/deleteAll",
+                        type:"post",
+                        dataType:"json",
+                        success:function(data){
+                            location.href="../toshow/toShoppingTrolley"
+                        },
+                        error:function(){
+                            alert("清除失败");
                         }
-                    });
+                    })
                 }
                 return false;
             });
@@ -459,8 +461,6 @@
                 </ul>
             </div>
 
-            <!--  表格 -->
-            <button type='button'  class='btn btn-success' onclick='empty()'>清空购物车</button>
             <table id="dataGrid" ></table>
         </div>
     </div>
@@ -470,10 +470,10 @@
 						<span class="total">
 								<em>登录后确认是否享有优惠</em>
 							赠送积分: <em id="effectiveRewardPoint">23886</em>
-							商品金额: <strong id="effectivePrice">￥23886.00元</strong>
+							商品金额: ￥:<span id="spPrice"></span>元
 						</span>
                 <span>
-							<a href="javascript:;" id="clear" class="clear">清空</a>
+							<a  id="clear" class="clear">清空</a>
 							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
 						</span>
             </div>
@@ -714,6 +714,7 @@
         initDataGrid();
     })
 
+    var price = 0;
     //查询商品
     function initDataGrid() {
         //创建bootstrapTable
@@ -745,10 +746,21 @@
                     }},
                 {field:'cz',title:'操作',formatter:function (value,row,index) {
                         return "<button type='button'  class='btn btn-success' onclick='delShop("+row.id+")'>删除</button>";
-                    }}
+                    }},
+                {field:'commodityPrices',title:'总价格',formatter:function(value,row,index){
+                        price+=value;
+                        jiaGe(price);
+                       return value;
+                    }},
             ]
         });
     }
+    //计算商品总价
+    function jiaGe(prices){
+        $("#spPrice").html("<font color='red'>"+prices+"</font>");
+    }
+
+
 
     //删除指定数据
     function delShop(id) {
@@ -765,20 +777,6 @@
             }
         })
     }
-    
-    //清空购物车
-    function empty() {
-        $.ajax({
-            url:"../cart/deleteAll",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                location.href="../toshow/toShoppingTrolley"
-            },
-            error:function(){
-                alert("清除失败");
-            }
-        })
-    }
+
 </script>
 </html>
