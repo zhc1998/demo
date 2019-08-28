@@ -13,7 +13,6 @@
 
 <div id="app">
     <!-- header -->
-    <div th:replace="public/header :: header"></div>
 
     <!-- main -->
     <div id="main">
@@ -103,7 +102,6 @@
     </div>-->
 
     <!-- footer -->
-    <div th:replace="public/footer :: footer"></div>
 
 </div>
 
@@ -121,7 +119,8 @@
             seckillId: [[${seckill.seckillid}]],
             startTime: new Date([[${seckill.starttime}]]),//毫秒
             endTime: new Date([[${seckill.endtime}]]),
-            money: [[${seckill.costprice}]] //秒杀价钱
+            money: [[${seckill.costprice}]], //秒杀价钱
+
         });
     });
 </script>
