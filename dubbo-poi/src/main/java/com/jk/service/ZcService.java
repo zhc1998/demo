@@ -2,6 +2,7 @@ package com.jk.service;
 
 import com.jk.model.Orderone;
 import com.jk.model.commodity.*;
+import com.jk.util.ParameUtil;
 import com.jk.util.ResultPage;
 
 import java.util.List;
@@ -57,4 +58,8 @@ public interface ZcService {
     CommodityModel queryItemPrice(Integer ids);
 
     CommodityModel queryCommodityByArtNo(String artNo);
+
+    List<DrandModel> queryBranList();
+
+    List<CommodityModel> loadbranImgShow(Integer branId);
 }
