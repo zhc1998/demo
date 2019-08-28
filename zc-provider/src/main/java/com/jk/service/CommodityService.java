@@ -3,6 +3,7 @@ package com.jk.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.jk.dao.ZcDao;
 import com.jk.model.commodity.*;
+import com.jk.util.ParameUtil;
 import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -163,6 +164,20 @@ public class CommodityService implements ZcService {
     public CommodityModel queryCommodityByArtNo(String artNo) {
         return zcDao.queryCommodityByArtNo(artNo);
     }
+
+    //展示手机品牌树
+    @Override
+    public List<DrandModel> queryBranList() {
+        return zcDao.queryBranList();
+    }
+
+    //根据品牌展示图片
+    @Override
+    public List<CommodityModel> loadbranImgShow(Integer branId) {
+        return zcDao.loadbranImgShow(branId);
+    }
+
+
     //查询配件
     @Override
     public List<AccessoriesModel> queryAccessories(Integer typeId) {

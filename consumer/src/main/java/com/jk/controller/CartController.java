@@ -77,14 +77,16 @@ public class CartController {
 
     @RequestMapping("add")
     @ResponseBody
-    public HashMap<String,Object> addProductToCartList(Integer proId,Integer num,ShoppingTrolleyModel shop){
-
+    public HashMap<String,Object> addProductToCartList(Integer proId,Integer num,ShoppingTrolleyModel shop,Double commodityPrices){
         Members admin = (Members) session.getAttribute("members");
 
         HashMap<String, Object> map = new HashMap<>();
         try {
             //查询根据Id查询数据存入
             List<CommodityModel> carts = cartService.findProductById(proId);
+            for(CommodityModel commodityModel2:carts){
+                commodityModel2.setCommodityPrices(commodityPrices);
+            }
             if (admin==null){
                 if(CookieUtil.getCookieValue(request, "cartList", "UTF-8")!=null && !"".equals(CookieUtil.getCookieValue(request, "cartList", "UTF-8"))){
                     String cartList = CookieUtil.getCookieValue(request, "cartList", "UTF-8");
@@ -96,6 +98,9 @@ public class CartController {
 
                 CookieUtil.setCookie(request, response, "cartList", JSON.toJSONString(carts),3600*24,"UTF-8");
             }else{
+                for(CommodityModel commodityModel2:carts){
+                    commodityModel2.setCommodityPrices(commodityPrices);
+                }
                 if(cartService.findCartListFromRedis(admin.getUsername())!=null){
                     List<CommodityModel> cartListFromRedis = cartService.findCartListFromRedis(admin.getUsername());
                     for(CommodityModel commodityModel:cartListFromRedis){

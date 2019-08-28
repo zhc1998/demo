@@ -10,4 +10,9 @@ public class Manager {
         return new Queue("AddOrder");
         
     }
+    @Bean//把当前队列注入到spring环境中
+    public Queue seckill(){
+        return new Queue("seckill");
+
+    }
 }

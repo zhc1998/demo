@@ -28,5 +28,68 @@
     <update id="updateMembers">
         update members set password=#{newpassword} where phone=#{phone}
     </update>
- 
+
+    <select id="findAll" resultType="Seckill">
+        SELECT * FROM seckill order by endtime
+    </select>
+
+    <select id="findById" resultType="Seckill">
+        SELECT * FROM seckill WHERE seckillid = #{id}
+    </select>
+
+    <update id="reduceStock">
+        UPDATE seckill
+        SET stockcount = stockcount - 1
+        WHERE seckillid = #{seckillId}
+          AND starttime &lt;= #{killTime}
+          AND endtime &gt;= #{killTime}
+          AND stockcount &gt; 0
+    </update>
+
+    <!-- 插入订单明细。如果主键冲突会直接报错，可使用`ignore`实现主键冲突就直接返回0，表示更新失败 -->
+    <insert id="insertOrder">
+        INSERT ignore INTO seckill_order(seckillid, money,createtime, userphone,state)
+        VALUES (#{seckillId}, #{money}, now(),#{userPhone},0)
+    </insert>
+
+    <!-- 查询订单明细表并得到对应秒杀商品的数据
+        通过`s.xxx "seckill.xxx"`的方式实现将查询到的seckill表中的数据赋值给seckillOrder实体类中的seckill属性上
+    -->
+    <select id="findById2" resultType="SeckillOrder">
+        SELECT
+            so.seckillid,
+            so.userphone,
+            so.money,
+            so.createtime,
+            so.state,
+            s.seckillid "seckill.seckillid",
+            s.title "seckill.title",
+            s.costprice "seckill.costprice",
+            s.createtime "seckill.createtime",
+            s.starttime "seckill.starttime",
+            s.endtime "seckill.endtime",
+            s.stockcount "seckill.stockcount"
+        FROM seckill_order so
+                 INNER JOIN seckill s ON so.seckillid = s.seckillid
+        WHERE so.seckillid = #{seckillId} AND so.userphone = #{userPhone}
+    </select>
+
+    <select id="querySeckillCount" resultType="long">
+        select count(*)  from seckill
+    </select>
+    <select id="querySeckill" resultType="Seckill">
+        select *  from seckill LIMIT #{start},#{end}
+    </select>
+    <delete id="deleteSeckill">
+        delete from seckill where seckillid=#{ids}
+    </delete>
+    <select id="querySeckillById" resultType="Seckill">
+        select *  from seckill where seckillid=#{id}
+    </select>
+    <insert id="addSeckill2">
+        insert into seckill(image,title,costprice,createtime,starttime,endtime,stockcount,price) values(#{image},#{title},#{costprice},#{createtime},#{starttime},#{endtime},#{stockcount},#{price})
+    </insert>
+    <update id="updateSeckill2">
+        update seckill set image=#{image},title=#{title},costprice=#{costprice},createtime=#{createtime},starttime=#{starttime},endtime=#{endtime},stockcount=#{stockcount},price=#{price} where seckillid=#{seckillid}
+    </update>
 </mapper>

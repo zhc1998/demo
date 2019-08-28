@@ -35,14 +35,16 @@
   </select>
 
   <select id="queryClpYhq" resultMap="BaseResultMap">
-    select * from clp_yhq c where c.yhqstatus=1 GROUP BY c.yhqName
+    select * from clp_yhq c where c.yhqstatus=1 and c.id=#{id} GROUP BY c.yhqName
   </select>
 
   <select id="queryClpYhq2" resultMap="BaseResultMap">
     select * from clp_yhq where  yhqStatus=2 and yhquserid=#{mid}
   </select>
 
-
+  <select id="queryClpYhqs" resultMap="BaseResultMap">
+    select * from clp_yhq where  yhqStatus=1 GROUP BY yhqName
+  </select>
 
 
 

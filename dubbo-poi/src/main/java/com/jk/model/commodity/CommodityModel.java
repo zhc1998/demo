@@ -34,6 +34,16 @@ public class CommodityModel implements Serializable {
 
     private String name;
 
+    private Double commodityPrices;
+
+    public Double getCommodityPrices() {
+        return commodityPrices;
+    }
+
+    public void setCommodityPrices(Double commodityPrices) {
+        this.commodityPrices = commodityPrices;
+    }
+
     public String getTypeName() {
         return typeName;
     }

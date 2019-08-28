@@ -8,28 +8,181 @@
     <meta name="description" content="首页" />
     <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
-    <!-- 引入bootstrap的css -->
-    <link  href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-treeview的css -->
-    <link  href="../js/treeview/bootstrap-treeview.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap-addTabs的css -->
-    <link  href="../js/addTabs/addTabs.css" rel="stylesheet" >
-    <!-- 引入bootstrap-table的css -->
-    <link  href="../js/table/bootstrap-table.min.css" rel="stylesheet" >
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/treeview/bootstrap-treeview.min.js"></script>
-    <!-- 引入bootstrap的js-->
-    <script type="text/javascript" src="../js/addTabs/addTabs.js"></script>
-    <!-- 引入bootstrap-table的js-->
-    <script type="text/javascript" src="../js/table/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="../js/table/locale/bootstrap-table-zh-CN.min.js"></script>
-    <!-- 引入bootbox.js -->
-    <script type="text/javascript" src="../js/bootbox/bootbox.js"></script>
+
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap/css/bootstrap.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../common/global.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/personal.css" media="all">
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../layui/layui.js"></script>
 </head>
+<style type="text/css">
+    .article-container{
+        background-color: #ffffff;
+        padding-top:20px;
+        width:1024px;
+        margin:20px auto;
+    }
+
+    .article_r{
+        padding-top:10px;
+        float:right;
+    }
+    .pulisher,.time,.article_view,.article_comments,.article_del{
+        clear:both;
+        margin-right:25px;
+        font-size: 15px;
+    }
+    .title{
+        font-weight:bold;
+        font-size: 30px;
+        text-align: center;
+    }
+    .article_content{
+        background: #ffffff;
+        clear:both;
+        padding:1em 4em;
+        margin-top: 40px;
+    }
+    p{
+        text-indent: 2em;
+        text-overflow: hidden;
+        font-size:18px;
+    }
+
+    /*话题内容图片*/
+    .ImgContent{
+        width:350px;
+        margin:0px auto;
+        padding: 5px;
+        overflow:hidden;
+
+    }
+
+    .NavLinks{
+        padding:5px;
+        width:100px;
+        height: 100px;
+        float: left;
+        overflow: hidden;
+    }
+
+    .NavLinks img{
+        width: 100%;
+        height: 100%;
+    }
+    .hitShowPic {
+        width:350px;
+        clear:both;
+        margin-left:430px;
+    }
+    .hitShowPic span {
+        font-size: 15px;
+        text-align: center;
+    }
+    /*以下评论的css*/
+    .show_reply_list {
+        margin-right:1em;
+        color: grey;
+    }
+    .comment_list {
+        background-color: #ffffff;
+        padding-top:5px;
+        width:900px;
+        margin:0 auto;
+    }
+    .comment {
+        width:900px;
+        margin-top:10px;
+    }
+    .comment_details {
+        float:right;
+    }
+    .comment_content {
+        clear:both;
+        margin:5px 50px;
+        font-size:16px;
+    }
+    .comment_add_or_last {
+
+        margin:0 auto;
+        clear: both;
+        width:600px;
+        height:50px;
+        background: #F0F0F0;
+        text-align: center;
+        font-size:20px;
+        line-height: 40px;   //行高（与div保持同高，垂直居中写法）
+    margin-bottom: 40px;
+    }
+    .imgdiv{
+        width:80px;
+        height:70px;
+        float:left;
+
+    }
+    .imgcss {
+        width:60px;
+        height:60px;
+        border-radius: 50%;
+    }
+    .comment_name {
+        margin-left:10px;
+        color:#3D9EEA;
+        font-size:16px;
+        font-weight: bolder;
+    }
+    .layui-icon {
+        font-size: 13px;
+        color: grey;
+    }
+    .del {
+        float:right;
+
+    }
+    .del_comment {
+        margin-right:50px;
+    }
+
+
+
+    .reply_list {
+        clear:both;
+        display:none;
+        width:900px;
+
+        padding-right:15px;
+        margin-top:10px;
+        font-size:16px;
+
+    }
+    .reply {
+        clear:both;
+        width:700px;
+        margin:4px auto;
+
+    }
+    .reply_name {
+        color:#3D9EEA;
+    }
+    .del_reply {
+        float:right;
+    }
+    .show_remain_reply {
+        width:600px;
+        height:40px;
+        text-align:center;font-size:18px;
+        background-color: #F0F0F0;
+        margin:0 auto;
+        line-height: 40px;
+        display:none;
+    }
+</style>
 <body>
-<input type="hidden" id="ids" th:value="${ids}">
+<input type="text" id="ids" th:value="${ids}">
 <div class="showall">
     <!--left -->
     <div class="showbot">
@@ -54,7 +207,7 @@
             <h3><span id = "commodityName"></span></h3>
         </div>
         <div class="txt">
-            <span class="nowprice">￥<a href=""><span id="commodityPrice"></span></a></span>
+            <span class="nowprice">￥<span id="commodityPrice"></span></span>
             <div class="cumulative">
                 <span class="number ty1">累计售出<br /><em id="add_sell_num_363"><span id="sellquantity"></span></em></span>
                 <span class="number tyu">累计评价<br /><em id="add_sell_num_363">25</em></span>
@@ -80,33 +233,13 @@
                         <span id="m2"></span>:<input type="radio" id="me2" name="ab" value="" onclick="internal(this.value)">
                         <span id="m3"></span>:<input type="radio" id="me3" name="ab" value="" onclick="internal(this.value)">
         </span>
-        <script>
-            $(document).ready(function(){
-                var t = $("#text_box");
-                $('#min').attr('disabled',true);
-                $("#add").click(function(){
-                    t.val(parseInt(t.val())+1)
-                    if (parseInt(t.val())!=1){
-                        $('#min').attr('disabled',false);
-                    }
-
-                })
-                $("#min").click(function(){
-                    t.val(parseInt(t.val())-1);
-                    if (parseInt(t.val())==1){
-                        $('#min').attr('disabled',true);
-                    }
-
-                })
-            });
-        </script>
         <div class="gcIpt">
             <span class="guT">数量</span>
-            <input id="min" name="" type="button" value="-" onclick="plus()"/>
-            <input id="text_box" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
-            <input id="add" name="" type="button" value="+" onclick="queryOneDetails()"/>
+            <input id="min"  type="button" value="-" onclick="plus()"/>
+            <input id="text_box"  name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="add"  type="button" value="+" onclick="jiaYi()"/>
 
-            <span class="Hgt" id="inventory"></span>
+            库存：<span class="Hgt" id="inventory"></span>
             <input type="hidden" id="inventory2">
         </div>
         <div class="nobdr-btns">
@@ -312,7 +445,24 @@
                         <div class="plm clearfix">商品评价</div>
                         <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
                         <a class="dp_wrap_pname" href="javascript:evaluation()" >评论</a>
-                        <div id="treeDiv"></div>
+                        <div class="article-container">
+
+                            <hr>
+                            <div class="comment_list">
+                                <h3 style="text-indent: 2em;">评论列表</h3>
+                                <hr>
+                                <div class="comment" id="ping">
+
+                                </div>
+                                <hr>
+
+                                <div class="comment_add_or_last" >
+                                    点击加载更多评论
+                                </div>
+                                <hr>
+                            </div>
+
+                        </div>
                     </div>
                 </ul>
             </div>
@@ -352,6 +502,8 @@
     var pr;
     var typeId;
     var imgSrc;
+    var inventoryCount;
+    var totalPrices;
     //查询一条详情信息
     function queryOneDetails(val) {
         var ids = $("#ids").val();
@@ -364,6 +516,7 @@
                 pr = data.commodityPrice;
                 typeId = data.typeId;
                 imgSrc = data.pictureUrl;
+                inventoryCount = data.inventory;
                 //商品名称
                 $("#commodityName").html(data.commodityName);
                 $("#spName").html(data.commodityName);
@@ -385,8 +538,7 @@
                 //数量加一
                 toryNumber = $("[name='tory']").val();
                 var nu = data.inventory-toryNumber;
-                $("#inventory").html("库存"+nu);
-                $("#inventory2").val(nu);
+                $("#inventory").html(nu);
 
                 //循环获取选中的内存价格
                 var memoryPrice = 0;
@@ -399,7 +551,7 @@
                 }
                 var memo = parseInt(memoryPrice);
                 //内存价格加总价 然后乘于个数 计算总价格
-                var totalPrices = memo+data.commodityPrice;
+                totalPrices = memo+data.commodityPrice;
                 $("#commodityPrice").html(toryNumber*totalPrices);
 
                 //调用查询配件 根据商品类型ID
@@ -412,20 +564,75 @@
         })
     }
 
+
+    function jiaYi(){
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi+1);
+
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
+
+
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount-1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
+
+
+    }
+
     //数量减一
     function plus() {
+        //数量加一
+        var jia = $("#text_box").val();
+        var jiaYi = parseInt(jia);
+        //alert(jiaYi++);
+        $("#text_box").val(jiaYi-1);
 
-        var inventory = $("#inventory2").val();
-        var nu = parseInt(inventory);
-        nu++;
-        $("#inventory").html("库存"+nu);
-        $("#inventory2").val(nu);
+        //获取库存
+        var inventory = $("#inventory").html();
+        var inventoryCount = parseInt(inventory);
 
-        //计算价格
-        var pri = $("#commodityPrice").html();//获取当前价格
-        var price = parseInt(pri);
-        $("#commodityPrice").html(price-pr);
+        //获取当前商品数量
+        var count = $("[name='tory']").val();
+        var comCount = parseInt(count);
+        //库存减去商品数量
+        $("#inventory").html(inventoryCount+1);
+
+        //循环获取选中的内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
+            }
+        }
+        var memo = parseInt(memoryPrice);
+        //内存价格加总价 然后乘于商品个数 计算总价格
+        var totalPrice = memo+totalPrices;
+        $("#commodityPrice").html(count*totalPrice);
     }
+
 
     //加载颜色
     function queryColor(){
@@ -540,7 +747,7 @@
 
     }
 
-    //可选择内存
+    //内存价格加载
     function lickMemory() {
 
         $.ajax({
@@ -564,33 +771,32 @@
 
     }
 
-    //选择内存
+    //选择内存计算总价
     function internal(val) {
-        var ids = $("#ids").val();
-        $.ajax({
-            url:"../zch/queryItemPrice",
-            type:"post",
-            data:{ids:ids},
-            type:"json",
-            success:function (data) {
-                //alert(data.commodityPrice);
-                //每选择一项内存从新给总价格赋值
-                $("#commodityPrice").html(data.commodityPrice);
-
-                //从新获取当前商品总价格
-                var pri = $("#commodityPrice").html();
-                var price = parseInt(pri);
-
-                //获取每个内存价格
-                var vall = parseInt(val);
-                //计算价格
-                $("#commodityPrice").html(price+vall);
-
-            },
-            error:function(){
-                alert("查询价格失败");
+        //循环获取内存价格
+        var memoryPrice = 0;
+        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+        for(var i=0;i<memoryArr.length;i++){
+            if(memoryArr[i].checked==true) {
+                memoryPrice=memoryArr[i].value;
+                break;
             }
-        })
+        }
+
+        //当前内存价格
+        var price = parseInt(memoryPrice);
+
+        //获取当前总价格
+        //var pri = $("#commodityPrice").html();
+        var prices = parseInt(pr);
+
+        //计算内存加总价
+        var aa = prices+price;
+        //获取当前商品数量
+        var bb = $("[name='tory']").val();
+        var cc = parseInt(bb);
+        $("#commodityPrice").html(aa*cc);
+
 
     }
 
@@ -678,8 +884,6 @@
     evaluation = function(){
         var text =$("#TextArea1").val();
         var ids =$("#ids").val();
-        alert(text)
-        alert(ids)
       $.ajax({
            url:"../hb/addevaluation",
            data:{text:text,ids:ids},
@@ -690,27 +894,71 @@
     }
 
 
-      $(function(){
-        showTree();
-    })
-    function showTree(){
-        var id = $("#ids").val();
+    $(function(){
         $.ajax({
-            url:'../hb/comments?id='+id,
-            type : "post",
+            url:"../hb/qurtycom",
+            dataType:"json",
             success:function(data){
-                $("#treeDiv").treeview({
-                    //data属性 树节点信息 json数组
-                    data: data,
-                    //tree默认展开的节点级别默认为2
-                    levels: 0,
-
-                })
-            },error : function (){
-                alert("查询失败");
+                var html = "";
+                for (var i = 0; i <data.length ; i++) {
+                    html+='<div class="imgdiv">' +
+                        '<img class="imgcss"  src="./images/user.jpg"/> ' +
+                        '</div> <div class="conmment_details" >' +
+                        '<div style="float:left;">' +
+                        '<span>'+data[i].uid+'</span>' +
+                        '</div><div class="del">' +
+                        '<span  class="show_reply_list"><a href="#">查看回复</a></span> </div> ' +
+                        '<div class="comment_content" >'+ data[i].text+' </div></div>  <hr>'
+                }
+                $("#ping").html(html);
             }
         })
-    }
+    })
+</script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery','element','laypage','form'],function(){
+        var form = layui.form();
+        window.layer = layui.layer;
+        layedit = layui.layedit;
+        window.jQuery = window.$ = layui.jquery;
+        var element = layui.element(),form = layui.form();
+        layer.photos({
+            photos: '#layer-photos-demo'
+            ,anim: 5
+        });
 
+        $(document).ready(function(){
+            //alert($(".comment_list").find(".comment")[0] == undefined);
+            if($(".comment_list").find(".comment")[0] == undefined) {
+                $(".comment_add_or_last").html("暂无人评论");
+            }
+            $(document).on('click','.show_reply_list', function(){
+
+                if($(this).closest('.comment').find(".reply_list").css("display") != "none") {
+                    $(this).closest('.comment').find(".show_remain_reply").css("display","none");
+                    $(this).html("查看回复");
+
+                }else {
+                    $(this).closest('.comment').find(".show_remain_reply").css("display","block");
+                    $(this).html("收起回复");
+
+                }
+                $(this).closest('.comment').find(".reply_list").toggle(500);
+            });
+
+            $(document).on('click','.show_remain_reply', function(){
+                $(this).html("已显示全部回复");
+                //TODO发送数据
+
+            });
+            $(document).on('click','.comment_add_or_last', function(){
+                var getMoreComment = $(this);
+                //TODO如果获取的数据为零
+                getMoreComment.html("没有更多评论了");
+            });
+
+        });
+
+    });
 </script>
 </html>

@@ -5,9 +5,13 @@ import com.jk.dao.XxfDao;
 
 import com.jk.model.Highcharts;
 import com.jk.model.Members;
+import com.jk.model.Seckill;
 import com.jk.model.User;
+import com.jk.model.commodity.CommodityModel;
+import com.jk.util.ResultPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -60,6 +64,48 @@ public class XxfServiceImpl implements XxfService{
     @Override
     public void updateMembers(Members members) {
         xxfDao.updateMembers(members);
+    }
+
+    @Override
+    public ResultPage querySeckill(ResultPage result) {
+        ResultPage resultPage = new ResultPage();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("result", result);
+
+        //查询总条数
+        Long count = xxfDao.querySeckillCount(hashMap);
+        resultPage.setTotal(Integer.parseInt(count.toString()));
+
+        resultPage.setPageNumber(result.getPageNumber());
+        resultPage.setPageSize(result.getPageSize());
+
+        hashMap.put("start", (result.getPageNumber()-1)*result.getPageSize());
+        hashMap.put("end", result.getPageSize());
+
+        //查询所有数据
+        List<Seckill> list = xxfDao.querySeckill(hashMap);
+        resultPage.setRows(list);
+        return resultPage;
+    }
+
+    @Override
+    public void deleteSeckill(Integer ids) {
+        xxfDao.deleteSeckill(ids);
+    }
+
+    @Override
+    public Seckill querySeckillById(Integer id) {
+        return xxfDao.querySeckillById(id);
+    }
+
+    @Override
+    public void addSeckill2(Seckill seckill) {
+        xxfDao.addSeckill2(seckill);
+    }
+
+    @Override
+    public void updateSeckill2(Seckill seckill) {
+        xxfDao.updateSeckill2(seckill);
     }
 
 

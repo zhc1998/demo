@@ -152,7 +152,7 @@ public class ClpController {
     @RequestMapping("updateClpUseYhq2")
     @ResponseBody
     public Integer updateClpUseYhq2() throws ParseException {
-        List<Yhq> list=clpService.queryClpYhq();
+        List<Yhq> list=clpService.queryClpYhqs();
         long time=0;
         if(list.size()>0){
             Yhq yhq=list.get(0);
@@ -182,7 +182,7 @@ public class ClpController {
     //优惠券页面展示
     @RequestMapping("showClpYhq")
     public String showClpYhq(Model model) throws ParseException {
-        List<Yhq> list=clpService.queryClpYhq();
+        List<Yhq> list=clpService.queryClpYhqs();
         if(list.size()>0){
             Yhq yhq=list.get(0);
             String key="yhq"+yhq.getYhqname();
@@ -219,7 +219,7 @@ public class ClpController {
     @ResponseBody
     public String addYhq3(Integer id,HttpServletRequest request) throws ParseException {
         Members members=(Members) request.getSession().getAttribute("members");
-        List<Yhq> list=clpService.queryClpYhq();
+        List<Yhq> list=clpService.queryClpYhq(id);
 
         String a=null;
         if(list.size()>0){

@@ -81,7 +81,16 @@
         )
     </delete>
 
+    <!--新增评论-->
     <insert id="addevaluation" parameterType="map">
         insert into comments(text,pid,sid,uid) values (#{text},0,#{sid},#{uid})
     </insert>
+
+    <select id="qurtycom" resultType="Comments">
+        select * from comments where pid='0'
+    </select>
+
+    <select id="reply" resultType="Comments" parameterType="Integer">
+        select * from comments where pid=#{obj}
+    </select>
 </mapper>

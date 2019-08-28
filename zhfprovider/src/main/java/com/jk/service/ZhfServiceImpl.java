@@ -75,7 +75,6 @@ public class ZhfServiceImpl implements ZhfService{
     @Override
     @RabbitListener(queues = "AddOrder")//添加RabbitListener注解 监听
     public void addorder(Orderone order1) {
-
         orderoneDao.insertSelective(order1);
     }
 
