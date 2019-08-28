@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BUG商城</title>
-
+	<script src="../assets/js/jquery.js"></script>
+<script>$("#seckill").load('../seckill')</script>
 <!-- Latest Bootstrap min CSS -->
 <link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css">
 <!-- Dropdownhover CSS -->
@@ -138,12 +139,8 @@
 									</li>
 									<li class="dropdown">
 										<a href="#"><img src="../assets/images/menu-icon2.png" alt="menu-icon2" />手机 & 品牌<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="dropdown-menu right">
-											<li><a onclick="toList()">华为</a></li>
-											<li><a href="list.html">联想</a></li>
-											<li><a href="grid.html">荣耀</a></li>
-											<li><a href="list.html">vivo</a></li>
-											<li><a href="grid.html">锤子</a></li>
+										<ul id="dropdown-menu" class="dropdown-menu right">
+
 										</ul>
 									</li>
 									<li>
@@ -221,10 +218,7 @@
 									<li class="dropdown">
 										<a href="#"><img src="../assets/images/menu-icon9.png" alt="menu-icon2" /> Book & Office <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu right">
-											<li><a href="grid.html">Book 05</a></li>
-											<li><a href="list.html">Book 06</a></li>
-											<li><a href="list.html">Office 02</a></li>
-											<li><a href="grid.html">Office 01</a></li>
+
 										</ul>
 									</li>
 									<li>
@@ -352,6 +346,7 @@
 
 
 			<div class="col-sm-8">
+
 				<!-- new-arrivals -->
 				<div class="new-arrivals">
 					<div class="tab-content">
@@ -923,12 +918,13 @@
 					</div>
 				</div>
 				<!-- /new-arrivals -->
-				<div id="serkill" onload="aa">
 
-				</div>
 
 			</div>
 		</div>
+
+	</div>
+	<div id="serkill">
 	</div>
 </section>
 <!-- /deal-outer -->
@@ -961,7 +957,7 @@
 <p id="back-top">
 	<a href="#top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
 </p>
-<script src="../assets/js/jquery.js"></script>
+
 <!-- Bootstrap Core JavaScript -->
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/bootstrap-dropdownhover.min.js"></script>
@@ -993,10 +989,7 @@
 <input type="hidden" id="hiddenId">
 </body>
 <script>
-	//秒杀
-	function aa(){
-        $("#seckill").html("../seckill")
-	}
+
 
 
     //去个人中心
@@ -1004,9 +997,17 @@
         window.open("../clp/showClpYhq3");
     }
 
+
+
+
+
+
+
+
 	$(function(){
         getsession();
 		loadHuaWei();
+		queryBranList();
 	})
 	function getsession() {
         $.ajax({
@@ -1101,6 +1102,30 @@
         })
     }
 
+	//查询手机品牌
+	function queryBranList(){
+		$.ajax({
+			url:"../zch/queryBranList",
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var html = "";
+				for(var i=0;i<data.length;i++){
+                    html +="<li><a id='branName' href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				}
+				$("#dropdown-menu").html(html);
+			},
+			error:function(){
+				alert("手机品牌树展示失败");
+			}
+		})
+	}
+
+	//根据品牌名称跳转页面
+	function toListShow(ids){
+		window.open("../toshow/toListShow?ids="+ids)
+	}
+
     function updatePassword() {
         window.open("../toshow/toUpdatePassword");
     }
@@ -1113,8 +1138,9 @@
     }
     function  solr() {
         var pName = $("#pName").val();
-        window.open("../zhc/querysolr?pName="+pName);
+        window.open("../zch/querysolr?pName="+pName);
     }
+
 </script>
 
 </html>

@@ -340,12 +340,12 @@
         }
 
     }
-    
+
     //数量减一
     function plus() {
         //数量加一
         var jia = $("#text_box").val();
-        if(jia<1){
+        if(jia<2){
             alert("不能再减了")
         }else{
             var jiaYi = parseInt(jia);
@@ -398,9 +398,9 @@
 
     //设置样式
     //购买
-function buy(){
+    function buy(){
         alert("123");
-}
+    }
     $(document).ready(function(){
         var showproduct = {
             "boxid":"showbox",
@@ -416,13 +416,13 @@ function buy(){
             "lastid":"showlast",
             "nextid":"shownext"
         };//参数定义
-       // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
+        // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
     });
 
     var ii;
     //查询商品配件
     function queryAccessories() {
-       // alert(typeId);
+        // alert(typeId);
         $.ajax({
             url:"../zch/queryAccessories",
             type:"post",
@@ -454,26 +454,26 @@ function buy(){
     //累加配件价格
     function accumulation(val) {
         var ce = 0;
-            if(val==0){
-                var pri = $("#pri0").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==1){
-                var pri = $("#pri1").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==2){
-                var pri = $("#pri2").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==3){
-                var pri = $("#pri3").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
+        if(val==0){
+            var pri = $("#pri0").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==1){
+            var pri = $("#pri1").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==2){
+            var pri = $("#pri2").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==3){
+            var pri = $("#pri3").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
 
         //alert(ce);
         $("#pr").html(ce);
@@ -605,7 +605,7 @@ function buy(){
                 proId:proId
             },
             success:function(data){
-               alert("完成");
+                alert("完成");
             },
             error:function () {
                 alert("加入购物车失败");

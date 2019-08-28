@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="c">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<c:forEach items="${mSolr}" var="mSolr">
+    <div class = 'pro-all clearfix'>
+        <div class = 'fl phone-r'>
+            <ul  id="shouji1">
+                <div th:each="mmm:${mSolr}">
+                    <li>
+                    <a href="../front/txiangQing?tid="><img src=${mmm.pictureUrl}></a>
+                    <div class='item-tit'>
+                        <input th:text="${mmm.id}" th:value="${mmm.id}" type="hidden" id="id">
+                        <a href=\"\"><span th:text="${mmm.commodityName}" th:value="${mmm.commodityName}" type="hidden"></span></a>
+                        <p><span th:text="${mmm.commodityPrice}" th:value="${mmm.commodityPrice}" type="hidden"></span>起</p>
+                    </div>
+                </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</c:forEach>
+</body>
+</html>

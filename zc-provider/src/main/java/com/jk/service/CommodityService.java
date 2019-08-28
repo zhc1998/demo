@@ -165,6 +165,18 @@ public class CommodityService implements ZcService {
         return zcDao.queryCommodityByArtNo(artNo);
     }
 
+    //展示手机品牌树
+    @Override
+    public List<DrandModel> queryBranList() {
+        return zcDao.queryBranList();
+    }
+
+    //根据品牌展示图片
+    @Override
+    public List<CommodityModel> loadbranImgShow(Integer branId) {
+        return zcDao.loadbranImgShow(branId);
+    }
+
 
     //查询配件
     @Override
