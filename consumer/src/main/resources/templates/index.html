@@ -54,7 +54,7 @@
             <h3><span id = "commodityName"></span></h3>
         </div>
         <div class="txt">
-            <span class="nowprice">￥<a href="">599.00</a></span>
+            <span class="nowprice">￥<span id="commodityPrice"></span></span>
             <div class="cumulative">
                 <span class="number ty1">累计售出<br /><em id="add_sell_num_363"><span id="sellquantity"></span></em></span>
                 <span class="number tyu">累计评价<br /><em id="add_sell_num_363">25</em></span>
@@ -428,7 +428,7 @@
 
 
     }
-    
+
     //数量减一
     function plus() {
         //数量加一
@@ -484,9 +484,9 @@
 
     //设置样式
     //购买
-function buy(){
+    function buy(){
         alert("123");
-}
+    }
     $(document).ready(function(){
         var showproduct = {
             "boxid":"showbox",
@@ -502,13 +502,13 @@ function buy(){
             "lastid":"showlast",
             "nextid":"shownext"
         };//参数定义
-       // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
+        // $.ljsGlasses.pcGlasses(showproduct);//方法调用，务必在加载完后执行
     });
 
     var ii;
     //查询商品配件
     function queryAccessories() {
-       // alert(typeId);
+        // alert(typeId);
         $.ajax({
             url:"../zch/queryAccessories",
             type:"post",
@@ -540,26 +540,26 @@ function buy(){
     //累加配件价格
     function accumulation(val) {
         var ce = 0;
-            if(val==0){
-                var pri = $("#pri0").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==1){
-                var pri = $("#pri1").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==2){
-                var pri = $("#pri2").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
-            if(val==3){
-                var pri = $("#pri3").html();
-                priNumber = parseInt(pri);
-                ce+=priNumber;
-            }
+        if(val==0){
+            var pri = $("#pri0").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==1){
+            var pri = $("#pri1").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==2){
+            var pri = $("#pri2").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
+        if(val==3){
+            var pri = $("#pri3").html();
+            priNumber = parseInt(pri);
+            ce+=priNumber;
+        }
 
         //alert(ce);
         $("#pr").html(ce);
@@ -691,7 +691,7 @@ function buy(){
                 proId:proId
             },
             success:function(data){
-               alert("完成");
+                alert("完成");
             },
             error:function () {
                 alert("加入购物车失败");
