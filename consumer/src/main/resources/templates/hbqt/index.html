@@ -177,12 +177,8 @@
 									</li>
 									<li class="dropdown">
 										<a href="#"><img src="../assets/images/menu-icon2.png" alt="menu-icon2" />手机 & 品牌<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="dropdown-menu right">
-											<li><a onclick="toList()">华为</a></li>
-											<li><a href="list.html">联想</a></li>
-											<li><a href="grid.html">荣耀</a></li>
-											<li><a href="list.html">vivo</a></li>
-											<li><a href="grid.html">锤子</a></li>
+										<ul id="dropdown-menu" class="dropdown-menu right">
+
 										</ul>
 									</li>
 									<li>
@@ -260,10 +256,7 @@
 									<li class="dropdown">
 										<a href="#"><img src="../assets/images/menu-icon9.png" alt="menu-icon2" /> Book & Office <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu right">
-											<li><a href="grid.html">Book 05</a></li>
-											<li><a href="list.html">Book 06</a></li>
-											<li><a href="list.html">Office 02</a></li>
-											<li><a href="grid.html">Office 01</a></li>
+
 										</ul>
 									</li>
 									<li>
@@ -1408,6 +1401,7 @@
 
 	$(function(){
 		loadHuaWei();
+		queryBranList();
 	})
 
 	var ii;
@@ -1471,24 +1465,28 @@
 	}
 
 
-	//条件查询
-	function conditionQuery(){
-		var pName = $("#pName").val();
-		alert("要查询的值"+pName);
+	//查询手机品牌
+	function queryBranList(){
 		$.ajax({
-			url:"../zch/conditionQuery",
+			url:"../zch/queryBranList",
 			type:"post",
-			data:{
-				pName:pName
-			},
 			dataType:"json",
 			success:function(data){
-				alert(11);
+				var html = "";
+				for(var i=0;i<data.length;i++){
+                    html +="<li><a id='branName' href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				}
+				$("#dropdown-menu").html(html);
 			},
 			error:function(){
-				alert("查询失败");
+				alert("手机品牌树展示失败");
 			}
 		})
+	}
+
+	//根据品牌名称跳转页面
+	function toListShow(ids){
+		window.open("../toshow/toListShow?ids="+ids)
 	}
 
 </script>

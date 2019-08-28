@@ -100,5 +100,10 @@ public interface ZcDao {
     @Select("select commodityPrice  from  t_item WHERE id = #{value}")
     CommodityModel queryItemPrice(Integer ids);
 
+    //展示手机品牌树
+    @Select("select itemId,name  from  brand WHERE type = 2")
+    List<DrandModel> queryBranList();
 
+    //根据品牌展示图片
+    List<CommodityModel> loadbranImgShow(Integer branId);
 }

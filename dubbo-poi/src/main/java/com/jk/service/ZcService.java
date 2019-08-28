@@ -59,4 +59,7 @@ public interface ZcService {
 
     CommodityModel queryCommodityByArtNo(String artNo);
 
+    List<DrandModel> queryBranList();
+
+    List<CommodityModel> loadbranImgShow(Integer branId);
 }

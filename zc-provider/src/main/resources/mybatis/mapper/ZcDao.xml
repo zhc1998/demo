@@ -112,5 +112,11 @@
 		and ac.typeId = #{value}
     </select>
 
+    <!--根据品牌展示图片-->
+    <select id="loadbranImgShow" parameterType="int" resultType="com.jk.model.commodity.CommodityModel">
+        select it.id,it.pictureUrl,it.commodityName,it.commodityPrice  from  t_item it
+        left join brand br on br.itemId=it.itemId
+        WHERE br.itemId = #{value}
+    </select>
 
 </mapper>

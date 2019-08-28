@@ -303,20 +303,17 @@ public class ZchController {
     }
 
 
-    //solr查询
-    @RequestMapping("conditionQuery")
-    @ResponseBody
-    public Map conditionQuery(@RequestBody ResultPage result){
-        //返回的参数map
-        Map<String,Object> mSolr=new HashMap<String,Object>();
+    //条件查询
+    @RequestMapping("querysolr")
+    public String querysolr(String pName, Integer page, Model model){
         //查询的集合
         List<CommodityModel> comlist=new ArrayList<>();
         //查询参数的对象SolrQuery
         SolrQuery params=new SolrQuery();
         //判断关键词是否为空
-        if(!"".equals(result.getCommodityName())&&result.getCommodityName()!=null){
+        if(!"".equals(pName)&&pName!=null){
             //不为空时，关键词为前台传递的参数
-            params.set("q",result.getCommodityName());
+            params.set("q",pName);
         }else{
             //为空时查询所有数据
             params.set("q","status:1");
@@ -328,8 +325,11 @@ public class ZchController {
         //设置高亮字段
         params.addHighlightField("commodityName");
         //分页
-        params.setStart((result.getPageNumber()-1)*result.getPageSize());
-        params.setRows(result.getPageSize());
+        if(page==null){
+            page=0;
+        }
+        params.setStart(page);
+        params.setRows(20);
         //打开高亮
         params.setHighlight(true);
         //设置前缀
@@ -341,8 +341,6 @@ public class ZchController {
             QueryResponse queryResponse=client.query(params);
             //查询返回的真正结果
             SolrDocumentList results=queryResponse.getResults();
-            //查询总条数
-            long numFound=results.getNumFound();
             //高亮显示的内容
             Map<String,Map<String,List<String>>> higlight=queryResponse.getHighlighting();
             //循环遍历结果，把查询内容放到list中
@@ -376,17 +374,29 @@ public class ZchController {
                 comlist.add(com);
             }
             //把条数和查询结果放到上面的map中
-            mSolr.put("total",numFound);
-            mSolr.put("rows",comlist);
         } catch (SolrServerException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         //返回map
-        return mSolr;
+        model.addAttribute("mSolr",comlist);
+        return "hbqt/showlist";
     }
 
 
+    //展示手机品牌树
+    @RequestMapping("queryBranList")
+    @ResponseBody
+    public List<DrandModel> queryBranList(){
+        return  zcService.queryBranList();
+    }
+
+    //根据品牌展示图片
+    @RequestMapping("loadbranImgShow")
+    @ResponseBody
+    public List<CommodityModel> loadbranImgShow(Integer branId){
+        return zcService.loadbranImgShow(branId);
+    }
 
 }

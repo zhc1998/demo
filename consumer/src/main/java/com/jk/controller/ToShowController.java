@@ -233,4 +233,12 @@ public class ToShowController {
     public String toList(){
         return "hbqt/list";
     }
+
+    //根据品牌展示
+    @RequestMapping("toListShow")
+    public String toList(Integer ids,Model model){
+
+        model.addAttribute("branId",ids);
+        return "hbqt/list";
+    }
 }
