@@ -356,71 +356,7 @@
 
 </script>
 <div class="header">
-    <div class="top">
-        <div class="topNav">
-            <ul class="left">
-                <!--  <li id="headerLogin" class="headerLogin">
-                      <a href="/shopxxb2b2c/member/login">登录</a>|
-                  </li>
-                  <li id="headerRegister" class="headerRegister">
-                      <a href="/shopxxb2b2c/member/register">注册</a>
-                  </li>
-                  <li id="headerLogout" class="headerLogout">
-                      <a href="/shopxxb2b2c/member/logout">[退出]</a>
-                  </li>-->
-            </ul>
-            <ul class="right">
-                <li>
-                    <a href="/shopxxb2b2c/member/index">会员中心</a>
-                    |
-                </li>
-                <li>
-                    <a href="/shopxxb2b2c/business/index">商家中心</a>
-                    |
-                </li>
-                <li>
-                    <a href="/shopxxb2b2c/article/list/3">帮助中心</a>
-
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="container">
-        <div class="row">
-            <div class="span3">
-                <a href="/shopxxb2b2c/">
-                    <img src="#" alt="" />
-                </a>
-            </div>
-            <div class="span6">
-                <div class="search">
-                    <form id="productSearchForm" action="/shopxxb2b2c/product/search" method="get">
-                        <input name="keyword" class="keyword" value="搜索 商品/店铺" autocomplete="off" x-webkit-speech="x-webkit-speech" x-webkit-grammar="builtin:search" maxlength="30" />
-                        <button type="submit">&nbsp;</button>
-                    </form>
-                </div>
-                <div class="hotSearch">
-                    热门搜索:
-                    <a href="/shopxxb2b2c/product/search?keyword=%E8%8B%B9%E6%9E%9C">苹果</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E4%B8%89%E6%98%9F">三星</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E7%B4%A2%E5%B0%BC">索尼</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E5%8D%8E%E4%B8%BA">华为</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E9%AD%85%E6%97%8F">魅族</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E4%BD%B3%E8%83%BD">佳能</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E5%8D%8E%E7%A1%95">华硕</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E7%BE%8E%E7%9A%84">美的</a>
-                    <a href="/shopxxb2b2c/product/search?keyword=%E6%A0%BC%E5%8A%9B">格力</a>
-                </div>
-            </div>
-            <div id="headerCart" class="headerCart">
-                <a class="cartButton" href="/shopxxb2b2c/cart/list"><span>购物车(<em></em>)</span></a>
-                <div class="detail">
-                    <div class="title">购物车商品</div>
-                    <div class="items"></div>
-                    <div class="summary"></div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="span12">
                 <dl class="mainNav">
@@ -430,23 +366,6 @@
                 </dl>
             </div>
         </div>
-        <div id="broadsideNav" class="broadsideNav">
-            <ul>
-                <li class="shoppingCart">
-                    <a href="/shopxxb2b2c/cart/list"><em>购物车</em></a>
-                </li>
-                <li class="memberCenter">
-                    <a href="/shopxxb2b2c/member/index"><em>会员中心</em></a>
-                </li>
-                <li class="myCoupons">
-                    <a href="/shopxxb2b2c/member/coupon_code/exchange"><em>我的优惠券</em></a>
-                </li>
-                <li class="collectCenter">
-                    <a href="/shopxxb2b2c/member/product_favorite/list"><em>我的收藏</em></a>
-                </li>
-            </ul>
-            <div id="goTop" class="goTop"></div>
-        </div>
     </div>
 </div>	<div class="container cart">
     <div class="row">
@@ -454,11 +373,8 @@
             <div class="step">
                 <ul>
                     <li class="current">查看购物车</li>
-                    <li>订单结算</li>
-                    <li>订单完成</li>
                 </ul>
             </div>
-
             <!--  表格 -->
             <button type='button'  class='btn btn-success' onclick='empty()'>清空购物车</button>
             <table id="dataGrid" ></table>
@@ -468,11 +384,10 @@
         <div class="span12">
             <div class="bottom">
 						<span class="total">
-								<em>登录后确认是否享有优惠</em>
 							赠送积分: <em id="effectiveRewardPoint">23886</em>
 							商品金额: <strong id="effectivePrice">￥23886.00元</strong>
 						</span>
-                <span>
+                        <span>
 							<a href="javascript:;" id="clear" class="clear">清空</a>
 							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
 						</span>

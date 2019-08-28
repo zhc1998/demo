@@ -348,62 +348,7 @@
 <section class="deal-section">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-4">
-				<div class="deal-week">
-					<div class="title">
-						<h2>抢购商品</h2>
-					</div>
-					<div class="owl-demo-outer">
-						<!-- #owl-demo -->
-						<div id="owl-demo" class="deals-wk">
-							<div class="item">
-								<div class="col-md-12">
-									<!-- .pro-text -->
-									<div class="pro-text text-center">
-										<!-- .pro-img -->
-										<div class="pro-img">
-											<img src="../assets/images/wk-deal-img.jpg" alt="2" />
-										</div>
-										<!-- /.pro-img -->
-										<div class="text-text">
-											<span>Macbook, Laptop</span>
-											<h4> Apple Macbook Retina 23’’ </h4>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
-											<p class="wk-price">$290.00 <span>$290.00</span> </p>
-											<p class="availalbe">Availalbe: <span>In Stock</span></p>
-											<a href="#" class="add-btn">添加到购物车1</a>
-										</div>
-										<!-- clockdiv -->
-										<div id="clockdiv">
-											<h4>Hurry Up! Offer ends in:</h4>
-											<div>
-												<span class="days">14</span>
-												<div class="smalltext">Days</div>
-											</div>
-											<div>
-												<span class="hours">23</span>
-												<div class="smalltext">Hours</div>
-											</div>
-											<div>
-												<span class="minutes">59</span>
-												<div class="smalltext">Minutes</div>
-											</div>
-											<div>
-												<span class="seconds">47</span>
-												<div class="smalltext">Seconds</div>
-											</div>
-										</div>
-										<!-- /clockdiv -->
-									</div>
-									<!-- /.pro-text -->
-								</div>
-							</div>
-							<!-- /#owl-demo -->
-						</div>
-					</div>
 
-				</div>
-			</div>
 
 
 			<div class="col-sm-8">
@@ -978,6 +923,9 @@
 					</div>
 				</div>
 				<!-- /new-arrivals -->
+				<div id="serkill" onload="aa">
+
+				</div>
 
 			</div>
 		</div>
@@ -1045,6 +993,12 @@
 <input type="hidden" id="hiddenId">
 </body>
 <script>
+	//秒杀
+	function aa(){
+        $("#seckill").html("../seckill")
+	}
+
+
     //去个人中心
     function tousercenter(){
         window.open("../clp/showClpYhq3");
