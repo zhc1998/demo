@@ -65,11 +65,17 @@ public class CommodityService implements ZcService {
             return drandModels;
     }
 
-    //查询回显
     @Override
     public CommodityModel loadOneModel(String id) {
         return zcDao.loadOneModel(id);
     }
+
+    /*
+    //查询回显
+    @Override
+    public CommodityModel loadOneModel(Integer id) {
+        return zcDao.loadOneModel(id);
+    }*/
 
     @Override
     public void updCommodity(CommodityModel commodityModel) {
@@ -157,4 +163,23 @@ public class CommodityService implements ZcService {
     public CommodityModel queryCommodityByArtNo(String artNo) {
         return zcDao.queryCommodityByArtNo(artNo);
     }
+    //查询配件
+    @Override
+    public List<AccessoriesModel> queryAccessories(Integer typeId) {
+        return zcDao.queryAccessories(typeId);
+    }
+
+    //查询内存
+    @Override
+    public List<LickMemoryModel> queryLickMemory() {
+        return zcDao.queryLickMemory();
+    }
+
+    //根据Id查询商品总价格
+    @Override
+    public CommodityModel queryItemPrice(Integer ids) {
+        return zcDao.queryItemPrice(ids);
+    }
+
+
 }

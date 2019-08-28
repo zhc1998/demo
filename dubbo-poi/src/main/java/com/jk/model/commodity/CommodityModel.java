@@ -74,6 +74,7 @@ public class CommodityModel implements Serializable {
         this.sellquantity = sellquantity;
     }
 
+
     public Integer getId() {
         return id;
     }

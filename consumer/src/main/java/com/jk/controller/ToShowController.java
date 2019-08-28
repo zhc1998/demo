@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("toshow")
@@ -221,4 +222,19 @@ public class ToShowController {
         model.addAttribute("ids",ids);
         return "index";
     }
+
+    //跳转到购物车
+    @RequestMapping("toShoppingTrolley")
+    public String toShoppingTrolley(){
+        return "gouwuche";
+    }
+
+
+
+    @RequestMapping("zhuxiaodenglu")
+    public String zhuxiaodenglu(HttpSession session){
+        session.removeAttribute("members");
+        return "redirect:../toshow/index";
+    }
+
 }
