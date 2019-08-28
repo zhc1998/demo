@@ -227,4 +227,9 @@ public class ToShowController {
     public String toShoppingTrolley(){
         return "gouwuche";
     }
+
+    @RequestMapping("comments2")
+    public String comments2(){
+        return "comments2";
+    }
 }

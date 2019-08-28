@@ -672,8 +672,6 @@ function buy(){
     evaluation = function(){
         var text =$("#TextArea1").val();
         var ids =$("#ids").val();
-        alert(text)
-        alert(ids)
       $.ajax({
            url:"../hb/addevaluation",
            data:{text:text,ids:ids},
@@ -698,7 +696,6 @@ function buy(){
                     data: data,
                     //tree默认展开的节点级别默认为2
                     levels: 0,
-
                 })
             },error : function (){
                 alert("查询失败");
