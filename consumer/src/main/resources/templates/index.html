@@ -63,7 +63,7 @@
         <div class="gcIpt">
             <span class="guT">数量</span>
             <input id="min"  type="button" value="-" onclick="plus()"/>
-            <input id="text_box"  name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="text_box" disabled="true" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
             <input id="add"  type="button" value="+" onclick="jiaYi()"/>
 
             库存：<span class="Hgt" id="inventory"></span>
@@ -74,7 +74,7 @@
             <button class="addcart yh" onclick="buy()"><img src="../images/ht.png" width="25" height="25"/>立即购买</button>
         </div>
         <div class="guarantee">
-            <span>邮费：包邮&nbsp;&nbsp;支持货到付款 <a href=""><img src="../images/me.png"/></a></span>
+            <span>邮费：包邮</span>
         </div>
     </div>
 </div>
@@ -286,34 +286,34 @@
         //数量加一
         var jia = $("#text_box").val();
         var jiaYi = parseInt(jia);
-        //alert(jiaYi++);
-        $("#text_box").val(jiaYi+1);
-
         //获取库存
         var inventory = $("#inventory").html();
         var inventoryCount = parseInt(inventory);
 
+        if(inventoryCount<1){
+            alert("别加了")
+        }else{
+            $("#text_box").val(jiaYi+1);
+            //获取当前商品数量
+            var count = $("[name='tory']").val();
+            var comCount = parseInt(count);
+            //库存减去商品数量
+            $("#inventory").html(inventoryCount-1);
 
-        //获取当前商品数量
-        var count = $("[name='tory']").val();
-        var comCount = parseInt(count);
-        //库存减去商品数量
-        $("#inventory").html(inventoryCount-1);
-
-        //循环获取选中的内存价格
-        var memoryPrice = 0;
-        var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
-        for(var i=0;i<memoryArr.length;i++){
-            if(memoryArr[i].checked==true) {
-                memoryPrice=memoryArr[i].value;
-                break;
+            //循环获取选中的内存价格
+            var memoryPrice = 0;
+            var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
+            for(var i=0;i<memoryArr.length;i++){
+                if(memoryArr[i].checked==true) {
+                    memoryPrice=memoryArr[i].value;
+                    break;
+                }
             }
+            var memo = parseInt(memoryPrice);
+            //内存价格加总价 然后乘于商品个数 计算总价格
+            var totalPrice = memo+totalPrices;
+            $("#commodityPrice").html(count*totalPrice);
         }
-        var memo = parseInt(memoryPrice);
-        //内存价格加总价 然后乘于商品个数 计算总价格
-        var totalPrice = memo+totalPrices;
-        $("#commodityPrice").html(count*totalPrice);
-
 
     }
     
@@ -321,9 +321,11 @@
     function plus() {
         //数量加一
         var jia = $("#text_box").val();
-        var jiaYi = parseInt(jia);
-        //alert(jiaYi++);
-        $("#text_box").val(jiaYi-1);
+        if(jia<1){
+            alert("不能再减了")
+        }else{
+            var jiaYi = parseInt(jia);
+            $("#text_box").val(jiaYi-1);
 
         //获取库存
         var inventory = $("#inventory").html();
@@ -334,7 +336,6 @@
         var comCount = parseInt(count);
         //库存减去商品数量
         $("#inventory").html(inventoryCount+1);
-
         //循环获取选中的内存价格
         var memoryPrice = 0;
         var memoryArr=$("[name='ab']");//  selectvalue为radio中选中的值
@@ -348,6 +349,7 @@
         //内存价格加总价 然后乘于商品个数 计算总价格
         var totalPrice = memo+totalPrices;
         $("#commodityPrice").html(count*totalPrice);
+        }
     }
 
 
