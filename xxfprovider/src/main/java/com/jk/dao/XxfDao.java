@@ -85,4 +85,6 @@ public interface XxfDao {
     void addSeckill2(Seckill seckill);
 
     void updateSeckill2(Seckill seckill);
+
+    void addorderone();
 }

@@ -31,4 +31,9 @@ public interface HbService {
     void delAll(Integer [] ids);
 
     void addevaluation(String text, Integer ids, String username);
+
+
+    List<Comments> qurtycom();
+
+    List<Comments> reply(Integer obj);
 }

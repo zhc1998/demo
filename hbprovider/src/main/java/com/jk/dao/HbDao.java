@@ -61,4 +61,8 @@ public interface HbDao {
     void delAll(Integer[] ids);
 
     void addevaluation(HashMap map);
+
+    List<Comments> qurtycom();
+
+    List<Comments> reply(Integer obj);
 }

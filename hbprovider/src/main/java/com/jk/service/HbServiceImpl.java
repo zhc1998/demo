@@ -149,5 +149,15 @@ public class HbServiceImpl implements HbService {
         hbDao.addevaluation(map);
     }
 
+    @Override
+    public List<Comments> qurtycom() {
+        return hbDao.qurtycom();
+    }
+
+    @Override
+    public List<Comments> reply(Integer obj) {
+        return hbDao.reply(obj);
+    }
+
 
 }
