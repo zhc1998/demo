@@ -40,6 +40,7 @@ var seckill = {
                         $(this).addClass('disabled');
                         //2. 发送秒杀请求，执行秒杀
                         $.post(killUrl, {money: money}, function(data){
+
                             if (data.ordertime=="1"){
                                 //3. 显示秒杀结果
                                 node.html('<span class="label label-success">系统异常</span>');
@@ -138,7 +139,7 @@ var seckill = {
             var endTime = params['endTime'];
             var seckillId = params['seckillId'];
             var money = params['money'];
-            var artno=params['title']; //秒杀价钱
+            var artno=params['artno']; //秒杀价钱
             $.get(seckill.URL.now(), {}, function (result) {
                 if (result && result['success']) {
                     var nowTime = result['data'];
