@@ -54,8 +54,6 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
     private XxfDao xxfDao;
-    @Reference
-    private ZhfService zhfService;
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -132,64 +130,53 @@ public class SeckillServiceImpl implements SeckillService {
      * Spring默认只对运行期异常进行事务的回滚操作，对于编译异常Spring是不进行回滚的，所以对于需要进行事务控制的方法尽可能将可能抛出的异常都转换成运行期异常
      */
     @Override
-    @Transactional
-    @Async
     /*@RabbitListener(queues = "seckill")//添加RabbitListener注解 监听*/
-    public synchronized SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5,Members members)
-            throws SeckillException, RepeatKillException, SeckillCloseException {
-
+    public synchronized Orderone executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5,Members members)
+            {
+        Orderone orderone = new Orderone();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
-            throw new SeckillException("seckill data rewrite");
+            orderone.setOrdertime("1");
+            return orderone;
         }
         //执行秒杀逻辑：1.减库存；2.储存秒杀订单
         Date nowTime = new Date();
 
-        try {
+
             //记录秒杀订单信息
             int insertCount = xxfDao.insertOrder(seckillId, money, userPhone);
             //唯一性：seckillId,userPhone，保证一个用户只能秒杀一件商品
-            if (insertCount <= 0) {
-                //重复秒杀
-                throw new RepeatKillException("seckill repeated");
-            } else {
                 //减库存
                 int updateCount = xxfDao.reduceStock(seckillId, nowTime);
                 if (updateCount <= 0) {
                     //没有更新记录，秒杀结束
-                    throw new SeckillCloseException("seckill is closed");
+                    orderone.setOrdertime("3");
+                    return orderone;
                 } else {
                     //秒杀成功
                     SeckillOrder seckillOrder = xxfDao.findById2(seckillId, userPhone);
 
                     //更新缓存（更新库存数量）
                     Seckill seckill = (Seckill) redisTemplate.boundHashOps(key).get(seckillId);
-                    seckill.setStockcount(seckill.getSeckillid() - 1);
+                    seckill.setStockcount(seckill.getStockcount()- 1);
                     redisTemplate.boundHashOps(key).put(seckillId, seckill);
-                    Orderone orderone = new Orderone();
+
                     orderone.setOrdernumber(Ordernumber.getBillCode());
                     orderone.setConsignee(members.getUsername());
                     orderone.setTel(members.getPhone());
                     orderone.setAmountpayable(Double.parseDouble(money.toString()));
                     orderone.setState(1);
+                    orderone.setTotalmoney(Double.parseDouble(money.toString()));
                     orderone.setBuyer(members.getUsername());
-                    orderone.setOrdertime(format.format(new Date()));
+                    orderone.setOrdertime("0");
                     orderone.setAmount(1);
                     orderone.setUserid(members.getId());
-                    xxfDao.addSeckillOrder(orderone);
-
-                    return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, seckillOrder);
+                    orderone.setAddress("");
+                    orderone.setCommodityname("");
+                    return orderone;
                 }
-            }
-        } catch (SeckillCloseException e) {
-            throw e;
-        } catch (RepeatKillException e) {
-            throw e;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            //所有编译期异常，转换为运行期异常
-            throw new SeckillException("seckill inner error:" + e.getMessage());
-        }
+
+
     }
 
 
