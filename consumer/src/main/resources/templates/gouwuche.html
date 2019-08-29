@@ -473,7 +473,7 @@
                 <input type="button" name="yhq" class="btn btn-Warning btn-lg" onclick="useYhq()"></input>
                 <span>
                     总价格<a  id="spPrice"></a>
-							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
+							<input type="button"  value="提交订单" onclick="tjYhq()"></input>
 						</span>
             </div>
         </div>
@@ -541,6 +541,7 @@
                 if(c>=d){
                     c=c-b;
                     $("#spPrice").html("<font color='red'>"+c+"</font>");
+                    $("#spPrice").val(c);
                 }else{
                     alert("不满"+d+"元");
                     return ;
@@ -851,6 +852,37 @@
             }
         })
     }
+
+
+   function tjYhq(){
+       var arr = $('#dataGrid').bootstrapTable("getSelections");//获取选中的行
+
+       console.log(arr);
+       if (arr.length <= 0) {
+           alert("请选中要结算的数据！！！");
+       } else {
+           var commodityNames="";
+           var artNos="";
+           var commodityPrices="";
+           for (var i = 0; i < arr.length; i++) {
+               commodityNames+=arr[i].commodityName+",";
+               artNos+=arr[i].artNo+",";
+           }
+           artNos=artNos.substring(0, artNos.length - 1);
+           commodityNames=commodityNames.substring(0, commodityNames.length - 1);
+
+       }
+
+       location.href="../tobuy?commodityNames="+commodityNames+"&artNos="+artNos+"&commodityPrices="+$("#spPrice").val();
+   }
+
+
+
+
+
+
+
+
 
 </script>
 </html>
