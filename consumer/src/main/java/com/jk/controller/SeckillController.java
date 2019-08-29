@@ -5,6 +5,7 @@ import com.jk.dto.Exposer;
 import com.jk.dto.SeckillExecution;
 import com.jk.dto.SeckillResult;
 import com.jk.model.Members;
+import com.jk.model.Orderone;
 import com.jk.model.Seckill;
 import com.jk.enums.SeckillStatEnum;
 import com.jk.exception.RepeatKillException;
@@ -46,6 +47,11 @@ public class SeckillController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+    @RequestMapping("aaaa")
+    public String aaaa(Orderone orderone) {
+            return "redirect:../goAlipay?artno="+orderone.getArtno()+"&address="+orderone.getAddress()+"&consignee="+orderone.getConsignee()+"&commodityName="+orderone.getConsignee()+"&totalmoney="+orderone.getTotalmoney()+"&amout="+1+"&amountpayable="+orderone.getAmountpayable();
+        }
     @RequestMapping("/list")
     public String findSeckillList(Model model) throws ParseException {
         List<Seckill> list = seckillService.findAll();
@@ -103,35 +109,21 @@ public class SeckillController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<SeckillExecution> execute(@PathVariable("seckillId") Long seckillId,
+    public Orderone execute(@PathVariable("seckillId") Long seckillId,
                                                    @PathVariable("md5") String md5,
                                                    @RequestParam("money") BigDecimal money
                                                    ,HttpServletRequest request) {
         Members members = (Members) request.getSession().getAttribute("members");
         Long userPhone=Long.parseLong(members.getPhone());
-
-        if (userPhone == null) {
-            return new SeckillResult<SeckillExecution>(false, "未注册");
-        }
-        try {
             SeckillOrder seckillOrder = new SeckillOrder();
             seckillOrder.setUserPhone(userPhone);
             seckillOrder.setMd5(md5);
             seckillOrder.setMoney(money);
             seckillOrder.setSeckillId(seckillId);
            /* SeckillExecution execution = (SeckillExecution) amqpTemplate.convertSendAndReceive(seckillOrder);*/
-            SeckillExecution execution = seckillService.executeSeckill(seckillId, money, userPhone, md5,members);
-            return new SeckillResult<SeckillExecution>(true, execution);
-        } catch (RepeatKillException e) {
-            SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL);
-            return new SeckillResult<SeckillExecution>(true, seckillExecution);
-        } catch (SeckillCloseException e) {
-            SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.END);
-            return new SeckillResult<SeckillExecution>(true, seckillExecution);
-        } catch (SeckillException e) {
-            SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.INNER_ERROR);
-            return new SeckillResult<SeckillExecution>(true, seckillExecution);
-        }
+            Orderone orderone  = seckillService.executeSeckill(seckillId, money, userPhone, md5,members);
+            return orderone;
+
     }
 
     @ResponseBody
