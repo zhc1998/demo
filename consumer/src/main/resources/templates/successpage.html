@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入jquery -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+<body>
+
+
+<script>
+    $.ajax({
+        type:"post",
+        url:"../zhf/addorder",
+        success:function(){
+            location.href="/toshow/index"
+        }
+    })
+</script>
+</body>
+
+</html>

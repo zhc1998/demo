@@ -267,4 +267,24 @@ public class ClpController {
         return "houtai/showClpYhq3";
     }
 
+
+    //我的优惠券
+    @RequestMapping("showClpYhq4")
+    @ResponseBody
+    public List showClpYhq4(Model model, HttpServletRequest request) throws ParseException {
+        Members members=(Members) request.getSession().getAttribute("members");
+        Yhq yhq=new Yhq();
+        List<Yhq> list=clpService.queryClpYhq2(members.getId());
+        if(list.size()>0){
+            yhq=list.get(0);
+            String key="yhq"+members.getId()+yhq.getYhqname();
+            if(redisTemplate.hasKey(key)){
+                redisTemplate.opsForValue().get(key);
+            }
+        }
+        return list;
+    }
+
+
+
 }

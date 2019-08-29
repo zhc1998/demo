@@ -120,7 +120,7 @@ public class SeckillController {
             seckillOrder.setMoney(money);
             seckillOrder.setSeckillId(seckillId);
            /* SeckillExecution execution = (SeckillExecution) amqpTemplate.convertSendAndReceive(seckillOrder);*/
-            SeckillExecution execution = seckillService.executeSeckill(seckillId, money, userPhone, md5);
+            SeckillExecution execution = seckillService.executeSeckill(seckillId, money, userPhone, md5,members);
             return new SeckillResult<SeckillExecution>(true, execution);
         } catch (RepeatKillException e) {
             SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL);
