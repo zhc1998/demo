@@ -138,7 +138,6 @@ public class ZhfController {
         orderone.setBuyer(members.getNickname());
         orderone.setArtno(artno);
         orderone.setOrdertime(sdf.format(new Date()));
-
         amqpTemplate.convertAndSend("AddOrder",orderone);
        // zhfService.addorder(orderone);
        // return "suc";

@@ -1020,24 +1020,6 @@
 <script src="../assets/owl-carousel/owl.carousel.js"></script>
 <!--  Custom Theme JavaScript  -->
 <script src="../assets/js/custom.js"></script>
-
-
-<div id=win style="display:none; POSITION:fixed; left:50%; top:50%; width:600px; height:400px; margin-left:-300px; margin-top:-230px;  z-index:5; border:1px solid #888; background-color:#edf; text-align:center">
-	<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用户登录</font></font></h1><br/>
-	<form method="post" id="formId">
-		<input type="text" name="username" placeholder="用户名" /><br/><br/>
-		<input type="password" name="password" placeholder="密码" /><br/><br/>
-		<button type="button" onclick="login()" class="submit_button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">登录</font></font></button>
-		<div >
-			&emsp;&emsp;&emsp;&emsp;&emsp;
-			<a href="javascript:updatePassword()" class="dropdown">忘记密码</a>
-			&emsp;&emsp;
-			<a href="javascript:zhuCe()" class="dropdown">立即注册</a>
-		</div>
-	</form>
-	<br>
-	<center><a href="javascript:closeLogin();">我不登录了</a></center>
-</div>
 <input type="hidden" id="hiddenId">
 </body>
 <script>
@@ -1114,34 +1096,7 @@
 		window.open("../toshow/toParticulars?ids="+ids)
 	}
     function openLogin(){
-        document.getElementById("win").style.display="";
-    }
-    function closeLogin(){
-        document.getElementById("win").style.display="none";
-    }
-
-    function zhuCe() {
-        window.open("../toshow/toZhuCe");
-    }
-    function login() {
-        $.ajax({
-            url:"../xxf/frontLogin",
-            data:$("#formId").serialize(),
-            success:function(data){
-                if(data=="1"){
-                    alert("用户名错误")
-                }
-                if(data=="2"){
-                    alert("密码错误")
-                }
-                if(data=="3"){
-                    alert("该IP已被冻结，请五分钟后再试")
-                }
-                if(data=="0"){
-                    location.href="../toshow/index";
-                }
-            }
-        })
+        location.href="../toshow/tofrontLogin";
     }
 
 	//查询手机品牌

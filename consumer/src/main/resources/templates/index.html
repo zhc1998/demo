@@ -7,7 +7,6 @@
         <meta name="keywords" content="首页" />
         <meta name="description" content="首页" />
         <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
-        <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 
         <link rel="stylesheet" href="../layui/css/layui.css">
         <script src="../layui/layui.js"></script>
@@ -228,7 +227,7 @@
         </div>
         可选择内存 &nbsp;&nbsp;
         <span id="memory">
-                        <span id="m0"></span>:<input type="radio" id="me0" checked="true" name="ab" value="" onclick="internal(this.value)">
+                        <span id="m0"></span>:<input type="radio" id="me0" name="ab" value="" onclick="internal(this.value)">
                         <span id="m1"></span>:<input type="radio" id="me1" name="ab" value="" onclick="internal(this.value)">
                         <span id="m2"></span>:<input type="radio" id="me2" name="ab" value="" onclick="internal(this.value)">
                         <span id="m3"></span>:<input type="radio" id="me3" name="ab" value="" onclick="internal(this.value)">
@@ -236,7 +235,7 @@
         <div class="gcIpt">
             <span class="guT">数量</span>
             <input id="min"  type="button" value="-" onclick="plus()"/>
-            <input id="text_box"  name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
+            <input id="text_box" disabled="true" name="tory" type="text" value="1"style="width:30px; text-align: center; color: #0F0F0F;" />
             <input id="add"  type="button" value="+" onclick="jiaYi()"/>
 
             库存：<span class="Hgt" id="inventory"></span>
@@ -333,18 +332,10 @@
         <div class="active_tab" id="outer">
             <ul class="act_title_left" id="tab">
                 <li class="act_active">
-                    <a href="#">规格参数</a>
+                    规格参数
                 </li>
                 <li>
-                    <a href="#">商品评价</a>
-                </li>
-            </ul>
-            <ul class="act_title_right">
-                <li class="mui">
-                    <a id="mui-a" href="#">扫手机下单+</a>
-                </li>
-                <li class="mui-ac">
-                    <a href="#">加入购物车</a>
+                    商品评价
                 </li>
             </ul>
             <div class="clear"></div>
@@ -381,6 +372,9 @@
                                 </div>
                                 <hr>
 
+                                <div class="comment_add_or_last" >
+                                    点击加载更多评论
+                                </div>
                                 <hr>
                             </div>
 
@@ -388,6 +382,7 @@
                     </div>
                 </ul>
             </div>
+        </div>
         </div>
         <script>
             $(function(){
@@ -422,6 +417,27 @@
         $("#commodityPrice").html(count*totalPrice);
         //queryColor();
         //queryAccessories();
+    })
+    $(function(){
+        alert("123")
+        $.ajax({
+            url:"../hb/qurtycom",
+            dataType:"json",
+            success:function(data){
+                var html = "";
+                for (var i = 0; i <data.length ; i++) {
+                    html+='<div class="imgdiv">' +
+                        '<img class="imgcss"  src="./images/user.jpg"/> ' +
+                        '</div> <div class="conmment_details" >' +
+                        '<div style="float:left;">' +
+                        '<span>'+data[i].uid+'</span>' +
+                        '</div><div class="del">' +
+                        '<span  class="show_reply_list"><a href="#">查看回复</a></span> </div> ' +
+                        '<div class="comment_content" >'+ data[i].text+' </div></div>  <hr>'
+                }
+                $("#ping").html(html);
+            }
+        })
     })
 
     //别动
@@ -812,28 +828,6 @@
             }
         })
     }
-
-
-    $(function(){
-        $.ajax({
-            url:"../hb/qurtycom",
-            dataType:"json",
-            success:function(data){
-                var html = "";
-                for (var i = 0; i <data.length ; i++) {
-                    html+='<div class="imgdiv">' +
-                        '<img class="imgcss"  src="./images/user.jpg"/> ' +
-                        '</div> <div class="conmment_details" >' +
-                        '<div style="float:left;">' +
-                        '<span>'+data[i].uid+'</span>' +
-                        '</div><div class="del">' +
-                        '<span  class="show_reply_list"><a href="#">查看回复</a></span> </div> ' +
-                        '<div class="comment_content" >'+ data[i].text+' </div></div>  <hr>'
-                }
-                $("#ping").html(html);
-            }
-        })
-    })
 </script>
 <script type="text/javascript">
     layui.use(['form','layer','jquery','element','laypage','form'],function(){

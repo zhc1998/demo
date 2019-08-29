@@ -39,7 +39,7 @@ public class ZhcController {
         Members members = (Members) session.getAttribute("members");
         String userName="";
         if(members!=null){
-            userName=members.getUsername();
+            userName=members.getNickname();
         }
         return userName;
     }
