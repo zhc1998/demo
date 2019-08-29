@@ -92,4 +92,7 @@
     <update id="updateSeckill2">
         update seckill set image=#{image},title=#{title},costprice=#{costprice},createtime=#{createtime},starttime=#{starttime},endtime=#{endtime},stockcount=#{stockcount},price=#{price} where seckillid=#{seckillid}
     </update>
+    <insert id="addSeckillOrder">
+        insert into orderone(ordernumber,consignee,tel,address,totalmoney,amountpayable,state,buyer,ordertime,amount,artno,paydate,userid) values(#{ordernumber},#{consignee},#{tel},#{address},#{totalmoney},#{amountpayable},#{state},#{buyer},#{ordertime},#{amount},#{artno},#{paydate},#{userid})
+    </insert>
 </mapper>
