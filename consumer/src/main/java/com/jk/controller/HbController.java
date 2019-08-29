@@ -157,9 +157,14 @@ public class HbController {
 
     @RequestMapping("addevaluation")
     @ResponseBody
-    public void addevaluation(String text,Integer ids,HttpServletRequest request){
+    public String addevaluation(String text,Integer ids,HttpServletRequest request){
         Members members = (Members) request.getSession().getAttribute("members");
-        hbService.addevaluation(text,ids,members.getUsername());
+        if(members!=null){
+            hbService.addevaluation(text,ids,members.getUsername());
+            return "1";
+        }else {
+            return "0";
+        }
     }
 
     @RequestMapping("qurtycom")
