@@ -7,6 +7,7 @@
         <meta name="keywords" content="首页" />
         <meta name="description" content="首页" />
         <link rel="stylesheet" type="text/css" href="../css/normalize.css"/>
+        <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 
         <link rel="stylesheet" href="../layui/css/layui.css">
         <script src="../layui/layui.js"></script>
@@ -362,22 +363,13 @@
                         <div class="textarea_input"><textarea id="TextArea1"></textarea></div>
                         <a class="dp_wrap_pname" href="javascript:evaluation()" >评论</a>
                         <div class="article-container">
-
                             <hr>
                             <div class="comment_list">
                                 <h3 style="text-indent: 2em;">评论列表</h3>
                                 <hr>
                                 <div class="comment" id="ping">
-
                                 </div>
-                                <hr>
-
-                                <div class="comment_add_or_last" >
-                                    点击加载更多评论
-                                </div>
-                                <hr>
                             </div>
-
                         </div>
                     </div>
                 </ul>
@@ -411,6 +403,7 @@
     $(function(){
         lickMemory();
         queryOneDetails();
+        querypl();
         var memo = parseInt(memoryPrice);
         //内存价格加总价 然后乘于商品个数 计算总价格
         var totalPrice = memo+totalPrices;
@@ -418,8 +411,7 @@
         //queryColor();
         //queryAccessories();
     })
-    $(function(){
-        alert("123")
+    function querypl(){
         $.ajax({
             url:"../hb/qurtycom",
             dataType:"json",
@@ -438,7 +430,7 @@
                 $("#ping").html(html);
             }
         })
-    })
+    }
 
     //别动
     var pr;
