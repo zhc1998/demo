@@ -176,7 +176,7 @@ public class SeckillServiceImpl implements SeckillService {
                     orderone.setOrdertime(format.format(new Date()));
                     orderone.setAmount(1);
                     orderone.setPaydate(money.toString());
-                    orderone.getUserid(members.getId());
+                    orderone.setUserid(members.getId());
                     zhfService.addorder(orderone);
 
                     return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, seckillOrder);

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -25,6 +25,8 @@ public class ZhfServiceImpl implements ZhfService{
     private FamilyheadDao familyheadDao;
 @Autowired
     private OrderoneDao orderoneDao;
+@Autowired
+private RedisTemplate redisTemplate;
 
 
     @Override
@@ -76,6 +78,20 @@ public class ZhfServiceImpl implements ZhfService{
     @RabbitListener(queues = "AddOrder")//添加RabbitListener注解 监听
     public void addorder(Orderone order1) {
         orderoneDao.insertSelective(order1);
+        
+    }
+
+
+    @RabbitListener(queues = "DelOrder")//添加RabbitListener注解 监听
+    public void addorder(String key) {
+
+        redisTemplate.delete(key);
+    }
+    @RabbitListener(queues = "addredistOrder")//添加RabbitListener注解 监听
+    public void addredistOrder(Orderone orderone) {
+        String key= orderone.getUserid()+""+orderone.getOrdernumber();
+        redisTemplate.opsForValue().set(key,orderone);
+        redisTemplate.expire(key, 30, TimeUnit.MINUTES);
     }
 
 
