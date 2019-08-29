@@ -1,4 +1,4 @@
-package com.jk.service.impl;
+package com.jk.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -54,6 +54,8 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
     private XxfDao xxfDao;
+    @Reference
+    private ZhfService zhfService;
     @Autowired
     private HttpServletRequest request;
     @Autowired
