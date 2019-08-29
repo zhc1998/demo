@@ -122,7 +122,7 @@ public class AlipayDemoController {
             System.err.println("支付成功");
             order1.setState(2);
             order1.setPaydate(sdf.format(new Date()));
-
+            amqpTemplate.convertAndSend("AddOrder",order1);
             amqpTemplate.convertAndSend("DelOrder",key);
             return "redirect:/toshow/index";
         }else{

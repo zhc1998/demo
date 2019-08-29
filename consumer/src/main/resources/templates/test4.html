@@ -458,7 +458,7 @@
                     <!--满赠套装商品-->
                     <!--配送方式-->
                     <div class="goods-tit">
-                        <h4 class="vendor_name_h vendor_name_10079388" id="10079388">商家：</h4>
+                        <h4 class="vendor_name_h vendor_name_10079388" id="10079388"></h4>
                     </div>
 
                     <!--单品开始-->
@@ -475,17 +475,13 @@
                             <div data-service=""></div>
                             <div class="goods-item goods-item-extra" goods-id="44019324194" sx-type="">
 
-                                <div class="p-img">
-                                    <!--
-                                                                        <a target="_blank" href="http://item.jd.com/44019324194.html?dist="><img src="//img14.360buyimg.com/N4/jfs/t1/25194/10/12869/72820/5c9adf3aEeb4a1c24/da199ff0cbd20f52.jpg" alt=""></a>
-                                    -->
-                                </div>
+
                                 <div class="goods-msg">
                                     <div class="goods-msg-gel">
                                         <div class="p-name">
-                                            <input type="hidden" id="artno" th:value="${artno}">
+                                            <input type="hidden" id="artno" th:value="${art[0]}">
                                             <a href="" target="_blank">
-                                                <span id="commodityName" th:text="${commodityName}"></span>
+                                                <span id="commodityName" th:text="${com[0]}"></span>
                                             </a>
                                         </div>
                                         <div class="p-price ">
@@ -493,14 +489,55 @@
 
 
                                             <strong class="jd-price">
-                                                <span id="totalmoney" th:text="${totalmoney}"></span>
+                                                <span id="totalmoney" th:text="${co[0]}"></span>
 
                                                 <em class=''></em>
                                             </strong>
                                             <!--增加预售金额显示 end-->
-                                            <span class="p-num" id="amout" th:text="${amout}">
 
-                                                            </span>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 颜色尺码以及车型begin -->
+                                <div class="p-extra-continer">
+                                    <div class="p-extra-line">
+                                        <div class="fl"><strong>尺码：</strong><span>8+128GB全网通</span></div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods-items">
+                        <div class="goods-suit goods-last">
+
+                            <div data-service=""></div>
+                            <div class="goods-item goods-item-extra" goods-id="44019324194" sx-type="">
+
+
+                                <div class="goods-msg">
+                                    <div class="goods-msg-gel">
+                                        <div class="p-name">
+                                            <input type="hidden" id="artno1" th:value="${art[1]}">
+                                            <a href="" target="_blank">
+                                                <span id="commodityName1" th:text="${com[1]}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="p-price ">
+                                            <!--增加预售金额显示 begin   预售分阶段支付类型（1：一阶梯全款支付；2：一阶梯定金支付(全款或定金可选)；3：三阶梯(仅定金)；4：三阶梯(全款或定金可选)；5：一阶梯仅定金支付） -->
+
+
+                                            <strong class="jd-price">
+                                                <span id="totalmoney1" th:text="${co[1]}"></span>
+
+                                                <em class=''></em>
+                                            </strong>
+                                            <!--增加预售金额显示 end-->
+
 
 
                                         </div>
@@ -1972,9 +2009,9 @@
             var address=$("#address").val();
             var  consignee=$("#consignee").val();
             var commodityName=$("#commodityName").html();
-           var totalmoney=$("#totalmoney").html();
+           var totalmoney=$("#amountpayable").html();
             var amout=1;
-           var amountpayable=$("#totalmoney").html();
+           var amountpayable=$("#amountpayable").html();
            //alert(totalmoney)
           // alert(amout);
           // alert(amountpayable);

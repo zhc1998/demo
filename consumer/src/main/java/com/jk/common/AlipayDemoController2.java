@@ -42,11 +42,16 @@ public class AlipayDemoController2 {
 
     //购买页面
     @RequestMapping("tobuy")
-    public String tobuy(Double commodityPrices,String artNos,String commodityNames, Model model){
+    public String tobuy(String commodityPrices,Double totalmoney,String artNos,String commodityNames, Model model){
+        String[] com=commodityNames.split(",");
+        String[] art=artNos.split(",");
+        String[] co=commodityPrices.split(",");
+        model.addAttribute("totalmoney",totalmoney);
+            model.addAttribute("art",art);
+            model.addAttribute("com",com);
+            model.addAttribute("co",co);
 
-        model.addAttribute("totalmoney",commodityPrices);
-        model.addAttribute("artno",artNos);
-        model.addAttribute("commodityName",commodityNames);
+
         return "test4";
     }
 

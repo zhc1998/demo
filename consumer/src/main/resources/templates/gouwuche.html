@@ -867,13 +867,14 @@
            for (var i = 0; i < arr.length; i++) {
                commodityNames+=arr[i].commodityName+",";
                artNos+=arr[i].artNo+",";
+               commodityPrices+=arr[i].commodityPrices+",";
            }
            artNos=artNos.substring(0, artNos.length - 1);
            commodityNames=commodityNames.substring(0, commodityNames.length - 1);
-
+           commodityPrices=commodityPrices.substring(0, commodityPrices.length - 1);
        }
 
-       location.href="../tobuy?commodityNames="+commodityNames+"&artNos="+artNos+"&commodityPrices="+$("#spPrice").val();
+       location.href="../tobuy?commodityNames="+commodityNames+"&artNos="+artNos+"&totalmoney="+$("#spPrice").val()+"&commodityPrices="+commodityPrices;
    }
 
 
