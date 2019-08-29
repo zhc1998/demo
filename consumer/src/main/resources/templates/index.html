@@ -228,7 +228,7 @@
         </div>
         可选择内存 &nbsp;&nbsp;
         <span id="memory">
-                        <span id="m0"></span>:<input type="radio" id="me0" name="ab" value="" onclick="internal(this.value)">
+                        <span id="m0"></span>:<input type="radio" id="me0"  name="ab" value="" onclick="internal(this.value)">
                         <span id="m1"></span>:<input type="radio" id="me1" name="ab" value="" onclick="internal(this.value)">
                         <span id="m2"></span>:<input type="radio" id="me2" name="ab" value="" onclick="internal(this.value)">
                         <span id="m3"></span>:<input type="radio" id="me3" name="ab" value="" onclick="internal(this.value)">
@@ -351,7 +351,20 @@
                     <li>上架时间：<span id="createDate"></span></li>
                     <li>商品毛重：20克</li>
                     <li>库存： <span id="inventoryCount"></span> </li>
-                </ul>
+                    <li><img src="" id="rc"></li>
+                    <li>
+                        <a href="#">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <font size="5">
+                                回到顶部☝☝☝
+                            </font>
+                        </a>
+                    </li>
+
             </div>
 
             <!--商品评价-->
@@ -412,8 +425,9 @@
         //queryAccessories();
     })
     function querypl(){
+        var ids = $("#ids").val();
         $.ajax({
-            url:"../hb/qurtycom",
+            url:"../hb/qurtycom?id="+ids,
             dataType:"json",
             success:function(data){
                 var html = "";
@@ -468,6 +482,7 @@
                 $("#sellquantity").html(data.sellquantity);
                 //图片路径
                 $("#pictureUrl").attr("src",data.pictureUrl);
+                $("#rc").attr("src",data.pictureUrl);
 
                 //数量加一
                 toryNumber = $("[name='tory']").val();

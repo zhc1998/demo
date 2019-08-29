@@ -21,7 +21,7 @@ var seckill = {
         }
     },*/
     //处理秒杀逻辑
-    handleSeckill: function(seckillId, node, money){
+    handleSeckill: function(seckillId, node, money,artno){
         //获取秒杀地址，控制显示逻辑，执行秒杀
         node.html('<button class="btn btn-primary btn-lg" id="killBtn">秒杀</button>');
         $.post(seckill.URL.exposer(seckillId), {}, function(result){
@@ -39,10 +39,23 @@ var seckill = {
                         //1. 先禁用按钮
                         $(this).addClass('disabled');
                         //2. 发送秒杀请求，执行秒杀
-                        $.post(killUrl, {money: money}, function(result){
-                            if (result && result['success']){
+                        $.post(killUrl, {money: money}, function(data){
+
+                            if (data.ordertime=="1"){
                                 //3. 显示秒杀结果
-                                node.html('<span class="label label-success">秒杀成功</span>');
+                                node.html('<span class="label label-success">系统异常</span>');
+                            }
+                            if (data.ordertime=="2"){
+                                //3. 显示秒杀结果
+                                node.html('<span class="label label-success">不能重复秒杀</span>');
+                            }
+                            if (data.ordertime=="3"){
+                                //3. 显示秒杀结果
+                                node.html('<span class="label label-success">操作失败</span>');
+                            }
+                            if (data.ordertime=="0"){
+                                //3. 显示秒杀结果
+                                location.href="../aaaa?artno="+artno+"&address=河南省洛阳市&consignee="+data.consignee+"&commodityName="+data.consignee+"&totalmoney="+data.totalmoney+"&amout="+1+"&amountpayable="+data.amountpayable;
                             }
                         })
                     });
@@ -58,7 +71,7 @@ var seckill = {
         });
     },
     //计时
-    countdown: function (seckillId, nowTime, startTime, endTime, money) {
+    countdown: function (seckillId, nowTime, startTime, endTime, money,artno) {
         var seckillBox = $('#seckill-box');
         var seckillTimeSpan = $('#seckill-time-span');
         //时间判断
@@ -76,11 +89,11 @@ var seckill = {
                 //时间完成后回调事件
             }).on('finish.countdown', function(){
                 //获取秒杀地址，控制实现逻辑，执行秒杀
-                seckill.handleSeckill(seckillId, seckillBox, money);
+                seckill.handleSeckill(seckillId, seckillBox, money,artno);
             });
         }else{
             //秒杀开始
-            seckill.handleSeckill(seckillId, seckillBox, money);
+            seckill.handleSeckill(seckillId, seckillBox, money,artno);
 
             //计时
             var killEndTime = new Date(endTime + 1000);
@@ -126,11 +139,12 @@ var seckill = {
             var endTime = params['endTime'];
             var seckillId = params['seckillId'];
             var money = params['money'];
+            var artno=params['artno']; //秒杀价钱
             $.get(seckill.URL.now(), {}, function (result) {
                 if (result && result['success']) {
                     var nowTime = result['data'];
                     //时间判断
-                    seckill.countdown(seckillId, nowTime, startTime, endTime, money);
+                    seckill.countdown(seckillId, nowTime, startTime, endTime, money,artno);
                 }
             });
         }

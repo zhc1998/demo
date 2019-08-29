@@ -147,7 +147,7 @@ public class CartController {
             }
               if(admin!=null){
                 List<CommodityModel> cartListFromRedis = cartService.findCartListFromRedis(admin.getUsername());
-                if(cartListFromRedis.size()==1){
+                if(cartListFromRedis.size()<1){
                     CookieUtil.deleteCookie(request,response,"cartList");
                 }else{
                     for (int i=0;i<cartListFromRedis.size();i++){
@@ -155,7 +155,6 @@ public class CartController {
                             cartListFromRedis.remove(i);
                             i--;
                         }
-
                     }
                     cartService.saveCartListToRedis(admin.getUsername(),cartListFromRedis);
                 }
@@ -177,7 +176,7 @@ public class CartController {
             if(admin==null){
                 CookieUtil.deleteCookie(request,response,"cartList");
             }else {
-                redisTemplate.delete(admin.getUsername());
+                redisTemplate.delete("cartList");
             }
             return true;
         }catch (Exception e){

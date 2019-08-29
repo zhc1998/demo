@@ -226,9 +226,7 @@
                         type:"post",
                         dataType:"json",
                         success:function(data){
-                            lo
-
-                            cation.href="../toshow/toShoppingTrolley"
+                            location.href="../toshow/toShoppingTrolley"
                         },
                         error:function(){
                             alert("清除失败");
@@ -469,11 +467,11 @@
     <div class="row">
         <div class="span12">
             <div class="bottom">
-
+                <a id="clear">清空购物车</a>
                 <input type="button" name="yhq" class="btn btn-Warning btn-lg" onclick="useYhq()"></input>
                 <span>
                     总价格<a  id="spPrice"></a>
-							<a href="/shopxxb2b2c/order/checkout" id="submit" class="submit">提交订单</a>
+							<input type="button"  value="提交订单" onclick="tjYhq()"></input>
 						</span>
             </div>
         </div>
@@ -490,7 +488,7 @@
                         for (var i = 0; i < data.length; i++) {
 
                             if(data[i].yhqmenkan==1){
-                                a="不限制";
+                                a="满50元";
                             }
                             if(data[i].yhqmenkan==2){
                                 a="满100元";
@@ -541,6 +539,7 @@
                 if(c>=d){
                     c=c-b;
                     $("#spPrice").html("<font color='red'>"+c+"</font>");
+                    $("#spPrice").val(c);
                 }else{
                     alert("不满"+d+"元");
                     return ;
@@ -851,6 +850,38 @@
             }
         })
     }
+
+
+   function tjYhq(){
+       var arr = $('#dataGrid').bootstrapTable("getSelections");//获取选中的行
+
+       console.log(arr);
+       if (arr.length <= 0) {
+           alert("请选中要结算的数据！！！");
+       } else {
+           var commodityNames="";
+           var artNos="";
+           var commodityPrices="";
+           for (var i = 0; i < arr.length; i++) {
+               commodityNames+=arr[i].commodityName+",";
+               artNos+=arr[i].artNo+",";
+               commodityPrices+=arr[i].commodityPrices+",";
+           }
+           artNos=artNos.substring(0, artNos.length - 1);
+           commodityNames=commodityNames.substring(0, commodityNames.length - 1);
+           commodityPrices=commodityPrices.substring(0, commodityPrices.length - 1);
+       }
+
+       location.href="../tobuy?commodityNames="+commodityNames+"&artNos="+artNos+"&totalmoney="+$("#spPrice").val()+"&commodityPrices="+commodityPrices;
+   }
+
+
+
+
+
+
+
+
 
 </script>
 </html>

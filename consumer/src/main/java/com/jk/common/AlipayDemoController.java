@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class AlipayDemoController {
@@ -56,7 +57,9 @@ public class AlipayDemoController {
             orderone.setTotalmoney(totalmoney);
             orderone.setAmountpayable(amountpayable);
             orderone.setOrdertime(sdf.format(new Date()));
+            amqpTemplate.convertAndSend("addredistOrder",orderone);
         }
+
         request.getSession().setAttribute("order1",orderone);
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
@@ -78,7 +81,7 @@ public class AlipayDemoController {
         String body = "这是一个商品";
 
         // 该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。
-        String timeout_express = "1m";
+        String timeout_express = "5m";
 
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                 + "\"total_amount\":\""+ total_amount +"\","
@@ -97,6 +100,9 @@ public class AlipayDemoController {
     public String returnUrl(HttpServletRequest request, HttpServletResponse response) throws IOException, AlipayApiException, ServletException {
         response.setContentType("text/html;charset=utf-8");
         Orderone order1=(Orderone)  request.getSession().getAttribute("order1");
+        String key= order1.getUserid()+""+order1.getOrdernumber();
+
+
         boolean verifyResult = rsaCheckV1(request);
         if(verifyResult){
             //验证成功
@@ -112,13 +118,16 @@ public class AlipayDemoController {
 
                 }
             }
+
             System.err.println("支付成功");
             order1.setState(2);
             order1.setPaydate(sdf.format(new Date()));
             amqpTemplate.convertAndSend("AddOrder",order1);
+            amqpTemplate.convertAndSend("DelOrder",key);
             return "redirect:/toshow/index";
         }else{
             System.err.println("支付失败");
+
             return "redirect:error";
 
         }
