@@ -1,4 +1,4 @@
-package com.jk.service.impl;
+package com.jk.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -135,9 +135,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Transactional
     @Async
     /*@RabbitListener(queues = "seckill")//添加RabbitListener注解 监听*/
-    public synchronized SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5)
+    public synchronized SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5,Members members)
             throws SeckillException, RepeatKillException, SeckillCloseException {
-        Members members = (Members) request.getSession().getAttribute("members");
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
             throw new SeckillException("seckill data rewrite");
@@ -176,7 +176,7 @@ public class SeckillServiceImpl implements SeckillService {
                     orderone.setOrdertime(format.format(new Date()));
                     orderone.setAmount(1);
                     orderone.setPaydate(money.toString());
-                    orderone.getUserid(members.getId());
+                    orderone.setUserid(members.getId());
                     zhfService.addorder(orderone);
 
                     return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, seckillOrder);

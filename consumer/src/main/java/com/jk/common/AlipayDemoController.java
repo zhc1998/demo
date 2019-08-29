@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class AlipayDemoController {
@@ -56,7 +57,9 @@ public class AlipayDemoController {
             orderone.setTotalmoney(totalmoney);
             orderone.setAmountpayable(amountpayable);
             orderone.setOrdertime(sdf.format(new Date()));
+            amqpTemplate.convertAndSend("addredistOrder",orderone);
         }
+
         request.getSession().setAttribute("order1",orderone);
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
@@ -97,6 +100,9 @@ public class AlipayDemoController {
     public String returnUrl(HttpServletRequest request, HttpServletResponse response) throws IOException, AlipayApiException, ServletException {
         response.setContentType("text/html;charset=utf-8");
         Orderone order1=(Orderone)  request.getSession().getAttribute("order1");
+        String key= order1.getUserid()+""+order1.getOrdernumber();
+
+
         boolean verifyResult = rsaCheckV1(request);
         if(verifyResult){
             //验证成功
@@ -112,13 +118,16 @@ public class AlipayDemoController {
 
                 }
             }
+
             System.err.println("支付成功");
             order1.setState(2);
             order1.setPaydate(sdf.format(new Date()));
-            amqpTemplate.convertAndSend("AddOrder",order1);
+
+            amqpTemplate.convertAndSend("DelOrder",key);
             return "redirect:/toshow/index";
         }else{
             System.err.println("支付失败");
+
             return "redirect:error";
 
         }

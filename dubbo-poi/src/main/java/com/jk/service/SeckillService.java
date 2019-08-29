@@ -2,6 +2,7 @@ package com.jk.service;
 
 import com.jk.dto.Exposer;
 import com.jk.dto.SeckillExecution;
+import com.jk.model.Members;
 import com.jk.model.Seckill;
 import com.jk.exception.RepeatKillException;
 import com.jk.exception.SeckillCloseException;
@@ -53,7 +54,7 @@ public interface SeckillService {
      * @param money
      * @param md5
      */
-    SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5)
+    SeckillExecution executeSeckill(long seckillId, BigDecimal money, long userPhone, String md5, Members members)
             throws SeckillException, RepeatKillException, SeckillCloseException;
 
 
