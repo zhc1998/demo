@@ -460,7 +460,7 @@
                 imgSrc = data.pictureUrl;
                 inventoryCount = data.inventory;
                 //商品名称
-                $("#commodityName").html("商品名称:"+data.commodityName);
+                $("#commodityName").html(data.commodityName);
                 $("#spName").html(data.commodityName);
                 //编号
                 $("#serial").html(data.artNo);
@@ -505,6 +505,7 @@
             }
         })
     }
+
 
     function jiaYi(){
         //数量加一
@@ -597,9 +598,15 @@
     }
 
     //设置样式
+
     //购买
     function buy(){
-        alert("123");
+      var totalmoney=$("#commodityPrice").html();
+        var artno=$("#serial").html();
+        var amout=$("#text_box").val();
+        var color=$("[name='cName']:checked").val();
+       var commodityName=$("#commodityName").html()
+        location.href="../zhf/tobuypage?totalmoney="+totalmoney+"&artno="+artno+"&amout="+amout+"&color="+color+"&commodityName="+commodityName;
     }
     $(document).ready(function(){
         var showproduct = {
@@ -698,6 +705,7 @@
                         $("#me"+i).val(data[i].price);
                     }
                 }
+                //alert($("#me0").val());
             },
             error:function(){
                 alert("查询内存失败");
@@ -875,5 +883,4 @@
 
     });
 </script>
-
 </html>
