@@ -9,14 +9,14 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>dubbo-poi</module>
         <module>clpprovider</module>
         <module>consumer</module>
+        <module>dubbo-poi</module>
+        <module>hbprovider</module>
         <module>lmhprovider</module>
         <module>xxfprovider</module>
-        <module>zhfprovider</module>
-        <module>hbprovider</module>
         <module>zc-provider</module>
+        <module>zhfprovider</module>
     </modules>
 
 

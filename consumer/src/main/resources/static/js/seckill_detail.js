@@ -41,10 +41,8 @@ var seckill = {
                         //2. 发送秒杀请求，执行秒杀
                         $.post(killUrl, {money: money}, function(result){
                             if (result && result['success']){
-                                var killResult = result['data'];
-                                var stateInfo = killResult['stateInfo'];
                                 //3. 显示秒杀结果
-                                node.html('<span class="label label-success">'+ stateInfo +'</span>');
+                                node.html('<span class="label label-success">秒杀成功</span>');
                             }
                         })
                     });
