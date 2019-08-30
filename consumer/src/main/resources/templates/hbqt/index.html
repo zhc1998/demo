@@ -965,24 +965,30 @@
     function tousercenter(){
         window.open("../clp/showClpYhq3");
     }
-    function querySeckill(){
-		$.ajax({
-			url:"../seckill/list",
-			success:function (data) {
-				var imgSrc = "";
-				for (var i = 0; i < data.length; i++) {
-					imgSrc += "<img  src='" + data[i].image + "' width='200' height='200'><br>" +
-							"商品名称：<font >" + data[i].title + "</font><br>" +
-							"原价<font>￥" + data[i].price + "</font><br>" +
-							"秒杀价<font>￥ " + data[i].costprice + "</font><br>" +
-							"<font>剩余库存： " + data[i].stockcount + "</font><br>" +
-							"<font >开始时间：" + data[i].starttime + "</font><br>" +
-							"<font >结束时间：" + data[i].endtime + "</font><br>" +
-							"<a href='../seckill/" + data[i].seckillid + "/detail' target='_blank'><button  class='btn btn-success' >立即抢购</button></a><br>"
-				}}
-	    })
 
-				//$("#seckill").html(imgSrc);
+		       function querySeckill(){
+    	            $.ajax({
+						url:"../seckill/list",
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							var imgSrc = "";
+							for (var i = 0; i < data.length; i++) {
+								imgSrc += "<img  src='" + data[i].image + "' width='200' height='200'><br>" +
+										"商品名称：<font >" + data[i].title + "</font><br>" +
+										"原价<font>￥" + data[i].price + "</font><br>" +
+										"秒杀价<font>￥ " + data[i].costprice + "</font><br>" +
+										"<font>剩余库存： " + data[i].stockcount + "</font><br>" +
+										"<font >开始时间：" + data[i].starttime + "</font><br>" +
+										"<font >结束时间：" + data[i].endtime + "</font><br>" +
+										"<a href='../seckill/" + data[i].seckillid + "/detail' target='_blank'><button  class='btn btn-success' >立即抢购</button></a><br>"
+							}
+							$("#seckill").html(imgSrc);
+						}
+					})
+			   }
+
+
 
 				$(function () {
 					getsession();
