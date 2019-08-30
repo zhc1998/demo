@@ -106,4 +106,36 @@ public interface ZcDao {
 
     //根据品牌展示图片
     List<CommodityModel> loadbranImgShow(Integer branId);
+
+    //儿童玩具树展示
+    @Select("select itemId,name  from  brand WHERE type = 5")
+    List<DrandModel> plaything();
+
+    //化妆品树展示
+    @Select("select itemId,name  from  brand WHERE type = 1")
+    List<DrandModel> makeup();
+
+    //鞋子树展示
+    @Select("select itemId,name  from  brand WHERE type = 4")
+    List<DrandModel> shoeTreeShow();
+
+    //钟表首饰树展示
+    @Select("select itemId,name  from  brand WHERE type = 6")
+    List<DrandModel> watchTreeShow();
+
+    //品质家居
+    @Select("select itemId,name  from  brand WHERE type = 7")
+    List<DrandModel> homeTreeShow();
+
+    //汽车用品树展示
+    @Select("select itemId,name  from  brand WHERE type = 8")
+    List<DrandModel> carAccessories();
+
+    //军用品树展示
+    @Select("select itemId,name  from  brand WHERE type = 9")
+    List<DrandModel> military();
+
+    //展示食品树4
+    @Select("select itemId,name  from  brand WHERE type = 10")
+    List<DrandModel> foodstuff();
 }

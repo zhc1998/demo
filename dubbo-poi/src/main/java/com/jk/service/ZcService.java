@@ -62,4 +62,20 @@ public interface ZcService {
     List<DrandModel> queryBranList();
 
     List<CommodityModel> loadbranImgShow(Integer branId);
+
+    List<DrandModel> plaything();
+
+    List<DrandModel> makeup();
+
+    List<DrandModel> shoeTreeShow();
+
+    List<DrandModel> watchTreeShow();
+
+    List<DrandModel> homeTreeShow();
+
+    List<DrandModel> carAccessories();
+
+    List<DrandModel> military();
+
+    List<DrandModel> foodstuff();
 }

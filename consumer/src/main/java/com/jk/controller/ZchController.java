@@ -400,4 +400,60 @@ public class ZchController {
         return zcService.loadbranImgShow(branId);
     }
 
+    //儿童玩具树展示
+    @RequestMapping("plaything")
+    @ResponseBody
+    public List<DrandModel> plaything(){
+        return zcService.plaything();
+    }
+
+    //化妆品树展示
+    @RequestMapping("makeup")
+    @ResponseBody
+    public  List<DrandModel> makeup(){
+        return zcService.makeup();
+    }
+
+    //鞋子树展示
+    @RequestMapping("shoeTreeShow")
+    @ResponseBody
+    public  List<DrandModel> shoeTreeShow(){
+        return zcService.shoeTreeShow();
+    }
+
+    //手表树展示
+    @RequestMapping("watchTreeShow")
+    @ResponseBody
+    public List<DrandModel> watchTreeShow(){
+        return zcService.watchTreeShow();
+    }
+
+    //品质家居
+    @RequestMapping("homeTreeShow")
+    @ResponseBody
+    public List<DrandModel> homeTreeShow(){
+        return zcService.homeTreeShow();
+    }
+
+    //汽车用品树展示
+    @RequestMapping("carAccessories")
+    @ResponseBody
+    public List<DrandModel> carAccessories(){
+        return zcService.carAccessories();
+    }
+
+    //军用品树展示
+    @RequestMapping("military")
+    @ResponseBody
+    public List<DrandModel> military(){
+        return zcService.military();
+    }
+
+    //展示食品树
+    @RequestMapping("foodstuff")
+    @ResponseBody
+    public List<DrandModel> foodstuff(){
+        return zcService.foodstuff();
+    }
+
 }

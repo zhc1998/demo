@@ -177,6 +177,54 @@ public class CommodityService implements ZcService {
         return zcDao.loadbranImgShow(branId);
     }
 
+    //儿童玩具树展示
+    @Override
+    public List<DrandModel> plaything() {
+        return zcDao.plaything();
+    }
+
+    //化妆品树展示
+    @Override
+    public List<DrandModel> makeup() {
+        return zcDao.makeup();
+    }
+
+    //鞋子树展示
+    @Override
+    public List<DrandModel> shoeTreeShow() {
+        return zcDao.shoeTreeShow();
+    }
+
+    //钟表首饰树展示
+    @Override
+    public List<DrandModel> watchTreeShow() {
+        return zcDao.watchTreeShow();
+    }
+
+    //品质家居
+    @Override
+    public List<DrandModel> homeTreeShow() {
+        return zcDao.homeTreeShow();
+    }
+
+    //汽车用品树展示
+    @Override
+    public List<DrandModel> carAccessories() {
+        return zcDao.carAccessories();
+    }
+
+    //军用品树展示
+    @Override
+    public List<DrandModel> military() {
+        return zcDao.military();
+    }
+
+    //展示食品树
+    @Override
+    public List<DrandModel> foodstuff() {
+        return zcDao.foodstuff();
+    }
+
 
     //查询配件
     @Override
