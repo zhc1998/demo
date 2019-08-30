@@ -969,273 +969,284 @@
 		$.ajax({
 			url:"../seckill/list",
 			success:function (data) {
-                var imgSrc = "";
-			    for (var i=0;i<data.length;i++) {
-                        imgSrc += "<img  src='"+data[i].image+"' width='200' height='200'><br>" +
-                            "商品名称：<font >"+data[i].title+"</font><br>"+
-							"原价<font>￥"+data[i].price+"</font><br>"+
-                            "秒杀价<font>￥ "+data[i].costprice+"</font><br>"+
-							"<font>剩余库存： "+data[i].stockcount+"</font><br>"+
-							"<font >开始时间："+data[i].starttime+"</font><br>"+
-							"<font >结束时间："+data[i].endtime+"</font><br>"+
-							"<a href='../seckill/"+data[i].seckillid+"/detail' target='_blank'><button  class='btn btn-success' >立即抢购</button></a><br>"
+				var imgSrc = "";
+				for (var i = 0; i < data.length; i++) {
+					imgSrc += "<img  src='" + data[i].image + "' width='200' height='200'><br>" +
+							"商品名称：<font >" + data[i].title + "</font><br>" +
+							"原价<font>￥" + data[i].price + "</font><br>" +
+							"秒杀价<font>￥ " + data[i].costprice + "</font><br>" +
+							"<font>剩余库存： " + data[i].stockcount + "</font><br>" +
+							"<font >开始时间：" + data[i].starttime + "</font><br>" +
+							"<font >结束时间：" + data[i].endtime + "</font><br>" +
+							"<a href='../seckill/" + data[i].seckillid + "/detail' target='_blank'><button  class='btn btn-success' >立即抢购</button></a><br>"
+				}}
+	    })
+
+				//$("#seckill").html(imgSrc);
+
+				$(function () {
+					getsession();
+					loadHuaWei();
+					queryBranList();
+					plaything();
+					makeup();
+					watchTreeShow();
+					homeTreeShow();
+					carAccessories();
+					military();
+					foodstuff();
+					querySeckill();
+				})
+
+				function getsession() {
+					$.ajax({
+						type: "get",
+						url: "../zhc/getLoginName",
+						dataType: "text",
+						success: function (result) {
+							$("#hiddenId").val(result);
+							iflogin();
+						},
+						error: function () {
+							alert("請求失敗");
+						}
+					});
 				}
-                $("#seckill").html(imgSrc)
 
-	$(function(){
-        getsession();
-		loadHuaWei();
-		queryBranList();
-		plaything();
-        makeup();
-        watchTreeShow();
-		homeTreeShow();
-		carAccessories();
-		military();
-		foodstuff();
-		querySeckill();
-	})
-	function getsession() {
-        $.ajax({
-            type : "get",
-            url : "../zhc/getLoginName",
-            dataType : "text",
-            success : function(result) {
-                $("#hiddenId").val(result);
-                iflogin();
-            },
-            error : function() {
-                alert("請求失敗");
-            }
-        });
-    }
-	function iflogin() {
-		var sessionname=$("#hiddenId").val();
-		if(sessionname!=null && sessionname!=""){
-            document.getElementById("nologin").style.display="none";
-            document.getElementById("login").style.display="";
-            $("#sessionvalue").html(sessionname);
-		}
-    }
-	var ii;
-	//查询所有商品
-	function loadHuaWei() {
-		$.ajax({
-			url:"../zch/loadHuaWei",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				for(var i=0;i<data.length;i++){
-					if(i==i){
-						// 循环 i下表和 img 的Id保持一致
-						$("#"+i).attr("src",data[i].pictureUrl);
-						//alert(data[i].id);
-						$("#aa"+i).val(data[i].id);
-						$("#span"+i).html(data[i].commodityName);
-						$("#price"+i).html("<font color='red'>$"+data[i].commodityPrice+"</font>");
-						ids = $("#aa"+i).val();
-
+				function iflogin() {
+					var sessionname = $("#hiddenId").val();
+					if (sessionname != null && sessionname != "") {
+						document.getElementById("nologin").style.display = "none";
+						document.getElementById("login").style.display = "";
+						$("#sessionvalue").html(sessionname);
 					}
 				}
 
-			},
-			error:function(){
-				alert("查询失败");
-			}
-		})
-	}
+				var ii;
 
-	//根据商品名称跳转页面
-	function toList() {
-		window.open("../toshow/toList")
-	}
+				//查询所有商品
+				function loadHuaWei() {
+					$.ajax({
+						url: "../zch/loadHuaWei",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							for (var i = 0; i < data.length; i++) {
+								if (i == i) {
+									// 循环 i下表和 img 的Id保持一致
+									$("#" + i).attr("src", data[i].pictureUrl);
+									//alert(data[i].id);
+									$("#aa" + i).val(data[i].id);
+									$("#span" + i).html(data[i].commodityName);
+									$("#price" + i).html("<font color='red'>$" + data[i].commodityPrice + "</font>");
+									ids = $("#aa" + i).val();
 
-	function togouwuche() {
-        window.open("../toshow/toShoppingTrolley");
-    }
-	function particulars(val) {
-		var ids = $("#aa"+val+"").val();
-		window.open("../toshow/toParticulars?ids="+ids)
-	}
-    function openLogin(){
-        location.href="../toshow/tofrontLogin";
-    }
+								}
+							}
 
-	//查询手机品牌
-	function queryBranList(){
-		$.ajax({
-			url:"../zch/queryBranList",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				var html = "";
-				for(var i=0;i<data.length;i++){
-                    html +="<li><a id='branName' href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+						},
+						error: function () {
+							alert("查询失败");
+						}
+					})
 				}
-				$("#dropdown-menu").html(html);
-			},
-			error:function(){
-				alert("手机品牌树展示失败");
-			}
-		})
-	}
 
-	//根据品牌名称跳转页面
-	function toListShow(ids){
-		window.open("../toshow/toListShow?ids="+ids)
-	}
-
-    function updatePassword() {
-        window.open("../toshow/toUpdatePassword");
-    }
-    function zhuxiaodenglu() {
-        location.href="../toshow/zhuxiaodenglu";
-    }
-    //去个人中心
-    function tousercenter(){
-        window.open("../clp/showClpYhq3");
-    }
-
-	//条件查询
-	function search() {
-		var pName = $("#pName").val();
-		window.open("../toshow/toshowlist?pName="+pName)
-	}
-
-	//儿童玩具树行菜单
-	function plaything(){
-		$.ajax({
-			url:"../zch/plaything",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-                var html = "";
-                for(var i=0;i<data.length;i++){
-                    html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
-                }
-                $("#plaything").html(html);
-			},
-			error:function(){
-				alert("查询儿童玩具失败");
-			}
-		})
-	}
-
-    //化妆品树展示
-    function  makeup() {
-        $.ajax({
-            url:"../zch/makeup",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                var html = "";
-                for(var i=0;i<data.length;i++){
-                    html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
-                }
-                $("#makeup").html(html);
-            },
-            error:function(){
-                alert("查询化妆品树失败");
-            }
-        })
-    }
-
-    //手表树展示
-    function watchTreeShow(){
-        $.ajax({
-            url:"../zch/watchTreeShow",
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                var html = "";
-                for(var i=0;i<data.length;i++){
-                    html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
-                }
-                $("#watch").html(html);
-            },
-            error:function(){
-                alert("查询手表树展示失败");
-            }
-        })
-
-    }
-
-	//家居树展示
-	function homeTreeShow(){
-
-		$.ajax({
-			url:"../zch/homeTreeShow",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				var html = "";
-				for(var i=0;i<data.length;i++){
-					html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				//根据商品名称跳转页面
+				function toList() {
+					window.open("../toshow/toList")
 				}
-				$("#homes").html(html);
-			},
-			error:function(){
-				alert("查询品质家居失败");
-			}
-		})
-	}
 
-	//汽车用品树展示
-	function carAccessories(){
-		$.ajax({
-			url:"../zch/carAccessories",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				var html = "";
-				for(var i=0;i<data.length;i++){
-					html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				function togouwuche() {
+					window.open("../toshow/toShoppingTrolley");
 				}
-				$("#carAccessories").html(html);
-			},
-			error:function(){
-				alert("查询品质家居失败");
-			}
-		})
-	}
 
-	//军用树展示
-	function military(){
-		$.ajax({
-			url:"../zch/military",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				var html = "";
-				for(var i=0;i<data.length;i++){
-					html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				function particulars(val) {
+					var ids = $("#aa" + val + "").val();
+					window.open("../toshow/toParticulars?ids=" + ids)
 				}
-				$("#military").html(html);
-			},
-			error:function(){
-				alert("查询品质家居失败");
-			}
-		})
-	}
 
-	//展示食品树
-	function foodstuff(){
-		$.ajax({
-			url:"../zch/foodstuff",
-			type:"post",
-			dataType:"json",
-			success:function(data){
-				var html = "";
-				for(var i=0;i<data.length;i++){
-					html +="<li><a  href='javascript:toListShow("+data[i].itemId+")'>"+data[i].name+"</a></li>";
+				function openLogin() {
+					location.href = "../toshow/tofrontLogin";
 				}
-				$("#foodstuff").html(html);
-			},
-			error:function(){
-				alert("查询品质家居失败");
-			}
-		})
-	}
+
+				//查询手机品牌
+				function queryBranList() {
+					$.ajax({
+						url: "../zch/queryBranList",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a id='branName' href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#dropdown-menu").html(html);
+						},
+						error: function () {
+							alert("手机品牌树展示失败");
+						}
+					})
+				}
+
+				//根据品牌名称跳转页面
+				function toListShow(ids) {
+					window.open("../toshow/toListShow?ids=" + ids)
+				}
+
+				function updatePassword() {
+					window.open("../toshow/toUpdatePassword");
+				}
+
+				function zhuxiaodenglu() {
+					location.href = "../toshow/zhuxiaodenglu";
+				}
+
+				//去个人中心
+				function tousercenter() {
+					window.open("../clp/showClpYhq3");
+				}
+
+				//条件查询
+				function search() {
+					var pName = $("#pName").val();
+					window.open("../toshow/toshowlist?pName=" + pName)
+				}
+
+				//儿童玩具树行菜单
+				function plaything() {
+					$.ajax({
+						url: "../zch/plaything",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#plaything").html(html);
+						},
+						error: function () {
+							alert("查询儿童玩具失败");
+						}
+					})
+				}
+
+				//化妆品树展示
+				function makeup() {
+					$.ajax({
+						url: "../zch/makeup",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#makeup").html(html);
+						},
+						error: function () {
+							alert("查询化妆品树失败");
+						}
+					})
+				}
+
+				//手表树展示
+				function watchTreeShow() {
+					$.ajax({
+						url: "../zch/watchTreeShow",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#watch").html(html);
+						},
+						error: function () {
+							alert("查询手表树展示失败");
+						}
+					})
+
+				}
+
+				//家居树展示
+				function homeTreeShow() {
+
+					$.ajax({
+						url: "../zch/homeTreeShow",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#homes").html(html);
+						},
+						error: function () {
+							alert("查询品质家居失败");
+						}
+					})
+				}
+
+				//汽车用品树展示
+				function carAccessories() {
+					$.ajax({
+						url: "../zch/carAccessories",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#carAccessories").html(html);
+						},
+						error: function () {
+							alert("查询品质家居失败");
+						}
+					})
+				}
+
+				//军用树展示
+				function military() {
+					$.ajax({
+						url: "../zch/military",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#military").html(html);
+						},
+						error: function () {
+							alert("查询品质家居失败");
+						}
+					})
+				}
+
+				//展示食品树
+				function foodstuff() {
+					$.ajax({
+						url: "../zch/foodstuff",
+						type: "post",
+						dataType: "json",
+						success: function (data) {
+							var html = "";
+							for (var i = 0; i < data.length; i++) {
+								html += "<li><a  href='javascript:toListShow(" + data[i].itemId + ")'>" + data[i].name + "</a></li>";
+							}
+							$("#foodstuff").html(html);
+						},
+						error: function () {
+							alert("查询品质家居失败");
+						}
+					})
+				}
+
 </script>
 
 </html>
