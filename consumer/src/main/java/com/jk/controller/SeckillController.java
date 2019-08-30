@@ -53,7 +53,8 @@ public class SeckillController {
             return "redirect:../goAlipay?artno="+orderone.getArtno()+"&address="+orderone.getAddress()+"&consignee="+orderone.getConsignee()+"&commodityName="+orderone.getConsignee()+"&totalmoney="+orderone.getTotalmoney()+"&amout="+1+"&amountpayable="+orderone.getAmountpayable();
         }
     @RequestMapping("/list")
-    public String findSeckillList(Model model) throws ParseException {
+    @ResponseBody
+    public List<Seckill> findSeckillList() throws ParseException {
         List<Seckill> list = seckillService.findAll();
         for (Seckill seckill :list) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -62,9 +63,7 @@ public class SeckillController {
             seckill.setStarttime(startTime);
             seckill.setEndtime(endTime);
         }
-
-        model.addAttribute("list", list);
-        return "page/seckill";
+        return list;
     }
 
     @ResponseBody

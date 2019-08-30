@@ -202,7 +202,7 @@ public class XxfConltroller {
                  return "1";
         }
 
-       /* String url = "https://api.netease.im/sms/sendcode.action";
+        String url = "https://api.netease.im/sms/sendcode.action";
         String CurTime=String.valueOf(new Date().getTime());
         String Nonce= UUID.randomUUID().toString().replace("-", "");
 
@@ -222,17 +222,19 @@ public class XxfConltroller {
             JSONObject jsonObject = JSONObject.parseObject(str);
             String code=jsonObject.getString("code");
 
-            if("200".equals(code)){
-                String objcode = jsonObject.getString("obj");*/
-                String objcode="1234";
-                String key="phone"+members2.getPhone();
+            if("200".equals(code)) {
+                String objcode = jsonObject.getString("obj");
+
+                String key = "phone" + members2.getPhone();
                 List<Object> list = new ArrayList<Object>();
-                    redisTemplate.opsForValue().set(key, objcode);
-                    redisTemplate.expire(key, 5, TimeUnit.MINUTES);
-        /*} catch (Exception e) {
+
+                redisTemplate.opsForValue().set(key, objcode);
+                redisTemplate.expire(key, 1, TimeUnit.MINUTES);
+            }
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }*/
+        }
         return "0";
     }
 
@@ -244,7 +246,7 @@ public class XxfConltroller {
                return "1";
           }
 
-       /* String url = "https://api.netease.im/sms/sendcode.action";
+        String url = "https://api.netease.im/sms/sendcode.action";
         String CurTime=String.valueOf(new Date().getTime());
         String Nonce= UUID.randomUUID().toString().replace("-", "");
 
@@ -264,17 +266,17 @@ public class XxfConltroller {
             JSONObject jsonObject = JSONObject.parseObject(str);
             String code=jsonObject.getString("code");
 
-            if("200".equals(code)){
-                String objcode = jsonObject.getString("obj");*/
-        String objcode="1234";
-        String key="phone"+members2.getPhone();
-        List<Object> list = new ArrayList<Object>();
-        redisTemplate.opsForValue().set(key, objcode);
-        redisTemplate.expire(key, 5, TimeUnit.MINUTES);
-        /*} catch (Exception e) {
+            if("200".equals(code)) {
+                String objcode = jsonObject.getString("obj");
+                String key = "phone" + members2.getPhone();
+                List<Object> list = new ArrayList<Object>();
+                redisTemplate.opsForValue().set(key, objcode);
+                redisTemplate.expire(key, 1, TimeUnit.MINUTES);
+            }
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }*/
+        }
         return "0";
     }
 

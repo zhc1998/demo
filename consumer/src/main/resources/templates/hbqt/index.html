@@ -1,11 +1,15 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BUG商城</title>
+	<link rel="stylesheet" th:href="@{../../lib/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+	<link rel="stylesheet" th:href="@{../../css/seckill.css}"/>
+	<link rel="stylesheet" th:href="@{../../css/public.css}"/>
 	<script src="../assets/js/jquery.js"></script>
 <script>$("#seckill").load('../seckill')</script>
 <!-- Latest Bootstrap min CSS -->
@@ -32,6 +36,10 @@
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <link rel="stylesheet" href="../lib/bootstrap.min.css}"/>
+  <link rel="stylesheet" href="../lib/font/css/font-awesome.min.css}"/>
+  <link rel="stylesheet" href="../css/seckill.css}"/>
+  <link rel="stylesheet" href="../css/public.css}"/>
   <![endif]-->
 </head>
 
@@ -351,47 +359,8 @@
 					<div class="owl-demo-outer">
 						<!-- #owl-demo -->
 						<div id="owl-demo" class="deals-wk">
-							<div class="item">
-								<div class="col-md-12">
-									<!-- .pro-text -->
-									<div class="pro-text text-center">
-										<!-- .pro-img -->
-										<div class="pro-img">
-											<img src="../assets/images/wk-deal-img.jpg" alt="2" />
-										</div>
-										<!-- /.pro-img -->
-										<div class="text-text">
-											<span>Macbook, Laptop</span>
-											<h4> Apple Macbook Retina 23’’ </h4>
-											<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
-											<p class="wk-price">$290.00 <span>$290.00</span> </p>
-											<p class="availalbe">Availalbe: <span>In Stock</span></p>
-											<a href="#" class="add-btn">添加到购物车1</a>
-										</div>
-										<!-- clockdiv -->
-										<div id="clockdiv">
-											<h4>Hurry Up! Offer ends in:</h4>
-											<div>
-												<span class="days">14</span>
-												<div class="smalltext">Days</div>
-											</div>
-											<div>
-												<span class="hours">23</span>
-												<div class="smalltext">Hours</div>
-											</div>
-											<div>
-												<span class="minutes">59</span>
-												<div class="smalltext">Minutes</div>
-											</div>
-											<div>
-												<span class="seconds">47</span>
-												<div class="smalltext">Seconds</div>
-											</div>
-										</div>
-										<!-- /clockdiv -->
-									</div>
-									<!-- /.pro-text -->
-								</div>
+							<div class="item" id="seckill">
+
 							</div>
 							<!-- /#owl-demo -->
 						</div>
@@ -1027,11 +996,31 @@
     function tousercenter(){
         window.open("../clp/showClpYhq3");
     }
+    function querySeckill(){
+		$.ajax({
+			url:"../seckill/list",
+			success:function (data) {
+                var imgSrc = "";
+			    for (var i=0;i<data.length;i++) {
+                        imgSrc += "<img  src='"+data[i].image+"' width='200' height='200'><br>" +
+                            "商品名称：<font >"+data[i].title+"</font><br>"+
+							"原价<font>￥"+data[i].price+"</font><br>"+
+                            "秒杀价<font>￥ "+data[i].costprice+"</font><br>"+
+							"<font>剩余库存： "+data[i].stockcount+"</font><br>"+
+							"<font >开始时间："+data[i].starttime+"</font><br>"+
+							"<font >结束时间："+data[i].endtime+"</font><br>"+
+							"<a href='../seckill/"+data[i].seckillid+"/detail' target='_blank'><button  class='btn btn-success' >立即抢购</button></a><br>"
+				}
+                $("#seckill").html(imgSrc)
 
+            }
+		})
+	}
 	$(function(){
         getsession();
 		loadHuaWei();
 		queryBranList();
+		querySeckill();
 	})
 	function getsession() {
         $.ajax({
